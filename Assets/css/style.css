@@ -1,0 +1,159 @@
+/* :root{
+    --main-bg-color:#1b1c1b;
+    --text-color: #ffff99;
+}
+
+.bar{
+    
+   background-color:var(--main-bg-color);
+    
+}
+.margin-search{
+    margin-top: 40px;
+    
+}
+.margin-logo{
+    margin-top: 20px;
+    font-size: 20px;
+    width: auto;
+    padding-right: 30px;
+}
+.top-bar, .top-bar ul{
+    background:var(--main-bg-color);
+    
+}
+.top-bar-right{
+    width:50%;
+    
+}
+a, li{
+    color:var(--text-color);
+    
+    
+}
+#font-span{
+    font-style: italic;
+    color:var(--text-color);
+   
+}
+.button{
+    background-color:var(--main-bg-color) ;
+}
+.head-color{
+    background-color: var(--text-color);
+} */
+
+
+
+:root {
+    --title-color-1: rgb(227, 212, 212);
+    --title-color-2: rgba(230, 77, 35, 0.811);
+    --section-title-color:black;
+    --color-dark: #333;
+    --button-color: #0b4c8ee3;
+    }
+    
+    
+    /* .movie-posters .grid-container {
+    padding-left: 0;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    }
+    
+    
+    .movie-posters .card-group {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    }
+    
+    
+    .movie-posters .card {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    margin-right: 1rem;
+    }
+    
+    
+    .movie-posters .grid-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    width: max-content;
+    margin-left: -1rem;
+    }
+    
+    
+    .movie-posters .cell {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    margin-right: 0;
+    margin-left: 1rem;
+    } */
+    
+    
+    a {
+    color:var(--title-color-1);
+    font-size: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    }
+    #logo{
+    height: 75px;
+    width: 75px;
+   
+    
+    }
+    
+    
+    .button {
+    background-color:var(--color-dark);
+    color: var(--title-color-1);
+    margin-left: 0;
+    border-radius: 2px solid var(--button-color);
+    }
+    
+    
+    .top-bar {
+    background-color: var(--color-dark);
+   
+    }
+    
+    
+    .top-bar .menu {
+    background-color:var(--color-dark)
+    }
+    
+    
+    .top-bar .top-bar-left {
+    margin-left: 30px;
+    }
+    
+    
+    .top-bar .top-bar-right {
+    margin-right: 50px;
+    margin-left: 25px;
+   
+    }
+    
+    
+    #project-title1 {
+    color:var(--title-color-1);
+   margin-top: 15px;
+  
+    }
+    
+    
+    #project-title2 {
+    color:var(--title-color-2)
+    }
+    
+   
+    
