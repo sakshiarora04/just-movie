@@ -8,9 +8,38 @@ function getParams() {
     var searchParamsArr = document.location.search.split('=');
 
     var query = searchParamsArr.pop();
-    console.log(query);
+    // console.log(query);
 
     searchApi(query);
+}
+
+function printResults(resultObj) {
+    resultObj.results.forEach(function (movie) {
+        if (!movie.overview) {
+            return;
+        }
+
+        var cell = $('<div class="cell"></div>')
+        var card = $('<div class="card"></div>');
+        var cardDivider = $('<div class="card-divider head-color">' + movie.title + '</div>');
+        var cardSection = $('<div class="card-section"></div>');
+        var title = $('<h4>Cast</h4>');
+        var details = $('<p>' + movie.overview + '</p>');
+
+        cell.append(card)
+        card.append(cardDivider);
+        if (movie.poster_path) {
+            var image = $('<img src="https://image.tmdb.org/t/p/w500' + movie.poster_path + '">');
+            card.append(image);
+        }
+        cardSection.append(title);
+        cardSection.append(details);
+        card.append(cardSection);
+
+
+        // Append the card to the container
+        $('#result-content').append(cell);
+    })
 }
 
 function searchApi(query) {
@@ -25,18 +54,20 @@ function searchApi(query) {
         datatype: 'json'})
         .done(function (tmbdRes) {
             resultTextEl.textContent = tmbdRes.query;
-            console.log(tmbdRes);
+            // console.log(tmbdRes);
+            console.log(tmbdRes.results);
+            // console.log(tmbdRes.results[0].title);
 
             if (!tmbdRes.results.length) {
                 console.log('No results found');
                 resultContentEl.html('<h3>no results found, search again!</h3>');
             } else {
-                resultContentEl.text('');
+                printResults(tmbdRes);
                 }
 
             })
         .fail(function (error) {
-            console.error(error)
+            console.error(error);
         })
 
         
@@ -45,19 +76,20 @@ function searchApi(query) {
 function handleSearchFormSubmit(event) {
     event.preventDefault();
 
-    var searchInputVal = $('#search-input').value;
+    var searchInputVal = $('#search-input').val();
 
     if (!searchInputVal) {
         console.error('You need a search input value!');
         return;
     }
 
-    var query = searchInputVal.replace(/\s/g, '+')
-    // console.log(query)
+    var query = searchInputVal.replace(/\s/g, '+');
+    // console.log(query);
 
-    searchApi(query)
+    resultContentEl.empty();
+
+    searchApi(query);
 }
 
 searchFormEl.on('submit', handleSearchFormSubmit)
 
-getParams()
