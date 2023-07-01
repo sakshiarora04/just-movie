@@ -42,6 +42,27 @@ function printResults(resultObj) {
     })
 }
 
+function saveResultsToLocalStorage(resultObj) {
+    // Convert the result object to JSON string
+    var resultJson = $.stringify(resultObj);
+    
+    // Save the JSON string to local storage
+    localStorage.setItem('searchResults', resultJson);
+}
+
+function loadResultsFromLocalStorage() {
+    // Retrieve the JSON string from local storage
+    var resultJson = localStorage.getItem('searchResults');
+    
+    // Parse the JSON string to get the result object
+    var resultObj = $.parse(resultJson);
+    
+    if (resultObj) {
+      // If results exist, print them on the page
+      printResults(resultObj);
+    }
+}
+
 function searchApi(query) {
     var tmbdQueryUrl = 'https://api.themoviedb.org/3/search/';
 
@@ -63,6 +84,7 @@ function searchApi(query) {
                 resultContentEl.html('<h3>no results found, search again!</h3>');
             } else {
                 printResults(tmbdRes);
+                saveResultsToLocalStorage(tmbdRes);
                 }
 
             })
@@ -90,6 +112,10 @@ function handleSearchFormSubmit(event) {
 
     searchApi(query);
 }
+
+$(document).ready(function () {
+    loadResultsFromLocalStorage();
+});
 
 searchFormEl.on('submit', handleSearchFormSubmit)
 
