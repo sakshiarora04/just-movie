@@ -1,16 +1,16 @@
-var searchFormEl = document.querySelector('#search-form')
+var searchFormEl = $('#search-form')
 
 function handleSearchFormSubmit(event) {
     event.preventDefault();
 
-    var searchInputVal = document.querySelector('#search-input').value;
+    var searchInputVal = $('#search-input').val();
 
     if (!searchInputVal) {
         console.error('You need a search input value!');
         return;
     }
 
-    var query = searchInputVal.replace(/\s/g, '+')
+    var query = searchInputVal.replace(/\s/g, '+');
     // console.log(query)
     var queryString = './display-search.html?q=' + query
 
@@ -18,7 +18,7 @@ function handleSearchFormSubmit(event) {
     location.assign(queryString)
 }
 
-searchFormEl.addEventListener('submit', handleSearchFormSubmit)
+searchFormEl.on('submit', handleSearchFormSubmit)
 
 
 // SEARCH BY MOVIE NAME

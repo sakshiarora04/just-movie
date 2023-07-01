@@ -1,6 +1,6 @@
-var searchFormEl = document.querySelector('#search-form');
-var resultTextEl = document.querySelector('#result-content')
-var resultContentEl = document.querySelector('#result-content')
+var searchFormEl = $('#search-form');
+var resultTextEl = $('#result-content')
+var resultContentEl = $('#result-content')
 
 var apiKey = '&api_key=533313cc880a2148c77843e769ec1a97';
 
@@ -19,30 +19,23 @@ function searchApi(query) {
     tmbdQueryUrl = tmbdQueryUrl + 'movie?query=' + query + "&page=1" + apiKey;
     console.log(tmbdQueryUrl)
 
-    fetch(tmbdQueryUrl)
-        .then(function (response) {
-            if (!response.ok) {
-                throw response.json();
-            }
-
-            return response.json();
-        })
-
-        .then(function (tmbdRes) {
+    $.ajax({
+        url: tmbdQueryUrl,
+        method: 'GET',
+        datatype: 'json'})
+        .done(function (tmbdRes) {
             resultTextEl.textContent = tmbdRes.query;
-
             console.log(tmbdRes);
 
-
             if (!tmbdRes.results.length) {
-                console.log('No results found')
-                resultContentEl.innerHTML = '<h3>no results found, search again!</h3>';
+                console.log('No results found');
+                resultContentEl.html('<h3>no results found, search again!</h3>');
             } else {
-                resultContentEl.textContent = '';
+                resultContentEl.text('');
                 }
 
             })
-        .catch(function (error) {
+        .fail(function (error) {
             console.error(error)
         })
 
@@ -52,7 +45,7 @@ function searchApi(query) {
 function handleSearchFormSubmit(event) {
     event.preventDefault();
 
-    var searchInputVal = document.querySelector('#search-input').value;
+    var searchInputVal = $('#search-input').value;
 
     if (!searchInputVal) {
         console.error('You need a search input value!');
@@ -65,6 +58,6 @@ function handleSearchFormSubmit(event) {
     searchApi(query)
 }
 
-searchFormEl.addEventListener('submit', handleSearchFormSubmit)
+searchFormEl.on('submit', handleSearchFormSubmit)
 
 getParams()
