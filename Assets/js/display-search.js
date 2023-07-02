@@ -72,15 +72,15 @@ function searchApi(query) {
     tmbdQueryUrl = tmbdQueryUrl + 'movie?query=' + query + "&page=1" + apiKey;
     console.log(tmbdQueryUrl)
 
-    $.ajax({
-        url: tmbdQueryUrl,
-        method: 'GET',
-        datatype: 'json'})
-        .done(function (tmbdRes) {
-            resultTextEl.textContent = tmbdRes.query;
-            // console.log(tmbdRes);
+    fetch(tmbdQueryUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(tmbdRes => {
             console.log(tmbdRes.results);
-            // console.log(tmbdRes.results[0].title);
 
             if (!tmbdRes.results.length) {
                 console.log('No results found');
@@ -88,14 +88,12 @@ function searchApi(query) {
             } else {
                 printResults(tmbdRes);
                 saveResultsToLocalStorage(tmbdRes);
-                }
-
-            })
-        .fail(function (error) {
-            console.error(error);
+            }
         })
-
-        
+        .catch(error => {
+            console.error('Fetch error:', error);
+            resultContentEl.html('<h3>Error occurred while fetching search results</h3>');
+        });
 }
 
 function handleSearchFormSubmit(event) {
@@ -112,9 +110,9 @@ function handleSearchFormSubmit(event) {
     // console.log(query);
     var queryString = './display-search.html?q=' + query
 
-    location.assign(queryString)
-
     resultContentEl.empty();
+
+    location.assign(queryString) 
 
     searchApi(query);
 }
