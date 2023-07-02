@@ -23,19 +23,19 @@ function printResults(resultObj) {
         var card = $('<div class="card"></div>');
         var cardDivider = $('<div class="card-divider head-color">' + movie.title + '</div>');
         var cardSection = $('<div class="card-section"></div>');
-        var title = $('<h4>Overview</h4>');
+        var overview = $('<h4>Overview</h4>');
         var details = $('<p>' + movie.overview + '</p>');
 
         cell.append(card)
         card.append(cardDivider);
         if (movie.poster_path) {
-            var image = $('<img src="https://image.tmdb.org/t/p/w500' + movie.poster_path + '">');
-            card.append(image);
+            var posterImg = $('<img src="https://image.tmdb.org/t/p/w500' + movie.poster_path + '">');
+            card.append(posterImg);
         } else {
-            var image = $('<img src="./Assets/img/no-poster.png">');
-            card.append(image);
+            var posterImg = $('<img src="./Assets/img/no-poster.png">');
+            card.append(posterImg);
         }
-        cardSection.append(title);
+        cardSection.append(overview);
         cardSection.append(details);
         card.append(cardSection);
 
@@ -47,7 +47,7 @@ function printResults(resultObj) {
 
 function saveResultsToLocalStorage(resultObj) {
     // Convert the result object to JSON string
-    var resultJson = $.stringify(resultObj);
+    var resultJson = JSON.stringify(resultObj);
     
     // Save the JSON string to local storage
     localStorage.setItem('searchResults', resultJson);
@@ -58,7 +58,7 @@ function loadResultsFromLocalStorage() {
     var resultJson = localStorage.getItem('searchResults');
     
     // Parse the JSON string to get the result object
-    var resultObj = $.parse(resultJson);
+    var resultObj = JSON.parse(resultJson);
     
     if (resultObj) {
       // If results exist, print them on the page
