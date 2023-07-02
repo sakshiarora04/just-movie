@@ -23,13 +23,16 @@ function printResults(resultObj) {
         var card = $('<div class="card"></div>');
         var cardDivider = $('<div class="card-divider head-color">' + movie.title + '</div>');
         var cardSection = $('<div class="card-section"></div>');
-        var title = $('<h4>Cast</h4>');
+        var title = $('<h4>Overview</h4>');
         var details = $('<p>' + movie.overview + '</p>');
 
         cell.append(card)
         card.append(cardDivider);
         if (movie.poster_path) {
             var image = $('<img src="https://image.tmdb.org/t/p/w500' + movie.poster_path + '">');
+            card.append(image);
+        } else {
+            var image = $('<img src="./Assets/img/no-poster.png">');
             card.append(image);
         }
         cardSection.append(title);
