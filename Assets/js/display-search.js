@@ -110,6 +110,9 @@ function handleSearchFormSubmit(event) {
 
     var query = searchInputVal.replace(/\s/g, '+');
     // console.log(query);
+    var queryString = './display-search.html?q=' + query
+
+    location.assign(queryString)
 
     resultContentEl.empty();
 
@@ -121,4 +124,4 @@ $(document).ready(function () {
 });
 
 searchFormEl.on('submit', handleSearchFormSubmit)
-
+getParams()
