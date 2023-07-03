@@ -10,3 +10,6 @@
   .card{
 border-style: none;
   }
+  p{
+    margin: 0px;
+  }
