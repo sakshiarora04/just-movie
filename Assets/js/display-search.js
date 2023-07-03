@@ -1,6 +1,7 @@
 var searchFormEl = $('#search-form');
 var resultTextEl = $('#result-content')
 var resultContentEl = $('#result-content')
+var calloutEl = $('#errorMessage')
 
 var apiKey = '&api_key=533313cc880a2148c77843e769ec1a97';
 
@@ -103,16 +104,29 @@ function handleSearchFormSubmit(event) {
 
     if (!searchInputVal) {
         console.error('You need a search input value!');
+        var callout = $('<div class="callout alert" data-closable></div>');
+        var message = $('<p>You need a search input value!</p>');
+        var button = $('<button>', {
+            class: 'close-button',
+            'aria-label': 'Dismiss alert',
+            type: 'button',
+            'data-close': ''
+        });
+        var span = $('<span>', {
+            'aria-hidden': 'true',
+            html: '&times;'
+        });
+        button.append(span);
+        callout.append(message, button);
+
+        calloutEl.append(callout);
         return;
     }
-
     var query = searchInputVal.replace(/\s/g, '+');
     // console.log(query);
     var queryString = './display-search.html?q=' + query
 
     resultContentEl.empty();
-
-    location.assign(queryString) 
 
     searchApi(query);
 }
