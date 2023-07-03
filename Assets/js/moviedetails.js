@@ -38,5 +38,8 @@ var displayMovieById = function (movies) {
     }
     var overview = movies.overview;
     console.log(overview);
+    var titleEl=$('#movie-details');
+    titleEl.append($('<h1>',title));
+
 };
 

@@ -50,6 +50,7 @@ a, li{
     --title-color-2: rgba(230, 77, 35, 0.811);
     --section-title-color:black;
     --color-dark: #333;
+    /* --color-dark: #1B1616; */
     --button-color: #0b4c8ee3;
     }
     
@@ -154,6 +155,7 @@ a, li{
     #project-title2 {
     color:var(--title-color-2)
     }
+
     
    
     

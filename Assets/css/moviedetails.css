@@ -1,0 +1,12 @@
+.div-movie-details{
+    background-color: #1B1616;
+    padding-top: 40px;
+  }
+  #movie-details,#movie-cast,#movie-reviews{
+    background-color: var(--color-dark);
+    color: var(--title-color-1);
+    
+  }
+  .card{
+border-style: none;
+  }
