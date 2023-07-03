@@ -8,22 +8,8 @@ function handleSearchFormSubmit(event) {
 
     if (!searchInputVal) {
         console.error('You need a search input value!');
-        var callout = $('<div class="callout alert" data-closable></div>');
-        var message = $('<p>You need a search input value!</p>');
-        var button = $('<button>', {
-            class: 'close-button',
-            'aria-label': 'Dismiss alert',
-            type: 'button',
-            'data-close': ''
-        });
-        var span = $('<span>', {
-            'aria-hidden': 'true',
-            html: '&times;'
-        });
-        button.append(span);
-        callout.append(message, button);
+        $('#no-input').foundation('open'); // Show the popup
 
-        calloutEl.append(callout);
         return;
     }
 

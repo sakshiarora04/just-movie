@@ -1,10 +1,11 @@
+// global variables
 var searchFormEl = $('#search-form');
 var resultTextEl = $('#result-content')
 var resultContentEl = $('#result-content')
-var calloutEl = $('#errorMessage')
 
-var apiKey = '&api_key=533313cc880a2148c77843e769ec1a97';
+var apiKey = '533313cc880a2148c77843e769ec1a97';
 
+// getting paramaters for api fetch
 function getParams() {
     var searchParamsArr = document.location.search.split('=');
 
@@ -14,12 +15,15 @@ function getParams() {
     searchApi(query);
 }
 
+// Printing Results
 function printResults(resultObj) {
     resultObj.results.forEach(function (movie) {
+        // if a movie has no overview
         if (!movie.overview) {
             return;
         }
 
+        // Dynamically creating cards
         var cell = $('<div class="cell"></div>')
         var card = $('<div class="card"></div>');
         var cardDivider = $('<div class="card-divider head-color">' + movie.title + '</div>');
@@ -49,29 +53,35 @@ function printResults(resultObj) {
 function saveResultsToLocalStorage(resultObj) {
     // Convert the result object to JSON string
     var resultJson = JSON.stringify(resultObj);
-    
+    // console.log(resultObj)
     // Save the JSON string to local storage
     localStorage.setItem('searchResults', resultJson);
+    console.log('local storage', localStorage)
 }
 
 function loadResultsFromLocalStorage() {
-    // Retrieve the JSON string from local storage
-    var resultJson = localStorage.getItem('searchResults');
-    
-    // Parse the JSON string to get the result object
-    var resultObj = JSON.parse(resultJson);
-    
-    if (resultObj) {
-      // If results exist, print them on the page
-      printResults(resultObj);
+    // Check if the page is refreshed
+    if (performance.navigation.type === 1) {
+        // Retrieve the JSON string from local storage
+        var resultJson = localStorage.getItem('searchResults');
+
+        // Parse the JSON string to get the result object
+        var resultObj = JSON.parse(resultJson);
+        // console.log('load results', resultObj)
+
+        if (resultObj) {
+            // If results exist, print them on the page
+            printResults(resultObj);
+            // console.log('after load', resultObj)
+        }
     }
 }
-
+// API Query search
 function searchApi(query) {
     var tmbdQueryUrl = 'https://api.themoviedb.org/3/search/';
 
-    tmbdQueryUrl = tmbdQueryUrl + 'movie?query=' + query + "&page=1" + apiKey;
-    console.log(tmbdQueryUrl)
+    tmbdQueryUrl = tmbdQueryUrl + 'movie?query=' + query + "&page=1" + '&api_key=' + apiKey;
+    // console.log(tmbdQueryUrl)
 
     fetch(tmbdQueryUrl)
         .then(response => {
@@ -81,13 +91,14 @@ function searchApi(query) {
             return response.json();
         })
         .then(tmbdRes => {
-            console.log(tmbdRes.results);
+            // console.log(tmbdRes.results);
 
             if (!tmbdRes.results.length) {
                 console.log('No results found');
                 resultContentEl.html('<h3>no results found, search again!</h3>');
             } else {
                 printResults(tmbdRes);
+                // console.log('Before save results', tmbdRes.results);
                 saveResultsToLocalStorage(tmbdRes);
             }
         })
@@ -97,6 +108,7 @@ function searchApi(query) {
         });
 }
 
+// Search bar from display page
 function handleSearchFormSubmit(event) {
     event.preventDefault();
 
@@ -104,36 +116,24 @@ function handleSearchFormSubmit(event) {
 
     if (!searchInputVal) {
         console.error('You need a search input value!');
-        var callout = $('<div class="callout alert" data-closable></div>');
-        var message = $('<p>You need a search input value!</p>');
-        var button = $('<button>', {
-            class: 'close-button',
-            'aria-label': 'Dismiss alert',
-            type: 'button',
-            'data-close': ''
-        });
-        var span = $('<span>', {
-            'aria-hidden': 'true',
-            html: '&times;'
-        });
-        button.append(span);
-        callout.append(message, button);
+        $('#no-input').foundation('open'); // Show the popup
 
-        calloutEl.append(callout);
         return;
     }
+
     var query = searchInputVal.replace(/\s/g, '+');
-    // console.log(query);
-    var queryString = './display-search.html?q=' + query
+    // console.log(query);   
 
     resultContentEl.empty();
 
     searchApi(query);
 }
 
+// Loading previous saved results if page is refreshed
 $(document).ready(function () {
     loadResultsFromLocalStorage();
 });
 
+// Event listener for search bar
 searchFormEl.on('submit', handleSearchFormSubmit)
 getParams()
