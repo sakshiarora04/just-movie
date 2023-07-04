@@ -1,27 +1,32 @@
 // var movieId = 343611;
 var movieId = 550;
+var apiKey = 'api_key=533313cc880a2148c77843e769ec1a97';
+
+// Fetch movie details by id
 var getMovieById = function (movieId) {
-    var apiKey = 'api_key=533313cc880a2148c77843e769ec1a97';
+    
     var apiUrl = 'https://api.themoviedb.org/3/movie/' + movieId + '?' + apiKey + '&language=en-US&append_to_response=credits';
     fetch(apiUrl, { cache: 'reload' })
         .then(function (response) {
             if (response.ok) {
 
                 response.json().then(function (data) {
-                    displayMovieById(data);
+                    displayMovieDetails(data);
 
                 });
             } else {
-                alert('Error: ' + response.statusText);
+                // alert('Error: ' + response.statusText);
             }
         })
         .catch(function (error) {
-            alert('Unable to connect to Fetch');
+            // alert('Unable to connect to Fetch');
         });
 };
 getMovieById(movieId);
-var displayMovieById = function (movies) {
-    console.log(movies);
+
+// Displays movie details 
+var displayMovieDetails = function (movies) {
+    // console.log(movies);
     if (movies.length === 0) {
         return;
     }
@@ -70,7 +75,7 @@ var displayMovieById = function (movies) {
     if(movies.credits.cast[i].profile_path!=null)
     {
     var castProfilePath='https://image.tmdb.org/t/p/w500///' +movies.credits.cast[i].profile_path;
-    var cardEl=$('<div class="card small-6" style="height:300px; width:170px ; background-color:white"></div>');
+    var cardEl=$('<div class="card small-" style="height:300px; width:170px ; background-color:white"></div>');
     var castImageEl=$('<img style="height:200px; width:170px">').attr("src",castProfilePath);
     var cardSectionEl=$('<div class="card-section" style="background-color:white"></div>');
     var castName=$('<p>').append($('<strong>').text(movies.credits.cast[i].name));
@@ -84,4 +89,35 @@ var displayMovieById = function (movies) {
     }   
 
 };
+//function to fetch reviews by movie id
+var getReviewsByMovieId = function (movieId) {
+    var apiUrl = 'https://api.themoviedb.org/3/movie/' + movieId + '/reviews?' + apiKey;
+    fetch(apiUrl, { cache: 'reload' })
+    .then(function (response) {
+        if (response.ok) {
 
+            response.json().then(function (data) {
+                console.log(data.results);
+                displayReviews(data.results);
+            });
+        } else {
+            // alert('Error: ' + response.statusText);
+        }
+    })
+    .catch(function (error) {
+        alert('Unable to connect to Fetch');
+    });
+};
+getReviewsByMovieId(movieId);
+function displayReviews(reviews)
+{
+    for (var i = 0; i < reviews.length; i++) {
+        var review=reviews[i].content;
+        var author=reviews[i].author;
+        var writtenDate=reviews[i].created_at;
+        // console.log(review);
+        // console.log(author);
+        // console.log(writtenDate);
+    }
+
+}
