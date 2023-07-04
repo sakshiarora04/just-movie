@@ -24,9 +24,8 @@ border-style: none;
     padding-left: 0;
     display: flex;
     justify-content: flex-start;
-    overflow-x: auto;
-   
-    scroll-snap-type: x mandatory;
+    /* overflow-x: auto; */
+    /* scroll-snap-type: x mandatory; */
     width: 100%;
 }
 
@@ -34,21 +33,22 @@ border-style: none;
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    /* -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory; */
     width: 100%;
+    
   }
   
 .movie-cast .card {
-    scroll-snap-align: start;
-    flex: 0 0 auto;
+    /* scroll-snap-align: start;*/
+    flex: 0 0 auto; 
     margin-right: 1rem;
 }
   
 .movie-cast .grid-x {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    /* -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory; */
     width: max-content; 
     margin-left: -1rem;
 }

@@ -112,12 +112,23 @@ getReviewsByMovieId(movieId);
 function displayReviews(reviews)
 {
     for (var i = 0; i < reviews.length; i++) {
-        var review=reviews[i].content;
-        var author=reviews[i].author;
-        var writtenDate=reviews[i].created_at;
-        // console.log(review);
+        if(i===0){
+        var review=reviews[0].content;
+        var author=reviews[0].author;
+        var writtenDate=dayjs(reviews[2].created_at).format('DD-MM-YY');
+        // var writtenDate=dayjs(reviews[2].created_at).format('D MMMM YYYY');
+        var titleEl = $('#movie-reviews');
+        titleEl.append($('<h5>').text('A review written by '+author));
+        titleEl.append($('<p>').text('Written by '+author+'on '+writtenDate));
+        titleEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
+        }
+        console.log(writtenDate);
         // console.log(author);
         // console.log(writtenDate);
+        // responsiveVoice.speak('David Fincher’s new film, Mank, is coming soon on Netflix, released six years after his latest installment, Gone Girl. Therefore, this week I’m reviewing five of Fincher’s movies. Se7en was the first one, and now it’s time for one of the most culturally impactful films of the 90s, Fight Club. This is another rewatch of another filmmaking classic, one that I was never able to absolutely adore like most people. When this movie came out in 1999, critics were extremely divided, and the film failed at the box office. With time, it gained a cult following through home media, but it’s still considered a very controversial piece of cinema. So, nothing new, having in mind Fincher is at the helm.Despite this being my third or fourth time experiencing this story, I never really changed my opinion about it, which is a bit uncommon in my viewing history. Usually, after multiple rewatches, my overall thoughts about a movie slightly vary, but Fight Club is one of the few exceptions. I believe my opinion remains intact from the very first watch. I really enjoy this film, but I can’t state that I absolutely love it. Since this is a special case, I’m going to start with what still bothers me after so many viewings, something I also rarely do in my reviews since I always leave the bad stuff to the end of the article.');
     }
 
 }
+$("#play-review").on("click",function(){
+    responsiveVoice.speak('David Fincher’s new film, Mank, is coming soon on Netflix, released six years after his latest');
+});
