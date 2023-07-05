@@ -1,6 +1,6 @@
 // var movieId = 343611;
-var movieId = 550;
-var genre="Action";
+var movieId = 551;
+var genre = "Action";
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 
 // Fetch movie details by id
@@ -13,7 +13,7 @@ var getMovieById = function (movieId) {
 
                 response.json().then(function (data) {
                     displayMovieDetails(data);
-console.log(data);
+                    console.log(data);
                 });
             } else {
                 // alert('Error: ' + response.statusText);
@@ -28,7 +28,7 @@ getMovieById(movieId);
 // Displays movie details 
 var displayMovieDetails = function (movies) {
     if (movies.length === 0) {
-        $('#movie-validation-Modal').foundation('open');
+        $('#movie-validation-modal').foundation('open');
         return;
     }
     var movieId = movies.id;
@@ -110,29 +110,21 @@ var getReviewsByMovieId = function (movieId) {
 };
 getReviewsByMovieId(movieId);
 function displayReviews(reviews) {
-    var sectionReviewEl=$('<div style="background-color:#1B1616; padding :15px"></div>');
-    // for (var i = 0; i < reviews.length; i++) {
-    //     if (i === 0) {
-            var review = reviews[0].content;
-            var author = reviews[0].author;
-            var writtenDate = dayjs(reviews[2].created_at).format('DD-MM-YY');
-            // var writtenDate=dayjs(reviews[2].created_at).format('D MMMM YYYY');
-            var titleEl = $('#movie-reviews');
-           
-            sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
-            sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
-            sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
-            
-        // }
-        console.log(writtenDate);
-        
-    // }
-    
-    var buttonPlayEl=$('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
+    var sectionReviewEl = $('<div style="background-color:#1B1616; padding :15px"></div>');
+    var review = reviews[0].content;
+    var author = reviews[0].author;
+    var writtenDate = dayjs(reviews[0].created_at).format('DD-MM-YY');
+    var titleEl = $('#movie-reviews');
+    sectionReviewEl.append($( '<h6>').append($('<strong>').text('A review written by ' + author)));
+    sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
+    sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
+    console.log(writtenDate);
+
+    var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
     //  Screen readers will see "Play" 
-    var spanScreenReaderEl=$('<span class="show-for-sr">Play</span>');
+    var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
     // Visual users will see the icon , but not the "Play" text 
-    var spanVisualReaderEl=$('<span aria-hidden="true"><i class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
+    var spanVisualReaderEl = $('<span aria-hidden="true"><i class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
     buttonPlayEl.append(spanScreenReaderEl);
     buttonPlayEl.append(spanVisualReaderEl);
     sectionReviewEl.append(buttonPlayEl);
@@ -143,8 +135,25 @@ function displayReviews(reviews) {
         responsiveVoice.speak(review);
     });
 
-    var sectionReviewEl=$('<a style="margin-left:0px">Read all Reviews</a>');
+    var sectionReviewEl = $('<a id="read-more-reviews" style="margin-left:0px">Read all Reviews</a>');
     titleEl.append(sectionReviewEl);
+    $('#read-more-reviews').on("click", function () {
+        var reviewModalEl = $('#review-modal');
+        var moreReviewEl = $('#more-reviews');
+        moreReviewEl.html("");
+        for (var i = 0; i < reviews.length; i++) {
+
+            var review = reviews[i].content;
+            var author = reviews[i].author;
+            var writtenDate = dayjs(reviews[i].created_at).format('DD-MM-YY');
+
+            moreReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
+            moreReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
+            moreReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
+        }
+        reviewModalEl.append(moreReviewEl);
+        $('#review-modal').foundation('open');
+    });
 }
 
 
