@@ -7,7 +7,7 @@ var apiKey = '533313cc880a2148c77843e769ec1a97';
 
 // getting paramaters for api fetch
 function getParams() {
-    var searchParamsArr = document.location.search.split('=');
+    var searchParamsArr = window.location.search.split('=');
 
     var query = searchParamsArr.pop();
     // console.log(query);
@@ -24,29 +24,41 @@ function printResults(resultObj) {
         }
 
         // Dynamically creating cards
-        var cell = $('<div class="cell"></div>')
-        var card = $('<div class="card"></div>');
-        var cardDivider = $('<div class="card-divider head-color">' + movie.title + '</div>');
-        var cardSection = $('<div class="card-section"></div>');
-        var overview = $('<h4>Overview</h4>');
-        var details = $('<p>' + movie.overview + '</p>');
+        var releaseDate = dayjs(movie.release_date).format("YYYY");
+        var cellEl = $('<div class="cell"></div>');
+        var cardEl = $('<div class="card"></div>');
+        var cardSectionEl = $('<div class="card-section"></div>');
+        var titleEl = $('<h4 class="card-title">' + movie.title + " (" + releaseDate + ")" + '</h4>');
+        
+        cardEl.on('click', function() {
+            var movieId = movie.id;
+            var movieIdQueryString = './moviedetails.html?q=' + movieId
+            location.assign(movieIdQueryString)
+            // console.log(movieId)
+        })
 
-        cell.append(card)
-        card.append(cardDivider);
+        cellEl.append(cardEl);
         if (movie.poster_path) {
-            var posterImg = $('<img src="https://image.tmdb.org/t/p/w500' + movie.poster_path + '">');
-            card.append(posterImg);
+            var posterImg = $('<img class="card-title "src="https://image.tmdb.org/t/p/w500' + movie.poster_path + '">');
+            cardEl.append(posterImg);
         } else {
-            var posterImg = $('<img src="./Assets/img/no-poster.png">');
-            card.append(posterImg);
+            var posterImg = $('<img src="./assets/images/no-poster.png">');
+            cardEl.append(posterImg);
         }
-        cardSection.append(overview);
-        cardSection.append(details);
-        card.append(cardSection);
+        cardSectionEl.append(titleEl);
+        if (movie.vote_average > 0) {
+            var rating = parseFloat(movie.vote_average);
+            var ratingEl = $('<h6>' + "Rating: " + rating.toFixed(2) + "⭐" + '</h6>');
+            cardSectionEl.append(ratingEl);
+        } else {
+            var ratingEl = $('<p>No rating available</p>')
+            cardSectionEl.append(ratingEl)
+        }
+        cardEl.append(cardSectionEl);
 
 
         // Append the card to the container
-        $('#result-content').append(cell);
+        $('#result-content').append(cellEl);
     })
 }
 
@@ -56,12 +68,12 @@ function saveResultsToLocalStorage(resultObj) {
     // console.log(resultObj)
     // Save the JSON string to local storage
     localStorage.setItem('searchResults', resultJson);
-    console.log('local storage', localStorage)
+    // console.log('local storage', localStorage)
 }
 
 function loadResultsFromLocalStorage() {
     // Check if the page is refreshed
-    if (performance.navigation.type === 1) {
+    if (performance.navigation.type >= 1) {
         // Retrieve the JSON string from local storage
         var resultJson = localStorage.getItem('searchResults');
 
@@ -91,10 +103,10 @@ function searchApi(query) {
             return response.json();
         })
         .then(tmbdRes => {
-            // console.log(tmbdRes.results);
+            console.log(tmbdRes.results);
 
             if (!tmbdRes.results.length) {
-                console.log('No results found');
+                // console.log('No results found');
                 resultContentEl.html('<h3>no results found, search again!</h3>');
             } else {
                 printResults(tmbdRes);
@@ -125,7 +137,11 @@ function handleSearchFormSubmit(event) {
     // console.log(query);   
 
     resultContentEl.empty();
-
+    var locUrl = window.location.href.split('?');
+    console.log(locUrl)
+    var queryUrl = locUrl[0]
+    var queryString = queryUrl + '?q=' + query
+    window.location.replace(queryString)
     searchApi(query);
 }
 

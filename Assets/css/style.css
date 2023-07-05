@@ -62,6 +62,11 @@
     color:var(--title-color-2)
     }
 
-    
+    .card-title:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+   
    
     
