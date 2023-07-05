@@ -70,7 +70,7 @@ var displayMovieDetails = function (movies) {
     titleEl.append($('<h4>').text(movieTitle));
 
     titleEl.append($('<strong>').text('Genre : ')).append($('<p>').css('display', 'inline').text(genre));
-    titleEl.append($('<i id="star" class="fas fa-solid fa-star fa-2xs" style="color: #fdeb26; display:inline ;margin-left:400px ;"></i>').append($('<p>').css('display', 'inline-block').css('padding-left', '20px').text(userRating)));
+    titleEl.append($('<i id="star" class="fas fa-solid fa-star fa-2xs" style="color: #fdeb26; display:inline ;margin-left:100px ;"></i>').append($('<p>').css('display', 'inline-block').css('padding-left', '20px').text(userRating)));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('Runtime : ')).append($('<p>').css('display', 'inline-block').text(runtime)));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('User Rating : ')).append($('<p>').css('display', 'inline-block').text(userRating + '/ 10')));
 
@@ -191,6 +191,7 @@ function displayReviews(reviews) {
     $('#read-more-reviews').on("click", function () {
         var reviewModalEl = $('#review-modal');
         var moreReviewEl = $('#more-reviews');
+        
         moreReviewEl.html("");
         for (var i = 0; i < reviews.length; i++) {
             var sectionReviewEl = $('<div style="background-color: white; padding :15px"></div>');
@@ -205,7 +206,7 @@ function displayReviews(reviews) {
             //  Screen readers will see "Play" 
             var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
             // Visual users will see the icon , but not the "Play" text 
-            var spanVisualReaderEl = $('<span aria-hidden="true"><i class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
+            var spanVisualReaderEl = $('<span aria-hidden="true"><i id="play-button" class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
             var hrEl=$('<hr>');
             buttonPlayEl.append(spanScreenReaderEl);
             buttonPlayEl.append(spanVisualReaderEl);
