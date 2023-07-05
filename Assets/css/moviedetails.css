@@ -1,4 +1,4 @@
-#movie-details p, #cast-details  p{
+#movie-details p, #cast-details p,#movie-reviews h6{
   margin: 0px;
 }
 
@@ -11,10 +11,17 @@
     color: var(--title-color-1);
   }
   #movie-cast-section,#movie-reviews{
+    /* background-color: white; */
     background-color: var(--color-dark);
     /* background-color: #1B1616; */
     color: var(--title-color-1);
     
+  }
+  a{
+    color: var(--title-color-1);
+  }
+  .section-review{
+    background-color:  #1B1616;
   }
   .card{
 border-style: none;
@@ -32,11 +39,11 @@ border-style: none;
 .movie-cast .card-group {
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow-x: scroll;
     /* -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory; */
     width: 100%;
-    
+
   }
   
 .movie-cast .card {
@@ -46,7 +53,7 @@ border-style: none;
 }
   
 .movie-cast .grid-x {
-    overflow-x: auto;
+    overflow-x: scroll;
     /* -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory; */
     width: max-content; 
@@ -62,4 +69,7 @@ border-style: none;
 }
 .cast-title{
   text-decoration: solid;
+} 
+#movie-cast-section:hover{
+ 
 }

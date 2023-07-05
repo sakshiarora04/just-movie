@@ -1,5 +1,6 @@
 // var movieId = 343611;
 var movieId = 550;
+var genre="Action";
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 
 // Fetch movie details by id
@@ -12,7 +13,7 @@ var getMovieById = function (movieId) {
 
                 response.json().then(function (data) {
                     displayMovieDetails(data);
-
+console.log(data);
                 });
             } else {
                 // alert('Error: ' + response.statusText);
@@ -27,7 +28,7 @@ getMovieById(movieId);
 // Displays movie details 
 var displayMovieDetails = function (movies) {
     if (movies.length === 0) {
-        $('#exampleModal1').foundation('open');
+        $('#movie-validation-Modal').foundation('open');
         return;
     }
     var movieId = movies.id;
@@ -62,7 +63,7 @@ var displayMovieDetails = function (movies) {
     titleEl.append($('<h4>').text(movieTitle));
 
     titleEl.append($('<strong>').text('Genre : ')).append($('<p>').css('display', 'inline-block').text(genre));
-    titleEl.append($('<i class="fas fa-solid fa-star fa-2xs" style="color: #fdeb26; display:inline ;margin-left:400px ;"></i>').append($('<p>').css('display', 'inline-block').css('padding-left', '20px').text(userRating)));
+    titleEl.append($('<i id="star" class="fas fa-solid fa-star fa-2xs" style="color: #fdeb26; display:inline ;margin-left:400px ;"></i>').append($('<p>').css('display', 'inline-block').css('padding-left', '20px').text(userRating)));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('Runtime : ')).append($('<p>').css('display', 'inline-block').text(runtime)));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('User Rating : ')).append($('<p>').css('display', 'inline-block').text(userRating + '/ 10')));
 
@@ -109,24 +110,42 @@ var getReviewsByMovieId = function (movieId) {
 };
 getReviewsByMovieId(movieId);
 function displayReviews(reviews) {
-    for (var i = 0; i < reviews.length; i++) {
-        if (i === 0) {
+    var sectionReviewEl=$('<div style="background-color:#1B1616; padding :15px"></div>');
+    // for (var i = 0; i < reviews.length; i++) {
+    //     if (i === 0) {
             var review = reviews[0].content;
             var author = reviews[0].author;
             var writtenDate = dayjs(reviews[2].created_at).format('DD-MM-YY');
             // var writtenDate=dayjs(reviews[2].created_at).format('D MMMM YYYY');
             var titleEl = $('#movie-reviews');
-            titleEl.append($('<h5>').text('A review written by ' + author));
-            titleEl.append($('<p>').text('Written by ' + author + 'on ' + writtenDate));
-            titleEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
-        }
+           
+            sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
+            sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
+            sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
+            
+        // }
         console.log(writtenDate);
-        // console.log(author);
-        // console.log(writtenDate);
-        // responsiveVoice.speak('David Fincher’s new film, Mank, is coming soon on Netflix, released six years after his latest installment, Gone Girl. Therefore, this week I’m reviewing five of Fincher’s movies. Se7en was the first one, and now it’s time for one of the most culturally impactful films of the 90s, Fight Club. This is another rewatch of another filmmaking classic, one that I was never able to absolutely adore like most people. When this movie came out in 1999, critics were extremely divided, and the film failed at the box office. With time, it gained a cult following through home media, but it’s still considered a very controversial piece of cinema. So, nothing new, having in mind Fincher is at the helm.Despite this being my third or fourth time experiencing this story, I never really changed my opinion about it, which is a bit uncommon in my viewing history. Usually, after multiple rewatches, my overall thoughts about a movie slightly vary, but Fight Club is one of the few exceptions. I believe my opinion remains intact from the very first watch. I really enjoy this film, but I can’t state that I absolutely love it. Since this is a special case, I’m going to start with what still bothers me after so many viewings, something I also rarely do in my reviews since I always leave the bad stuff to the end of the article.');
-    }
+        
+    // }
+    
+    var buttonPlayEl=$('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
+    //  Screen readers will see "Play" 
+    var spanScreenReaderEl=$('<span class="show-for-sr">Play</span>');
+    // Visual users will see the icon , but not the "Play" text 
+    var spanVisualReaderEl=$('<span aria-hidden="true"><i class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
+    buttonPlayEl.append(spanScreenReaderEl);
+    buttonPlayEl.append(spanVisualReaderEl);
+    sectionReviewEl.append(buttonPlayEl);
+    titleEl.append(sectionReviewEl);
 
+    $("#play-review").on("click", function () {
+
+        responsiveVoice.speak(review);
+    });
+
+    var sectionReviewEl=$('<a style="margin-left:0px">Read all Reviews</a>');
+    titleEl.append(sectionReviewEl);
 }
-$("#play-review").on("click", function () {
-    responsiveVoice.speak('David Fincher’s new film, Mank, is coming soon on Netflix, released six years after his latest');
-});
+
+
+
