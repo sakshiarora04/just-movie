@@ -193,26 +193,36 @@ function displayReviews(reviews) {
         var moreReviewEl = $('#more-reviews');
         moreReviewEl.html("");
         for (var i = 0; i < reviews.length; i++) {
-            var sectionReviewEl = $('<div style="background-color:#1B1616; padding :15px"></div>');
+            var sectionReviewEl = $('<div style="background-color: white; padding :15px"></div>');
             var review = reviews[i].content;
             var author = reviews[i].author;
             var writtenDate = dayjs(reviews[i].created_at.substring(0, 7)).format('DD-MM-YY');
 
-            moreReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
-            moreReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
-            moreReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
+            sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
+            sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
+            sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
             var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
             //  Screen readers will see "Play" 
             var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
             // Visual users will see the icon , but not the "Play" text 
             var spanVisualReaderEl = $('<span aria-hidden="true"><i class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
+            var hrEl=$('<hr>');
             buttonPlayEl.append(spanScreenReaderEl);
             buttonPlayEl.append(spanVisualReaderEl);
             sectionReviewEl.append(buttonPlayEl);
-            
+            sectionReviewEl.append(hrEl);
+            moreReviewEl.append(sectionReviewEl);
+        
         }
         reviewModalEl.append(moreReviewEl);
         $('#review-modal').foundation('open');
+        moreReviewEl.on('click', '#play-review', playReview);
+        function playReview(event) {
+            var btnClicked = $(event.target);
+            // get the parent `<div>` element from the button we clicked and traverse to find the review text
+            var clickedReview =   btnClicked.parent('div').children('p').eq(1).text();
+            responsiveVoice.speak(clickedReview);
+        }
     });
 }
 
