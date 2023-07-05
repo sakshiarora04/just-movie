@@ -73,6 +73,7 @@ a {
   margin: 20px 40px;
   /* overflow: hidden; */
   border-radius: 25px;
+  width:80%;
   
 }
 .card-search{
@@ -98,7 +99,7 @@ a {
   font-size: 35px;
 }
 .swiper-button-next{
-  right: 0;
+  right:0;
 }
 .swiper-button-prev{
   left: 0;
