@@ -155,3 +155,4 @@ function printResults(result) {
 //   window.location = "check.html";
 //   });
 init();
+  
