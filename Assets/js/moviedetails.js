@@ -1,8 +1,10 @@
 // var movieId = 343611;
-var movieId = 551;
-var genre = "Action";
+var movieId = 550;
+// var searchParramsArray=window.location.search.split("=");
+// var movieId=searchParramsArray.pop();
 var apiKey = '533313cc880a2148c77843e769ec1a97';
-
+var omdbapiKey = '7721caf5';
+var imdbId;
 // Fetch movie details by id
 var getMovieById = function (movieId) {
 
@@ -13,7 +15,6 @@ var getMovieById = function (movieId) {
 
                 response.json().then(function (data) {
                     displayMovieDetails(data);
-                    console.log(data);
                 });
             } else {
                 // alert('Error: ' + response.statusText);
@@ -23,8 +24,8 @@ var getMovieById = function (movieId) {
             // alert('Unable to connect to Fetch');
         });
 };
-getMovieById(movieId);
 
+getMovieById(movieId);
 // Displays movie details 
 var displayMovieDetails = function (movies) {
     if (movies.length === 0) {
@@ -32,6 +33,8 @@ var displayMovieDetails = function (movies) {
         return;
     }
     var movieId = movies.id;
+    imdbId=movies.imdb_id;
+    
     var movieReleaseDate = movies.release_date;
     var releaseDate = dayjs(movieReleaseDate).format('D MMMM YYYY');
     var releaseYear = dayjs(movieReleaseDate).format('YYYY');
@@ -87,7 +90,9 @@ var displayMovieDetails = function (movies) {
             castEl.append(cardEl);
         }
     }
-
+    if(imdbId!=null){
+    getMovieByImdbId(imdbId);
+    }
 };
 //function to fetch reviews by movie id
 var getReviewsByMovieId = function (movieId) {
@@ -97,7 +102,7 @@ var getReviewsByMovieId = function (movieId) {
             if (response.ok) {
 
                 response.json().then(function (data) {
-                    console.log(data.results);
+                    // console.log(data.results);
                     displayReviews(data.results);
                 });
             } else {
@@ -105,17 +110,18 @@ var getReviewsByMovieId = function (movieId) {
             }
         })
         .catch(function (error) {
-            alert('Unable to connect to Fetch');
+            // alert('Unable to connect to Fetch');
         });
 };
 getReviewsByMovieId(movieId);
+//Display reviews
 function displayReviews(reviews) {
     var sectionReviewEl = $('<div style="background-color:#1B1616; padding :15px"></div>');
     var review = reviews[0].content;
     var author = reviews[0].author;
     var writtenDate = dayjs(reviews[0].created_at).format('DD-MM-YY');
     var titleEl = $('#movie-reviews');
-    sectionReviewEl.append($( '<h6>').append($('<strong>').text('A review written by ' + author)));
+    sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
     sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
     sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
     console.log(writtenDate);
@@ -145,7 +151,7 @@ function displayReviews(reviews) {
 
             var review = reviews[i].content;
             var author = reviews[i].author;
-            var writtenDate = dayjs(reviews[i].created_at).format('DD-MM-YY');
+            var writtenDate = dayjs(reviews[i].created_at.substring(0, 7)).format('DD-MM-YY');
 
             moreReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
             moreReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
@@ -156,5 +162,24 @@ function displayReviews(reviews) {
     });
 }
 
+//Movie details from OMDB to display ratings from different sites.
+var getMovieByImdbId = function (imdbId) {
+    var apiUrl = 'http://www.omdbapi.com?apikey=' + omdbapiKey + '&i=' + imdbId;
+    fetch(apiUrl, { cache: 'reload' })
+    .then(function (response) {
+        if (response.ok) {
+
+            response.json().then(function (data) {
+                console.log(data);
+               
+            });
+        } else {
+            // alert('Error: ' + response.statusText);
+        }
+    })
+    .catch(function (error) {
+        // alert('Unable to connect to Fetch');
+    });
+};
 
 
