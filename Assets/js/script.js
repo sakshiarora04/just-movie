@@ -1,5 +1,7 @@
 const sliders = document.getElementsByClassName("slide-content");
 var swipers=[];
+var next=[];
+
 for (let slide of sliders) {
   
   const nextEl = slide.getElementsByClassName("swiper-button-next")[0];
@@ -36,6 +38,7 @@ for (let slide of sliders) {
       prevEl,
     },
   });
+
   swipers.push(swiper);
   console.log(swiper);
 
@@ -94,10 +97,36 @@ function getRatedResults() {
       );
     });
 }
+function getRecentReleasesResults() {
+  var mostRecentUrl =
+    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" + apiKey;
+  fetch(mostRecentUrl)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      if (!data.results.length) {
+        $(".slide-content").html("No results found");
+      } else {
+        console.log("search")
+        renderRecentReleasesResults(data);
 
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+      $(".slide-content").html(
+        "<h3>Error occurred while fetching search results</h3>"
+      );
+    });
+}
 function init() {
   getMostSearchedResults();
   getRatedResults();
+  getRecentReleasesResults();
 }
 
 function renderMostSearchedResults(obj) {
@@ -122,20 +151,36 @@ function renderRatedResults(obj) {
     
   }
 }
+function renderRecentReleasesResults(obj) {
+  //loop to print 4 cards inside carousal
+  for (var i = 0; i < obj.results.length; i++) {
+    var card = printResults(obj.results[i]);
+    var slideShow = $('<div class="card-search swiper-slide"></div>');
+    slideShow.append(card);
+    swipers[2].appendSlide(slideShow);
+    swipers[2].update();
+    
+  }
+}
 function printResults(result) {
   var cellE1 = $('<div class="cell"></div>');
-  var card = $('<div class="card"></div>');
-  var img = $("<img>");
+  var card = $('<div class="card h-100"></div>');
+  var img = $('<img>');
   var cardSection = $('<div class="card-section"></div>');
-  var h6E1 = $("<h6>");
+  var h6E1 = $('<h6>');
 
-  var h6E2 = $("<h6>");
-  var pE1 = $("<p>");
+  var h6E2 = $('<h6>');
+  var pE1 = $('<p>');
   var imgLink = "https://image.tmdb.org/t/p/w500/";
-
+  
+if(result.poster_path==null){
+  img.attr('src','./Assets/img/no-poster.png');
+}
+else{
   imgLink += result.poster_path;
 
   img.attr("src", imgLink);
+}
 
   var releaseDate = dayjs(result.release_date).format("YYYY");
   h6E1.text(result.title + " (" + releaseDate + ")");
