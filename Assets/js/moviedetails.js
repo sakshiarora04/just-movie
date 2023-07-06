@@ -173,16 +173,25 @@ function displayReviews(reviews) {
     //  Screen readers will see "Play" 
     var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
     // Visual users will see the icon , but not the "Play" text 
-    var spanVisualReaderEl = $('<span aria-hidden="true"><i class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
+    var spanVisualReaderEl = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>');
     buttonPlayEl.append(spanScreenReaderEl);
     buttonPlayEl.append(spanVisualReaderEl);
     sectionReviewEl.append(buttonPlayEl);
     titleEl.append(sectionReviewEl);
     //Plays the text to voice (responsive voice api call)
+    var isSpeakerOn = false;
     $("#play-review").on("click", function () {
+        if (isSpeakerOn === false) {
+            isSpeakerOn = true;
+            responsiveVoice.speak(review);
 
-        responsiveVoice.speak(review);
+        }
+        else {
+            isSpeakerOn = false;
+            responsiveVoice.cancel();
+        }
     });
+    //stops playing the speech
 
     var sectionReviewEl = $('<a id="read-more-reviews" style="margin-left:0px">Read all Reviews</a>');
     titleEl.append(sectionReviewEl);
@@ -191,7 +200,6 @@ function displayReviews(reviews) {
     $('#read-more-reviews').on("click", function () {
         var reviewModalEl = $('#review-modal');
         var moreReviewEl = $('#more-reviews');
-        
         moreReviewEl.html("");
         for (var i = 0; i < reviews.length; i++) {
             var sectionReviewEl = $('<div style="background-color: white; padding :15px"></div>');
@@ -205,15 +213,15 @@ function displayReviews(reviews) {
             var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
             //  Screen readers will see "Play" 
             var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
-            // Visual users will see the icon , but not the "Play" text 
-            var spanVisualReaderEl = $('<span aria-hidden="true"><i id="play-button" class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i> </span>');
-            var hrEl=$('<hr>');
+            // Visual users will see the icon , but not the "Play" text <i id="play-button" class="fas fa-solid fa-play fa-2xl" style="color: #white;"></i>
+            var spanVisualReaderEl = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>');
+            var hrEl = $('<hr>');
             buttonPlayEl.append(spanScreenReaderEl);
             buttonPlayEl.append(spanVisualReaderEl);
             sectionReviewEl.append(buttonPlayEl);
             sectionReviewEl.append(hrEl);
             moreReviewEl.append(sectionReviewEl);
-        
+
         }
         reviewModalEl.append(moreReviewEl);
         $('#review-modal').foundation('open');
@@ -221,8 +229,15 @@ function displayReviews(reviews) {
         function playReview(event) {
             var btnClicked = $(event.target);
             // get the parent `<div>` element from the button we clicked and traverse to find the review text
-            var clickedReview =   btnClicked.parent('div').children('p').eq(1).text();
-            responsiveVoice.speak(clickedReview);
+            var clickedReview = btnClicked.parent('div').children('p').eq(1).text();
+            if (isSpeakerOn === false) {
+                isSpeakerOn = true;
+                responsiveVoice.speak(clickedReview);
+            }
+            else {
+                isSpeakerOn = false;
+                responsiveVoice.cancel();
+            }
         }
     });
 }
