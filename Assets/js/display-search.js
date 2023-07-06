@@ -2,8 +2,14 @@
 var searchFormEl = $("#search-form");
 var resultTextEl = $("#result-content");
 var resultContentEl = $("#result-content");
+var logoEl = $("#logo");
+var projectTitleEl = $("#project-title1");
 
 var apiKey = "533313cc880a2148c77843e769ec1a97";
+
+// Hover class to Header
+logoEl.addClass("card-title");
+projectTitleEl.addClass("card-title");
 
 // getting paramaters for api fetch
 function getParams() {
@@ -155,5 +161,13 @@ $(document).ready(function () {
 });
 
 // Event listener for search bar
+logoEl.on("click", function () {
+  var locUrl = "./index.html";
+  location.assign(locUrl);
+});
+projectTitleEl.on("click", function () {
+  var locUrl = "./index.html";
+  location.assign(locUrl);
+});
 searchFormEl.on("submit", handleSearchFormSubmit);
 getParams();
