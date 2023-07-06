@@ -164,7 +164,7 @@ function renderRecentReleasesResults(obj) {
 }
 function printResults(result) {
   var cellE1 = $('<div class="cell"></div>');
-  var card = $('<div class="card h-100"></div>');
+  var card = $('<div class="card"></div>');
   var img = $('<img>');
   var cardSection = $('<div class="card-section"></div>');
   var h6E1 = $('<h6>');

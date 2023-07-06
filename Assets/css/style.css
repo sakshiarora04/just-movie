@@ -70,7 +70,7 @@ a {
     
 }
 .swiper-slide{
-  height: auto;
+  height: auto; 
 }
 
 .slide-container{
@@ -79,6 +79,7 @@ a {
   padding: 20px 0px;
 
 }
+
 .slide-content{
   margin: 20px 40px;
   /* overflow: hidden; */
@@ -96,6 +97,9 @@ a {
   background-color: #FFF;
   object-fit: cover;
 
+}
+.card img{
+  height:356px;
 }
 .swiper-navBtn{
   color: #6E93f7;
