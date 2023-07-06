@@ -125,7 +125,15 @@ a {
 .swiper-pagination-bullet-active{
   background-color: #4070F4;
 }
-
+.ftr{
+ 
+  
+  background-color: var(--color-dark1);
+  min-height: 40px;
+  text-align: center;
+  margin-top: 20px;
+ 
+}
 @media screen and (max-width: 768px) {
   .slide-content{
     margin: 0 10px;
