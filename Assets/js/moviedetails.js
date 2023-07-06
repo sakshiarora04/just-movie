@@ -1,5 +1,5 @@
-var searchParramsArray=window.location.search.split("=");
-var movieId=searchParramsArray.pop();
+var searchParramsArr = window.location.search.split('=')
+var movieId = searchParramsArr.pop()
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
