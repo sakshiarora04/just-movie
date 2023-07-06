@@ -1,0 +1,65 @@
+#movie-details p, #cast-details  p{
+  margin: 0px;
+}
+
+.div-movie-details{
+    background-color: #1B1616;
+    padding-top: 40px;
+  }
+  #movie-details{
+    background-color: #1B1616;
+    color: var(--title-color-1);
+  }
+  #movie-cast-section,#movie-reviews{
+    background-color: var(--color-dark);
+    /* background-color: #1B1616; */
+    color: var(--title-color-1);
+    
+  }
+  .card{
+border-style: none;
+  }
+  
+  .movie-cast .grid-container {
+    padding-left: 0;
+    display: flex;
+    justify-content: flex-start;
+    /* overflow-x: auto; */
+    /* scroll-snap-type: x mandatory; */
+    width: 100%;
+}
+
+.movie-cast .card-group {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    /* -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory; */
+    width: 100%;
+    
+  }
+  
+.movie-cast .card {
+    /* scroll-snap-align: start;*/
+    flex: 0 0 auto; 
+    margin-right: 1rem;
+}
+  
+.movie-cast .grid-x {
+    overflow-x: auto;
+    /* -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory; */
+    width: max-content; 
+    margin-left: -1rem;
+}
+  
+.movie-cast .cell {
+    scroll-snap-align: start; 
+    flex: 0 0 auto; 
+    margin-right: 0; 
+    margin-left: 1rem; 
+    
+}
+.cast-title{
+  text-decoration: solid;
+}
