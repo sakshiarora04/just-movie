@@ -61,8 +61,8 @@
               <li>
                 <a href="#">Movies</a>
                 <ul class="menu">
-                  <li><a href="#">Top Rated</a></li>
-                  <li><a href="#">Most Searched</a></li>
+                  <li><a href="#top-rated">Top Rated</a></li>
+                  <li><a href="#most-searched">Most Searched</a></li>
                   <li><a href="#">Recent Releases</a></li>
                 </ul>
               </li>
@@ -96,8 +96,21 @@
         </div>
       </div>
     </header>
+
     <main>
       <br />
+      <div class="tiny reveal" id="no-input" data-reveal>
+        <p>Please enter a search value</p>
+        <button
+          class="close-button"
+          data-close
+          aria-label="Close reveal"
+          type="button"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <div class="row column">
         <hr />
       </div>

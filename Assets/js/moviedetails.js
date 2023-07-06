@@ -1,5 +1,6 @@
 // var movieId = 343611;
-var movieId = 550;
+var searchParramsArr = window.location.search.split('=')
+var movieId = searchParramsArr.pop()
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 
 // Fetch movie details by id

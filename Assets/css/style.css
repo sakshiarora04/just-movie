@@ -19,6 +19,11 @@ a {
   margin-left: 20px;
 }
 
+.card-title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 #logo {
   height: 75px;
   width: 75px;
