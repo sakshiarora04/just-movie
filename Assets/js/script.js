@@ -1,6 +1,5 @@
 const sliders = document.getElementsByClassName("slide-content");
 var swipers=[];
-var next=[];
 
 for (let slide of sliders) {
   
@@ -174,7 +173,7 @@ function printResults(result) {
   var imgLink = "https://image.tmdb.org/t/p/w500/";
   
 if(result.poster_path==null){
-  img.attr('src','./Assets/img/no-poster.png');
+  img.attr('src','./assets/images/no-poster.png');
 }
 else{
   imgLink += result.poster_path;
