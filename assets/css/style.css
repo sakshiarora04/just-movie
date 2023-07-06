@@ -1,0 +1,141 @@
+:root {
+  --title-color-1: rgb(227, 212, 212);
+  --title-color-2: rgba(230, 77, 35, 0.811);
+  --section-title-color: black;
+  --color-dark: #1b1616;
+  --color-dark1: #333;
+  --button-color: #0b4c8ee3;
+}
+body {
+  background-color: var(--color-dark);
+}
+section {
+  background-color: var(--color-dark);
+}
+a {
+  color: var(--title-color-1);
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.card-title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#logo {
+  height: 75px;
+  width: 75px;
+}
+
+.button {
+  background-color: var(--color-dark);
+  color: var(--title-color-1);
+  margin-left: 0;
+  border-radius: 2px solid var(--button-color);
+}
+
+.top-bar {
+  background-color: var(--color-dark1);
+}
+
+.top-bar .menu {
+  background-color: var(--color-dark1);
+}
+
+.top-bar .top-bar-left {
+  margin-left: 30px;
+}
+
+.top-bar .top-bar-right {
+  margin-right: 50px;
+  margin-left: 25px;
+}
+.lead {
+  color: var(--title-color-1);
+  font-weight: bold;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-left: 70px;
+}
+#project-title1 {
+  color: var(--title-color-1);
+  margin-top: 15px;
+}
+
+#project-title2 {
+  color: var(--title-color-2);
+}
+
+.card-section {
+  width: 90%;
+  height: 100px;
+}
+.swiper-slide {
+  height: auto;
+}
+
+.slide-container {
+  max-width: 1120px;
+  width: 80%;
+  padding: 20px 0px;
+}
+
+.slide-content {
+  margin: 20px 40px;
+  /* overflow: hidden; */
+  border-radius: 25px;
+  width: 80%;
+}
+.card-search {
+  border-radius: 25px;
+
+  object-fit: cover;
+}
+.card {
+  border-radius: 25px;
+  background-color: #fff;
+  object-fit: cover;
+}
+.card img {
+  height: 356px;
+}
+.swiper-navBtn {
+  color: #6e93f7;
+  transition: color 0.3s ease;
+}
+.swiper-navBtn:hover {
+  color: #4070f4;
+}
+.swiper-navBtn::before,
+.swiper-navBtn::after {
+  font-size: 35px;
+}
+.swiper-button-next {
+  right: 0;
+}
+.swiper-button-prev {
+  left: 0;
+}
+.swiper-pagination-bullet {
+  background-color: #6e93f7;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background-color: #4070f4;
+}
+.ftr {
+  background-color: var(--color-dark1);
+  min-height: 40px;
+  text-align: center;
+  margin-top: 20px;
+}
+@media screen and (max-width: 768px) {
+  .slide-content {
+    margin: 0 10px;
+  }
+  .swiper-navBtn {
+    display: none;
+  }
+}
