@@ -77,9 +77,9 @@ var displayMovieDetails = function (movies) {
     var userRating = movies.vote_average.toFixed(1);
 
     titleEl.append($('<h3>').text(movieTitle));
-
+    // <i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>
     titleEl.append($('<strong>').text('Genre : ')).append($('<p>').css('display', 'inline').text(genre));
-    titleEl.append($('<i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>').append($('<p>').css('display', 'inline-block').css('padding-left', '20px').text(userRating)));
+    titleEl.append($('<p style="color: #fdeb26">').css('display', 'inline-block').css('padding-left', '20px').text('    ⭐       '+userRating));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('Runtime : ')).append($('<p>').css('display', 'inline-block').text(runtime)));
     if (userRating > 0) {
         titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('User Rating : ')).append($('<p>').css('display', 'inline-block').text(userRating + '/ 10')));
@@ -258,11 +258,11 @@ function displayReviews(reviews) {
                 sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
                 sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
                 sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
-                var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline-block;"></button>');
+                var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline-block;"><i id="play-button" class="fa-solid fa-volume-high"></i></button>');
                 //  Screen readers will see "Play" 
                 var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
                 // Visual users will see the icon , but not the "Play" text 
-                var spanVisualReaderEl = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>');
+                var spanVisualReaderEl = $('<span aria-hidden="true"> </span>');
 
                 //stop button
                 var buttonPlayEl2 = $('<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>');
@@ -270,7 +270,7 @@ function displayReviews(reviews) {
                 var spanScreenReaderEl2 = $('<span class="show-for-sr">Play</span>');
                 // Visual users will see the icon , but not the "Play" text 
                 var spanVisualReaderEl2 = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>');
-                
+                // <i id="play-button" class="fa-solid fa-volume-xmark"></i>
                 var hrEl = $('<hr>');
                 buttonPlayEl.append(spanScreenReaderEl);
                 buttonPlayEl.append(spanVisualReaderEl);
@@ -289,13 +289,26 @@ function displayReviews(reviews) {
             $('#review-modal').foundation('open');
             moreReviewEl.on('click', '#play-review', playReview);
             function playReview(event) {
-                var btnClicked = $(event.target);
+                var clickedReview ='';
+                var btnClicked = $(event.target)
+                if(btnClicked.attr('id')==='play-button'){
+                    clickedReview = btnClicked.parent('button ').parent('div').children('p').eq(1).text();
+                }
+                if(btnClicked.attr('id')==='play-review'){
+                    clickedReview = btnClicked.parent('div').children('p').eq(1).text();
+                }
                 // get the parent `<div>` element from the button we clicked and traverse to find the review text
-                var clickedReview = btnClicked.parent('div').children('p').eq(1).text();
+        
                 responsiveVoice.speak(clickedReview);
             }
             moreReviewEl.on('click', '#stop-review', stopReview);
             function stopReview(event) {
+                // if(btnClicked.attr('id')==='play-button'){
+                //     clickedReview = btnClicked.parent('button ').parent('div').children('p').eq(1).text();
+                // }
+                // if(btnClicked.attr('id')==='play-review'){
+                //     clickedReview = btnClicked.parent('div').children('p').eq(1).text();
+                // }
                 responsiveVoice.cancel();
             }
             $('#btn-close-modal').on('click', function () {
