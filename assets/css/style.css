@@ -27,13 +27,14 @@ a {
   text-decoration: underline;
   cursor: pointer;
 }
+
 .see-more{
   text-decoration: underline;
   color: var(--title-color-2);
   font-size: 15px;
   background-color: var(--color-dark);
   cursor: pointer;
-  
+
 }
 #logo {
   height: 75px;

@@ -174,11 +174,6 @@ function getRecentReleasesResults() {
       );
     });
 }
-function init() {
-  getRatedResults();
-  getMostSearchedResults();
-  getRecentReleasesResults();
-}
 function renderRatedResults(obj) {
   //loop to print 4 cards inside carousal
   for (var i = 0; i < obj.results.length; i++) {
@@ -188,6 +183,8 @@ function renderRatedResults(obj) {
     swiper1.appendSlide(slideShow);
     swiper1.update();
   }
+    
+  
 }
 function renderMostSearchedResults(obj) {
   //loop to print cards inside carousal
@@ -208,69 +205,68 @@ function renderRecentReleasesResults(obj) {
     slideShow.append(cell);
     swiper3.appendSlide(slideShow);
     swiper3.update();
-    
   }
 }
 function printResults(result) {
-  var cellE1 = $('<div class="cell"></div>');
+  var cell = $('<div class="cell"></div>');
   var card = $('<div class="card"></div>');
   var a = $("<a></a>");
   var img = $("<img>");
   var cardSection = $('<div class="card-section"></div>');
-  var titleE1 = $('<h6>'+ result.title + " (" + releaseDate + ")"+'</h6>'); 
+  var releaseDate = dayjs(result.release_date).format("YYYY");
+  var titleE1 = $('<h6 class="card-title">' + result.title + " (" + releaseDate + ")" + '</h6>');
   var ratingE1;
   var pE1 = $("<p>");
   var imgLink = "https://image.tmdb.org/t/p/w500/";
 
-  if (result.poster_path == null) {
-    img.attr("src", "./assets/images/no-poster.png");
-  } else {
+  if (result.poster_path) {
     imgLink += result.poster_path;
     img.attr("src", imgLink);
-  }
-  var query = result.id;
-  a.attr("href", "./moviedetails.html?q=" + query);
-  var releaseDate = dayjs(result.release_date).format("YYYY");
-  var rating = parseFloat(result.vote_average);
-  if (rating > 0) {
-    ratingE1 = $(
-      '<h6>' + "Rating: " + rating.toFixed(1) + '</h6>');
-      ratingE1.append('<i class="fa fa-star" style="color:yellow"></i>');
-      
     
   } else {
-    ratingE1 = $("<p>No rating available</p>");  
-    
+    img.attr("src", "./assets/images/no-poster.png");
   }
-  
+  var query = result.id;
+  a.attr("href", "./moviedetails.html?q=" + query);  
+  var rating = parseFloat(result.vote_average);
+  if (rating > 0) {
+    ratingE1 = $('<h6>' + "Rating: " + rating.toFixed(1) + '</h6>');
+    ratingE1.append('<i class="fa fa-star" style="color:yellow"></i>');
+  } else {
+    ratingE1 = $("<h6>No rating available</h6>");
+  }
+
   cardSection.append(titleE1);
-  pE1.append(ratingE1); 
+  pE1.append(ratingE1);
   cardSection.append(pE1);
   card.append(img);
   card.append(cardSection);
   a.append(card);
-  cellE1.append(a);
-  return cellE1;
+  cell.append(a);
+  return cell;
 }
-
+function init() {
+  getRatedResults();
+  getMostSearchedResults();
+  getRecentReleasesResults();
+}
 init();
-$(document).ready(function(){
-  $('#rated-link').on('click',function(event){
+$(document).ready(function () {
+  $("#rated-link").on("click", function (event) {
     event.preventDefault();
-    var query="top_rated";
-    var linkToMoreMovies = "./movies.html?q="+query;
+    var query = "top_rated";
+    var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
   });
-  $('#search-link').on('click',function(){
+  $("#search-link").on("click", function () {
     var linkToMoreMovies = "./movies.html";
     location.assign(linkToMoreMovies);
   });
-  $('#recent-link').on('click',function(){
+  $("#recent-link").on("click", function () {
     var linkToMoreMovies = "./movies.html";
     location.assign(linkToMoreMovies);
   });
 });
-
 
 function handleSearchFormSubmit(event) {
   event.preventDefault();
