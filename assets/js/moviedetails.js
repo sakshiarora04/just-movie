@@ -46,8 +46,15 @@ var displayMovieDetails = function (movies) {
     var releaseDate = dayjs(movieReleaseDate).format('D MMMM YYYY');
     var releaseYear = dayjs(movieReleaseDate).format('YYYY');
     var movieTitle = movies.title + ' (' + releaseYear + ')';
+    if(movies.poster_path){
     var moviePosterPath = 'https://image.tmdb.org/t/p/w500///' + movies.poster_path;
     var imageEl = $('#imgId').attr('src', moviePosterPath);
+    }
+    else{
+        // var posterImg = $('<img src="./assets/images/no-poster.png">');
+        var imageEl = $('#imgId').attr('src','./assets/images/no-poster.png');
+    }
+    
     var genre = '';
 
     for (var i = 0; i < movies.genres.length; i++) {
@@ -72,7 +79,7 @@ var displayMovieDetails = function (movies) {
     var runtime = Math.floor(118 / 60) + 'h    ' + 118 % 60 + 'min';
     var userRating = movies.vote_average.toFixed(1);
 
-    titleEl.append($('<h4>').text(movieTitle));
+    titleEl.append($('<h3>').text(movieTitle));
 
     titleEl.append($('<strong>').text('Genre : ')).append($('<p>').css('display', 'inline').text(genre));
     titleEl.append($('<i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>').append($('<p>').css('display', 'inline-block').css('padding-left', '20px').text(userRating)));
@@ -134,16 +141,19 @@ function displayRatingsFromOmdb(ratings) {
     if (ratings.length !== 0) {
         var ratingSource;
         var ratingValue;
-        var cardEl = $('<div class="grid-x grid-padding-x align-center-middle text-center" style="height: 150px;"></div>');
+        console.log(ratings);
+        var cardEl = $('<div class="grid-x grid-padding-x align-middle text-center" style="height: 150px;"></div>');
         for (var i = 0; i < ratings.length; i++) {
-            ratingSource = ratings[i].Source;
             ratingValue = ratings[i].Value;
+            if(ratingValue){
+            ratingSource = ratings[i].Source;
             var cardSectionEl = $('<div class="cell small-12 medium-4 "></div>');
             var sourceEl = $('<p>').append($('<strong>').text(ratingSource));
             var ratingEl = $('<p style="color: #fdeb26">').text(ratingValue);
             cardSectionEl.append(sourceEl);
             cardSectionEl.append(ratingEl);
             cardEl.append(cardSectionEl);
+            }
         }
         titleEl.append(cardEl);
     }
@@ -258,8 +268,6 @@ function displayReviews(reviews) {
             $('#review-modal').foundation('open');
             moreReviewEl.on('click', '#play-review', playReview);
             function playReview(event) {
-                var index = parseInt(moreReviewEl.attr('data-index'));
-
                 var btnClicked = $(event.target);
                 // get the parent `<div>` element from the button we clicked and traverse to find the review text
                 var clickedReview = btnClicked.parent('div').children('p').eq(1).text();
@@ -271,7 +279,7 @@ function displayReviews(reviews) {
             }
             $('#btn-close-modal').on('click', function () {
                 responsiveVoice.cancel();
-                isSpeakerOn === false;
+                isSpeakerOn = false;
             });
         });
     }
