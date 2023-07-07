@@ -86,7 +86,7 @@ function printResults(resultObj) {
 }
 
 // API Query search
-function searchApi(query) {
+function searchApi(query, page) {
   var tmbdQueryUrl = "https://api.themoviedb.org/3/search/";
 
   tmbdQueryUrl =
@@ -139,7 +139,7 @@ function handleSearchFormSubmit(event) {
   searchApi(query);
 }
 
-// Event listener for search bar
+// On click event listeners
 logoEl.on("click", function () {
   var locUrl = "./index.html";
   location.assign(locUrl);
@@ -148,5 +148,24 @@ projectTitleEl.on("click", function () {
   var locUrl = "./index.html";
   location.assign(locUrl);
 });
+$("#rated-link").on("click", function (event) {
+  event.preventDefault();
+  var query = "top_rated";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
+});
+$("#search-link").on("click", function (event) {
+  event.preventDefault();
+  var query = "most_searched";
+  var linkToMoreMovies = "./movies.html" + query;
+  location.assign(linkToMoreMovies);
+});
+$("#recent-link").on("click", function (event) {
+  event.preventDefault();
+  var query = "recent_releases";
+  var linkToMoreMovies = "./movies.html" + query;
+  location.assign(linkToMoreMovies);
+});
+// Event listener for search bar
 searchFormEl.on("submit", handleSearchFormSubmit);
 getParams();
