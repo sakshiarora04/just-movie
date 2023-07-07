@@ -18,12 +18,23 @@ a {
   margin-top: 20px;
   margin-left: 20px;
 }
-
+.card a{
+  
+  margin-top: 0;
+  margin-left: 0;
+}
 .card-title:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-
+.see-more{
+  text-decoration: underline;
+  color: var(--title-color-2);
+  font-size: 15px;
+  background-color: var(--color-dark);
+  cursor: pointer;
+  
+}
 #logo {
   height: 75px;
   width: 75px;

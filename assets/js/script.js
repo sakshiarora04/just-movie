@@ -1,7 +1,8 @@
-var apiKey = "dd82df3a677360e4edaa486372b0e8b4";
-var searchFormEl = $('#search-form');
-var calloutEl = $('#errorMessage');
-var swiper1 = new Swiper('#slide-rated', {
+var apiKey = "533313cc880a2148c77843e769ec1a97";
+var searchFormEl = $("#search-form");
+var calloutEl = $("#errorMessage");
+
+var swiper1 = new Swiper("#slide-rated", {
   speed: 300,
   slidesPerView: 3,
   spaceBetween: 15,
@@ -28,11 +29,11 @@ var swiper1 = new Swiper('#slide-rated', {
     },
   },
   navigation: {
-    nextEl:'#button-rated-next',
-    prevEl:'#button-rated-prev',
+    nextEl: "#button-rated-next",
+    prevEl: "#button-rated-prev",
   },
 });
-var swiper2 = new Swiper('#slide-search', {
+var swiper2 = new Swiper("#slide-search", {
   speed: 300,
   slidesPerView: 3,
   spaceBetween: 15,
@@ -59,12 +60,12 @@ var swiper2 = new Swiper('#slide-search', {
     },
   },
   navigation: {
-    nextEl:'#button-search-next',
-    prevEl:'#button-search-prev',
+    nextEl: "#button-search-next",
+    prevEl: "#button-search-prev",
   },
 });
 
-var swiper3 = new Swiper('#slide-recent', {
+var swiper3 = new Swiper("#slide-recent", {
   speed: 300,
   slidesPerView: 3,
   spaceBetween: 15,
@@ -91,8 +92,8 @@ var swiper3 = new Swiper('#slide-recent', {
     },
   },
   navigation: {
-    nextEl:'#button-recent-next',
-    prevEl:'#button-recent-prev',
+    nextEl: "#button-recent-next",
+    prevEl: "#button-recent-prev",
   },
 });
 
@@ -110,9 +111,8 @@ function getRatedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("rated")
+        console.log("rated");
         renderRatedResults(data);
-        
       }
     })
     .catch((error) => {
@@ -136,9 +136,8 @@ function getMostSearchedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("search")
+        console.log("search");
         renderMostSearchedResults(data);
-
       }
     })
     .catch((error) => {
@@ -151,7 +150,8 @@ function getMostSearchedResults() {
 
 function getRecentReleasesResults() {
   var mostRecentUrl =
-    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" + apiKey;
+    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
+    apiKey;
   fetch(mostRecentUrl)
     .then(function (response) {
       if (!response.ok) {
@@ -163,9 +163,8 @@ function getRecentReleasesResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("recent")
+        console.log("recent");
         renderRecentReleasesResults(data);
-
       }
     })
     .catch((error) => {
@@ -177,99 +176,115 @@ function getRecentReleasesResults() {
 }
 function init() {
   getRatedResults();
-  getMostSearchedResults();  
+  getMostSearchedResults();
   getRecentReleasesResults();
 }
 function renderRatedResults(obj) {
   //loop to print 4 cards inside carousal
   for (var i = 0; i < obj.results.length; i++) {
-    var card = printResults(obj.results[i]);
+    var cell = printResults(obj.results[i]);
     var slideShow = $('<div class="card-search swiper-slide"></div>');
-    slideShow.append(card);
+    slideShow.append(cell);
     swiper1.appendSlide(slideShow);
     swiper1.update();
-    
   }
 }
 function renderMostSearchedResults(obj) {
   //loop to print cards inside carousal
   for (var i = 0; i < obj.results.length; i++) {
-    var card = printResults(obj.results[i]);
+    var cell = printResults(obj.results[i]);
     var slideShow = $('<div class="card-search swiper-slide"></div>');
-    slideShow.append(card);   
+    slideShow.append(cell);
     swiper2.appendSlide(slideShow);
     swiper2.update();
-  
   }
 }
 
 function renderRecentReleasesResults(obj) {
   //loop to print 4 cards inside carousal
   for (var i = 0; i < obj.results.length; i++) {
-    var card = printResults(obj.results[i]);
+    var cell = printResults(obj.results[i]);
     var slideShow = $('<div class="card-search swiper-slide"></div>');
-    slideShow.append(card);
+    slideShow.append(cell);
     swiper3.appendSlide(slideShow);
     swiper3.update();
-    console.log(card)    
+    
   }
 }
 function printResults(result) {
   var cellE1 = $('<div class="cell"></div>');
   var card = $('<div class="card"></div>');
-  var img = $('<img>');
+  var a = $("<a></a>");
+  var img = $("<img>");
   var cardSection = $('<div class="card-section"></div>');
-  var h6E1 = $('<h6>');
-
-  var h6E2 = $('<h6>');
-  var pE1 = $('<p>');
+  var titleE1 = $('<h6>'+ result.title + " (" + releaseDate + ")"+'</h6>'); 
+  var ratingE1;
+  var pE1 = $("<p>");
   var imgLink = "https://image.tmdb.org/t/p/w500/";
-  
-if(result.poster_path==null){
-  img.attr('src','./assets/images/no-poster.png');
-}
-else{
-  imgLink += result.poster_path;
 
-  img.attr("src", imgLink);
-}
-
+  if (result.poster_path == null) {
+    img.attr("src", "./assets/images/no-poster.png");
+  } else {
+    imgLink += result.poster_path;
+    img.attr("src", imgLink);
+  }
+  var query = result.id;
+  a.attr("href", "./moviedetails.html?q=" + query);
   var releaseDate = dayjs(result.release_date).format("YYYY");
-  h6E1.text(result.title + " (" + releaseDate + ")");
   var rating = parseFloat(result.vote_average);
-  h6E2.text("Rating: " + rating.toFixed(1));
-  h6E2.append('<i class="fa fa-star" style="color:yellow"></i>');
-  cardSection.append(h6E1);
-  pE1.append(h6E2);
+  if (rating > 0) {
+    ratingE1 = $(
+      '<h6>' + "Rating: " + rating.toFixed(1) + '</h6>');
+      ratingE1.append('<i class="fa fa-star" style="color:yellow"></i>');
+      
+    
+  } else {
+    ratingE1 = $("<p>No rating available</p>");  
+    
+  }
+  
+  cardSection.append(titleE1);
+  pE1.append(ratingE1); 
   cardSection.append(pE1);
   card.append(img);
   card.append(cardSection);
-  cellE1.append(card);
+  a.append(card);
+  cellE1.append(a);
   return cellE1;
 }
 
-// $('.card').on("click", function () {
-//   window.location = "check.html";
-//   });
 init();
+$(document).ready(function(){
+  $('#rated-link').on('click',function(event){
+    event.preventDefault();
+    var query="top_rated";
+    var linkToMoreMovies = "./movies.html?q="+query;
+    location.assign(linkToMoreMovies);
+  });
+  $('#search-link').on('click',function(){
+    var linkToMoreMovies = "./movies.html";
+    location.assign(linkToMoreMovies);
+  });
+  $('#recent-link').on('click',function(){
+    var linkToMoreMovies = "./movies.html";
+    location.assign(linkToMoreMovies);
+  });
+});
 
 
 function handleSearchFormSubmit(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    var searchInputVal = $('#search-input').val();
+  var searchInputVal = $("#search-input").val();
+  if (!searchInputVal) {
+    console.error("You need a search input value!");
+    $("#no-input").foundation("open"); // Show the popup
+    return;
+  }
+  var query = searchInputVal.replace(/\s/g, "+");
+  var queryString = "./display-search.html?q=" + query;
 
-    if (!searchInputVal) {
-        console.error('You need a search input value!');
-        $('#no-input').foundation('open'); // Show the popup
-        return;
-    }
-
-    var query = searchInputVal.replace(/\s/g, '+');
-    var queryString = './display-search.html?q=' + query
-
-
-    location.assign(queryString);
+  location.assign(queryString);
 }
 
-searchFormEl.on('submit', handleSearchFormSubmit);
+searchFormEl.on("submit", handleSearchFormSubmit);

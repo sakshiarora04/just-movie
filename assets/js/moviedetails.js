@@ -4,6 +4,7 @@ var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
 var isSpeakerOn = false;
+
 // Fetch movie details by id
 var getMovieById = function (movieId) {
     var apiUrl = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=' + apiKey + '&language=en-US&append_to_response=credits';
