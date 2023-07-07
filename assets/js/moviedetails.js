@@ -278,15 +278,18 @@ function displayReviews(reviews) {
                 var spanScreenReaderEl2 = $('<span class="show-for-sr">Play</span>');
                 // Visual users will see the icon , but not the "Play" text 
                 var spanVisualReaderEl2 = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>');
+                
+                var hrEl = $('<hr>');
+                buttonPlayEl.append(spanScreenReaderEl);
+                buttonPlayEl.append(spanVisualReaderEl);
+                sectionReviewEl.append(buttonPlayEl);
+
                 buttonPlayEl2.append(spanScreenReaderEl2);
                 buttonPlayEl2.append(spanVisualReaderEl2);
                 sectionReviewEl.append(buttonPlayEl2);
                 // sectionReviewEl.append($('<p>').text(''));
                 moreReviewEl.append(sectionReviewEl);
-                var hrEl = $('<hr>');
-                buttonPlayEl.append(spanScreenReaderEl);
-                buttonPlayEl.append(spanVisualReaderEl);
-                sectionReviewEl.append(buttonPlayEl);
+                
                 sectionReviewEl.append(hrEl);
                 moreReviewEl.append(sectionReviewEl);
 
