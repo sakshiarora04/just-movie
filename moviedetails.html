@@ -20,6 +20,8 @@
 </head>
 
 <body class=" min-100-vh">
+
+    <!----------------------------------- Header------------------------------------->
     <header>
         <div class="margin-5">
             <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
@@ -74,6 +76,7 @@
             </div>
         </div>
     </header>
+    <!------------------------------------------------------------------------------->
     <!----------------------------------- Modal------------------------------------->
     <div class="reveal" id="movie-validation-modal" data-reveal>
         <p class="lead">This movie details are not available.</p>
@@ -107,7 +110,7 @@
                     </div>
                     <!-- Movie details  -->
                     <div class="small-8 cell medium-9">
-                        <div class="card ">
+                        <div class="card no-radius">
                             <div id="movie-details" class="card-section">
                             </div>
                         </div>
@@ -119,7 +122,7 @@
 
                     <!-- Cast details -->
                     <div class="small-12 cell medium-12">
-                        <div class="card">
+                        <div class="card no-radius">
                             <div id="movie-cast-section" class="card-section">
                                 <h4 id="cast-heading"></h4>
                                 <!-- <div id="movie-casts" class="movie-cast"> -->
@@ -140,11 +143,8 @@
                     </div>
                     <!-- Reviews -->
                     <div class="small-12 cell medium-12">
-                        <div class="card ">
-
+                        <div class="card no-radius">
                             <div id="movie-reviews" class="card-section">
-                                <!-- <h4>Reviews</h4> -->
-
 
                                 <div class="arrow-down"></div>
                             </div>
@@ -165,9 +165,7 @@
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
 
     <script src="./assets/js/script.js"></script>
-    <!-- <script src="./assets/js/display-search.js"></script> -->
     <script src="./assets/js/moviedetails.js"></script>
-
 
     <script>
         $(document).foundation();

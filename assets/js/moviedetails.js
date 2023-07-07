@@ -3,7 +3,6 @@ var movieId = searchParramsArr.pop()
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
-var isSpeakerOn = false;
 // Fetch movie details by id
 var getMovieById = function (movieId) {
     var apiUrl = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=' + apiKey + '&language=en-US&append_to_response=credits';
@@ -13,7 +12,6 @@ var getMovieById = function (movieId) {
 
                 response.json().then(function (data) {
                     displayMovieDetails(data);
-
                 });
             } else {
 
@@ -29,7 +27,6 @@ var getMovieById = function (movieId) {
 };
 
 getMovieById(movieId);
-
 
 // Displays movie details 
 var titleEl = $('#movie-details');
@@ -95,21 +92,17 @@ var displayMovieDetails = function (movies) {
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('Overview : ')).append($('<p>').css('display', 'inline').text(overview)));
 
     //Display cast details
-    // var movieSection=$('#movie-cast-section');
-    // // movieSection.append('<h4>Cast</h4>');
-    // movieSection.append($('<h4>').append($('<strong>').text('Cast')));
-    var movieSection = $('#movie-cast-section');
 
+    // var movieSection = $('#movie-cast-section');
     var castEl = $('#cast-details');
     var castHeading = $('#cast-heading');
     castHeading.append($('<strong>').text('Cast'));
-    // movieSection.append(castEl);
     var movieCastEl = $('#movie-casts');
     if (movies.credits.cast.length > 0) {
         for (var i = 0; i < movies.credits.cast.length; i++) {
             if (movies.credits.cast[i].profile_path != null) {
                 var castProfilePath = 'https://image.tmdb.org/t/p/w500///' + movies.credits.cast[i].profile_path;
-                var cardEl = $('<div class="card small-12" style="height:320px; width:170px ; background-color:rgb(227, 212, 212)"></div>');
+                var cardEl = $('<div class="card small-12" style="height:320px; width:170px ; background-color:white"></div>');
                 var castImageEl = $('<img style="height:200px; width:200px">').attr("src", castProfilePath);
                 var cardSectionEl = $('<div class="card-section" style="background-color:white padding:0px "></div>');
                 var castName = $('<p>').append($('<strong>').text(movies.credits.cast[i].name));
@@ -157,7 +150,6 @@ function displayRatingsFromOmdb(ratings) {
     if (ratings.length !== 0) {
         var ratingSource;
         var ratingValue;
-        console.log(ratings);
         var cardEl = $('<div class="grid-x grid-padding-x align-middle text-center" style="height: 150px;"></div>');
         for (var i = 0; i < ratings.length; i++) {
             ratingValue = ratings[i].Value;
@@ -205,14 +197,15 @@ function displayReviews(reviews) {
     if (reviews.length !== 0) {
         var review = reviews[0].content;
         var author = reviews[0].author;
-        var writtenDate = reviews[0].created_at.substring(0, 9);
-        // var writtenDate = dayjs(date).format('DD-MM-YY');
+        var writtenDate = reviews[0].created_at.substring(0, 10)+"  00:00:00";
+       
+        var reviewDate=dayjs(writtenDate).format('DD/MM/YYYY'); 
 
         titleEl.append($('<h4>').append($('<strong>').text('Reviews')));
         sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
-        sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
+        sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
         sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
-        console.log(writtenDate);
+       
 
         var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
         //  Screen readers will see "Play" 
@@ -233,10 +226,9 @@ function displayReviews(reviews) {
         buttonPlayEl2.append(spanScreenReaderEl2);
         buttonPlayEl2.append(spanVisualReaderEl2);
         sectionReviewEl.append(buttonPlayEl2);
-        // sectionReviewEl.append($('<p>').text(''));
         titleEl.append(sectionReviewEl);
 
-        //Plays the text to voice (responsive voice api call)
+        //Plays the text to voice (using responsive voice api call)
 
         $("#play-review").on("click", function () {
             responsiveVoice.speak(review);
@@ -252,19 +244,19 @@ function displayReviews(reviews) {
 
         //Opens a modal which displays all the reviews.
         $('#read-more-reviews').on("click", function () {
-            isSpeakerOn === false;
             responsiveVoice.cancel();
             var reviewModalEl = $('#review-modal');
             var moreReviewEl = $('#more-reviews');
             moreReviewEl.html("");
+            console.log(reviews);
             for (var i = 0; i < reviews.length; i++) {
                 var sectionReviewEl = $('<div style="background-color: white; padding :15px"></div>');
                 var review = reviews[i].content;
                 var author = reviews[i].author;
-                var writtenDate = dayjs(reviews[i].created_at.substring(0, 7)).format('DD-MM-YY');
-
+                var writtenDate =reviews[i].created_at.substring(0, 10)+"  00:00:00";
+                var reviewDate=dayjs(writtenDate).format('DD/MM/YYYY'); 
                 sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
-                sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + writtenDate));
+                sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
                 sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
                 var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline-block;"></button>');
                 //  Screen readers will see "Play" 
@@ -287,9 +279,8 @@ function displayReviews(reviews) {
                 buttonPlayEl2.append(spanScreenReaderEl2);
                 buttonPlayEl2.append(spanVisualReaderEl2);
                 sectionReviewEl.append(buttonPlayEl2);
-                // sectionReviewEl.append($('<p>').text(''));
                 moreReviewEl.append(sectionReviewEl);
-                
+
                 sectionReviewEl.append(hrEl);
                 moreReviewEl.append(sectionReviewEl);
 
@@ -309,7 +300,6 @@ function displayReviews(reviews) {
             }
             $('#btn-close-modal').on('click', function () {
                 responsiveVoice.cancel();
-                isSpeakerOn = false;
             });
         });
     }
