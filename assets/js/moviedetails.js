@@ -26,8 +26,6 @@ var getMovieById = function (movieId) {
         });
 };
 
-getMovieById(movieId);
-
 // Displays movie details 
 var titleEl = $('#movie-details');
 var displayMovieDetails = function (movies) {
@@ -79,7 +77,7 @@ var displayMovieDetails = function (movies) {
     titleEl.append($('<h3>').text(movieTitle));
     // <i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>
     titleEl.append($('<strong>').text('Genre : ')).append($('<p>').css('display', 'inline').text(genre));
-    titleEl.append($('<p style="color: #fdeb26">').css('display', 'inline-block').css('padding-left', '20px').text('    ⭐       '+userRating));
+    titleEl.append($('<p style="color: #fdeb26">').css('display', 'inline-block').css('padding-left', '20px').text(userRating+'        ⭐       ' ));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('Runtime : ')).append($('<p>').css('display', 'inline-block').text(runtime)));
     if (userRating > 0) {
         titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('User Rating : ')).append($('<p>').css('display', 'inline-block').text(userRating + '/ 10')));
@@ -116,7 +114,9 @@ var displayMovieDetails = function (movies) {
         }
     }
     else {
-        castEl.append($('<h5 style="width:300px;" >').text("Cast not available").css('display', 'block'));
+        movieCastEl.append($('<h5 style="width:600px;" >').text("Cast not available").css('display', 'block'));
+        
+        // titleEl.append($('<h5 style="width:600px">').text("No reviews").css('display', 'block'));
     }
 
     if (imdbId != null) {
@@ -150,23 +150,31 @@ function displayRatingsFromOmdb(ratings) {
     if (ratings.length !== 0) {
         var ratingSource;
         var ratingValue;
+        var cellCreated = false;
         var cardEl = $('<div class="grid-x grid-padding-x align-middle text-center" style="height: 150px;"></div>');
         for (var i = 0; i < ratings.length; i++) {
             ratingValue = ratings[i].Value;
             if (ratingValue) {
                 ratingSource = ratings[i].Source;
-                var cardSectionEl = $('<div class="cell small-12 medium-4 "></div>');
-                var sourceEl = $('<p>').append($('<strong>').text(ratingSource));
-                var ratingEl = $('<p style="color: #fdeb26">').text(ratingValue);
+                if (cellCreated === false) {
+                    var cardSectionEl = $('<div class="cell small-12 medium-3 align-self-left" style="padding:0px;"></div>');
+                    cellCreated = true;
+                }
+                else {
+                    var cardSectionEl = $('<div class="cell small-12 medium-3 align-self-center" style="padding:0px;"></div>');
+                }
+                var sourceEl = $('<p style="text-align:center;">').append($('<strong>').text(ratingSource));
+                var ratingEl = $('<p style="text-align:center;color: #fdeb26">').text(ratingValue);
                 cardSectionEl.append(sourceEl);
                 cardSectionEl.append(ratingEl);
                 cardEl.append(cardSectionEl);
             }
         }
+        var cardSectionEl = $('<div class="cell small-12 medium-3 align-self-left" style="padding:0px;"></div>');
+        cardEl.append(cardSectionEl);
         titleEl.append(cardEl);
     }
 }
-
 
 //function to fetch reviews by movie id
 var getReviewsByMovieId = function (movieId) {
@@ -188,7 +196,7 @@ var getReviewsByMovieId = function (movieId) {
             $('#movie-validation-modal').foundation('open');
         });
 };
-getReviewsByMovieId(movieId);
+
 
 //Display reviews
 function displayReviews(reviews) {
@@ -197,15 +205,15 @@ function displayReviews(reviews) {
     if (reviews.length !== 0) {
         var review = reviews[0].content;
         var author = reviews[0].author;
-        var writtenDate = reviews[0].created_at.substring(0, 10)+"  00:00:00";
-       
-        var reviewDate=dayjs(writtenDate).format('DD/MM/YYYY'); 
+        var writtenDate = reviews[0].created_at.substring(0, 10) + "  00:00:00";
+
+        var reviewDate = dayjs(writtenDate).format('DD/MM/YYYY');
 
         titleEl.append($('<h4>').append($('<strong>').text('Reviews')));
         sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
         sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
         sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
-       
+
 
         var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
         //  Screen readers will see "Play" 
@@ -244,17 +252,19 @@ function displayReviews(reviews) {
 
         //Opens a modal which displays all the reviews.
         $('#read-more-reviews').on("click", function () {
-            responsiveVoice.cancel();
+
+            if (responsiveVoice.isPlaying()) {
+                responsiveVoice.cancel();
+            }
             var reviewModalEl = $('#review-modal');
             var moreReviewEl = $('#more-reviews');
             moreReviewEl.html("");
-            console.log(reviews);
             for (var i = 0; i < reviews.length; i++) {
                 var sectionReviewEl = $('<div style="background-color: white; padding :15px"></div>');
                 var review = reviews[i].content;
                 var author = reviews[i].author;
-                var writtenDate =reviews[i].created_at.substring(0, 10)+"  00:00:00";
-                var reviewDate=dayjs(writtenDate).format('DD/MM/YYYY'); 
+                var writtenDate = reviews[i].created_at.substring(0, 10) + "  00:00:00";
+                var reviewDate = dayjs(writtenDate).format('DD/MM/YYYY');
                 sectionReviewEl.append($('<h6>').append($('<strong>').text('A review written by ' + author)));
                 sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
                 sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
@@ -263,6 +273,9 @@ function displayReviews(reviews) {
                 var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
                 // Visual users will see the icon , but not the "Play" text 
                 var spanVisualReaderEl = $('<span aria-hidden="true"> </span>');
+                buttonPlayEl.append(spanScreenReaderEl);
+                buttonPlayEl.append(spanVisualReaderEl);
+                sectionReviewEl.append(buttonPlayEl);
 
                 //stop button
                 var buttonPlayEl2 = $('<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>');
@@ -272,15 +285,10 @@ function displayReviews(reviews) {
                 var spanVisualReaderEl2 = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>');
                 // <i id="play-button" class="fa-solid fa-volume-xmark"></i>
                 var hrEl = $('<hr>');
-                buttonPlayEl.append(spanScreenReaderEl);
-                buttonPlayEl.append(spanVisualReaderEl);
-                sectionReviewEl.append(buttonPlayEl);
-
                 buttonPlayEl2.append(spanScreenReaderEl2);
                 buttonPlayEl2.append(spanVisualReaderEl2);
                 sectionReviewEl.append(buttonPlayEl2);
                 moreReviewEl.append(sectionReviewEl);
-
                 sectionReviewEl.append(hrEl);
                 moreReviewEl.append(sectionReviewEl);
 
@@ -289,30 +297,27 @@ function displayReviews(reviews) {
             $('#review-modal').foundation('open');
             moreReviewEl.on('click', '#play-review', playReview);
             function playReview(event) {
-                var clickedReview ='';
+                var clickedReview = '';
                 var btnClicked = $(event.target)
-                if(btnClicked.attr('id')==='play-button'){
+                if (btnClicked.attr('id') === 'play-button') {
                     clickedReview = btnClicked.parent('button ').parent('div').children('p').eq(1).text();
                 }
-                if(btnClicked.attr('id')==='play-review'){
-                    clickedReview = btnClicked.parent('div').children('p').eq(1).text();
+                else {
+                    if (btnClicked.attr('id') === 'play-review') {
+                        clickedReview = btnClicked.parent('div').children('p').eq(1).text();
+                    }
                 }
                 // get the parent `<div>` element from the button we clicked and traverse to find the review text
-        
                 responsiveVoice.speak(clickedReview);
             }
             moreReviewEl.on('click', '#stop-review', stopReview);
             function stopReview(event) {
-                // if(btnClicked.attr('id')==='play-button'){
-                //     clickedReview = btnClicked.parent('button ').parent('div').children('p').eq(1).text();
-                // }
-                // if(btnClicked.attr('id')==='play-review'){
-                //     clickedReview = btnClicked.parent('div').children('p').eq(1).text();
-                // }
                 responsiveVoice.cancel();
             }
             $('#btn-close-modal').on('click', function () {
-                responsiveVoice.cancel();
+                if (responsiveVoice.isPlaying()) {
+                    responsiveVoice.cancel();
+                }
             });
         });
     }
@@ -321,4 +326,12 @@ function displayReviews(reviews) {
         titleEl.append($('<h5 style="width:600px">').text("No reviews").css('display', 'block'));
     }
 }
-
+//First function to call
+function init() {
+    if (movieId > 0) {
+        getMovieById(movieId);
+        getReviewsByMovieId(movieId);
+    }
+}
+//Initial function call
+init();
