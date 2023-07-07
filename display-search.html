@@ -92,17 +92,28 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
+      <div class="tiny reveal" id="no-results" data-reveal>
+        <h4>No results found</h4>
+        <button
+          class="close-button"
+          data-close
+          aria-label="Close reveal"
+          type="button"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <div class="grid-container">
         <p class="lead">Results</p>
         <div
           id="result-content"
-          class="grid-x grid-margin-x small-up-2 medium-up-3"
+          class="grid-x grid-margin-x grid-margin-y small-up-2 medium-up-4"
         ></div>
       </div>
 
-      <div id="result-content">
-        <h3></h3>
-      </div>
+      <div id="result-content"></div>
     </main>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script

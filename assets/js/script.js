@@ -1,11 +1,10 @@
 const sliders = document.getElementsByClassName("slide-content");
-var swipers=[];
+var swipers = [];
 
 for (let slide of sliders) {
-  
   const nextEl = slide.getElementsByClassName("swiper-button-next")[0];
   const prevEl = slide.getElementsByClassName("swiper-button-prev")[0];
- 
+
   var swiper = new Swiper(slide, {
     speed: 300,
     slidesPerView: 3,
@@ -40,7 +39,6 @@ for (let slide of sliders) {
 
   swipers.push(swiper);
   console.log(swiper);
-
 }
 
 var apiKey = "dd82df3a677360e4edaa486372b0e8b4";
@@ -58,9 +56,8 @@ function getMostSearchedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("search")
+        console.log("search");
         renderMostSearchedResults(data);
-
       }
     })
     .catch((error) => {
@@ -84,9 +81,8 @@ function getRatedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("rated")
+        console.log("rated");
         renderRatedResults(data);
-        
       }
     })
     .catch((error) => {
@@ -98,7 +94,8 @@ function getRatedResults() {
 }
 function getRecentReleasesResults() {
   var mostRecentUrl =
-    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" + apiKey;
+    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
+    apiKey;
   fetch(mostRecentUrl)
     .then(function (response) {
       if (!response.ok) {
@@ -110,9 +107,8 @@ function getRecentReleasesResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("search")
+        console.log("search");
         renderRecentReleasesResults(data);
-
       }
     })
     .catch((error) => {
@@ -136,7 +132,6 @@ function renderMostSearchedResults(obj) {
     slideShow.append(card);
     swipers[1].appendSlide(slideShow);
     swipers[1].update();
-  
   }
 }
 function renderRatedResults(obj) {
@@ -147,7 +142,6 @@ function renderRatedResults(obj) {
     slideShow.append(card);
     swipers[0].appendSlide(slideShow);
     swipers[0].update();
-    
   }
 }
 function renderRecentReleasesResults(obj) {
@@ -158,28 +152,26 @@ function renderRecentReleasesResults(obj) {
     slideShow.append(card);
     swipers[2].appendSlide(slideShow);
     swipers[2].update();
-    
   }
 }
 function printResults(result) {
   var cellE1 = $('<div class="cell"></div>');
   var card = $('<div class="card"></div>');
-  var img = $('<img>');
+  var img = $("<img>");
   var cardSection = $('<div class="card-section"></div>');
-  var h6E1 = $('<h6>');
+  var h6E1 = $("<h6>");
 
-  var h6E2 = $('<h6>');
-  var pE1 = $('<p>');
+  var h6E2 = $("<h6>");
+  var pE1 = $("<p>");
   var imgLink = "https://image.tmdb.org/t/p/w500/";
-  
-if(result.poster_path==null){
-  img.attr('src','./assets/images/no-poster.png');
-}
-else{
-  imgLink += result.poster_path;
 
-  img.attr("src", imgLink);
-}
+  if (result.poster_path == null) {
+    img.attr("src", "./assets/images/no-poster.png");
+  } else {
+    imgLink += result.poster_path;
+
+    img.attr("src", imgLink);
+  }
 
   var releaseDate = dayjs(result.release_date).format("YYYY");
   h6E1.text(result.title + " (" + releaseDate + ")");
@@ -199,27 +191,3 @@ else{
 //   window.location = "check.html";
 //   });
 init();
-var searchFormEl = $('#search-form')
-var calloutEl = $('#errorMessage')
-
-function handleSearchFormSubmit(event) {
-    event.preventDefault();
-
-    var searchInputVal = $('#search-input').val();
-
-    if (!searchInputVal) {
-        console.error('You need a search input value!');
-        $('#no-input').foundation('open'); // Show the popup
-
-        return;
-    }
-
-    var query = searchInputVal.replace(/\s/g, '+');
-    // console.log(query)
-    var queryString = './display-search.html?q=' + query
-
-
-    location.assign(queryString)
-}
-
-searchFormEl.on('submit', handleSearchFormSubmit)
