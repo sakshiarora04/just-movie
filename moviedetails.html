@@ -22,70 +22,58 @@
 <body class=" min-100-vh">
     <header>
         <div class="margin-5">
-          <div
-            class="title-bar"
-            data-responsive-toggle="responsive-menu"
-            data-hide-for="medium"
-          >
-            <button
-              class="menu-icon"
-              type="button"
-              data-toggle="responsive-menu"
-            ></button>
-            <div class="title-bar-title">Menu</div>
-          </div>
-  
-          <div class="top-bar" id="responsive-menu">
-            <div class="top-bar-left small-4">
-              <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text">
-                  <img id="logo" src="./assets/images/logo2.jpg" alt="logo" />
-                </li>
-                <li>
-                  <h1 id="project-title1">
-                    Just<span id="project-title2">Movie</span>
-                  </h1>
-                </li>
-              </ul>
+            <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+                <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+                <div class="title-bar-title">Menu</div>
             </div>
-            <div class="top-bar-middle small-4">
-              <ul class="dropdown menu" data-dropdown-menu>
-                <li>
-                  <a href="#">Movies</a>
-                  <ul class="menu">
-                    <li><a href="#top-rated">Top Rated</a></li>
-                    <li><a href="#most-searched">Most Searched</a></li>
-                    <li><a href="#">Recent Releases</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="#">Genres</a>
-                  <ul class="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Adventure</a></li>
-                    <li><a href="#">Romance</a></li>
-                  </ul>
-                </li>
-              </ul>
+
+            <div class="top-bar" id="responsive-menu">
+                <div class="top-bar-left small-4">
+                    <ul class="dropdown menu" data-dropdown-menu>
+                        <li class="menu-text">
+                            <img id="logo" src="./assets/images/logo2.jpg" alt="logo" />
+                        </li>
+                        <li>
+                            <h1 id="project-title1">
+                                Just<span id="project-title2">Movie</span>
+                            </h1>
+                        </li>
+                    </ul>
+                </div>
+                <div class="top-bar-middle small-4">
+                    <ul class="dropdown menu" data-dropdown-menu>
+                        <li>
+                            <a href="#">Movies</a>
+                            <ul class="menu">
+                                <li><a href="#top-rated">Top Rated</a></li>
+                                <li><a href="#most-searched">Most Searched</a></li>
+                                <li><a href="#">Recent Releases</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Genres</a>
+                            <ul class="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Adventure</a></li>
+                                <li><a href="#">Romance</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="top-bar-right small-4">
+                    <form id="search-form">
+                        <ul class="menu">
+                            <li>
+                                <input id="search-input" type="search" placeholder="What do you want to watch"
+                                    style="max-width: 300px" />
+                            </li>
+                            <li><button type="submit" class="button">Search</button></li>
+                        </ul>
+                    </form>
+                </div>
             </div>
-            <div class="top-bar-right small-4">
-              <form id="search-form">
-                <ul class="menu">
-                  <li>
-                    <input
-                      id="search-input"
-                      type="search"
-                      placeholder="What do you want to watch"
-                      style="max-width: 300px"
-                    />
-                  </li>
-                  <li><button type="submit" class="button">Search</button></li>
-                </ul>
-              </form>
-            </div>
-          </div>
         </div>
-      </header>
+    </header>
     <!----------------------------------- Modal------------------------------------->
     <div class="reveal" id="movie-validation-modal" data-reveal>
         <p class="lead">This movie details are not available.</p>
@@ -133,14 +121,13 @@
                     <div class="small-12 cell medium-12">
                         <div class="card">
                             <div id="movie-cast-section" class="card-section">
-
-                                <h4>Cast</h4>
-
-                                <div class="movie-cast">
+                                <h4 id="cast-heading"></h4>
+                                <!-- <div id="movie-casts" class="movie-cast"> -->
+                                <div id="movie-casts">
                                     <div class="grid-container">
                                         <div class="grid-x grid-margin-x">
                                             <div class="cell small-12 medium-12">
-                                                <div id="cast-details" class="card-group overflow-scroll">
+                                                <div id="cast-details" class="card-group">
 
                                                 </div>
                                             </div>
@@ -156,7 +143,7 @@
                         <div class="card ">
 
                             <div id="movie-reviews" class="card-section">
-                                <h4>Reviews</h4>
+                                <!-- <h4>Reviews</h4> -->
 
 
                                 <div class="arrow-down"></div>
@@ -168,7 +155,7 @@
         </div>
         <footer>
             <div class="ftr">© 2020-2023 by JustMovie.com, Inc.</div>
-          </footer>
+        </footer>
     </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -176,10 +163,11 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
-    <script src="./assets/js/script.js"></script>
 
-    <script src="./assets/js/moviedetails.js"></script>
+    <script src="./assets/js/script.js"></script>
     <!-- <script src="./assets/js/display-search.js"></script> -->
+    <script src="./assets/js/moviedetails.js"></script>
+
 
     <script>
         $(document).foundation();

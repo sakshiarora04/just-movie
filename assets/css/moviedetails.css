@@ -13,6 +13,9 @@
 #poster{
   border-style: solid;
 }
+body{
+  overflow: scroll;
+}
 /* ------------- */
 #imgId{
   border-color: var(--section-title-color);
@@ -66,33 +69,25 @@ a {
   padding-left: 0;
   display: flex;
   justify-content: flex-start;
-  /* overflow-x: auto; */
-  /* scroll-snap-type: x mandatory; */
   width: 100%;
 }
 
 .movie-cast .card-group {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: scroll;
-  /* -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory; */
   width: 100%;
 
 }
 
 .movie-cast .card {
-  /* scroll-snap-align: start;*/
   flex: 0 0 auto;
   margin-right: 1rem;
 }
 
-.movie-cast .grid-x {
+.movie-cast  {
   overflow-x: scroll;
-  /* -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory; */
   width: max-content;
-  margin-left: -1rem;
+  /* margin-left: -1rem; */
 }
 
 .movie-cast .cell {
@@ -106,5 +101,10 @@ a {
 .cast-title {
   text-decoration: solid;
 }
-
-#movie-cast-section:hover {}
+#movie-cast-section{
+  /* overflow-x: scroll; */
+}
+/* #movie-cast-section:hover::after  {
+  overflow-x: scroll;
+  background-color: red;
+} */
