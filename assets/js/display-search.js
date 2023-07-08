@@ -6,6 +6,7 @@ var logoEl = $("#logo");
 var projectTitleEl = $("#project-title1");
 
 var apiKey = "533313cc880a2148c77843e769ec1a97";
+var recentSearches = [];
 
 // Hover class to Header
 logoEl.addClass("card-title");
@@ -31,15 +32,17 @@ function printResults(resultObj) {
     // Dynamically creating cards
     var releaseDate = dayjs(movie.release_date).format("YYYY");
     var cellEl = $('<div class="cell"></div>');
-    var cardEl = $('<div class="card"></div>');
-    var cardSectionEl = $('<div class="card-section"></div>');
+    var cardEl = $('<div class="card card-size"></div>');
+    var cardSectionEl = $('<div class="card-section section-text"></div>');
     var titleEl = $(
-      '<h4 class="card-title">' +
+      '<h6 class="card-title">' +
+        '<span class="title-text">' +
         movie.title +
+        "</span>" +
         " (" +
         releaseDate +
         ")" +
-        "</h4>"
+        "</h6>"
     );
 
     cardEl.on("click", function () {
@@ -51,25 +54,30 @@ function printResults(resultObj) {
     cellEl.append(cardEl);
     if (movie.poster_path) {
       var posterImg = $(
-        '<img class="card-title "src="https://image.tmdb.org/t/p/w500' +
+        '<img id="poster-size" class="card-title" src="https://image.tmdb.org/t/p/w500' +
           movie.poster_path +
           '">'
       );
       cardEl.append(posterImg);
     } else {
-      var posterImg = $('<img src="./assets/images/no-poster.png">');
+      var posterImg = $(
+        '<img id="poster-size" src="./assets/images/no-poster.png">'
+      );
       cardEl.append(posterImg);
     }
-    cardSectionEl.append(titleEl);
     if (movie.vote_average > 0) {
       var rating = parseFloat(movie.vote_average);
       var ratingEl = $(
-        "<h6>" + "Rating: " + rating.toFixed(2) + "⭐" + "</h6>"
+        '<p class="card-rating">' +
+          "Rating: " +
+          rating.toFixed(2) +
+          "⭐" +
+          "</p>"
       );
-      cardSectionEl.append(ratingEl);
+      cardSectionEl.append(titleEl, ratingEl);
     } else {
-      var ratingEl = $("<p>No rating available</p>");
-      cardSectionEl.append(ratingEl);
+      var ratingEl = $('<p class="card-rating">No rating available</p>');
+      cardSectionEl.append(titleEl, ratingEl);
     }
     cardEl.append(cardSectionEl);
 
@@ -78,28 +86,6 @@ function printResults(resultObj) {
   });
 }
 
-function saveResultsToLocalStorage(resultObj) {
-  // Convert the result object to JSON string
-  var resultJson = JSON.stringify(resultObj);
-  // Save the JSON string to local storage
-  localStorage.setItem("searchResults", resultJson);
-}
-
-function loadResultsFromLocalStorage() {
-  // Check if the page is refreshed
-  if (performance.navigation.type >= 1) {
-    // Retrieve the JSON string from local storage
-    var resultJson = localStorage.getItem("searchResults");
-
-    // Parse the JSON string to get the result object
-    var resultObj = JSON.parse(resultJson);
-
-    if (resultObj) {
-      // If results exist, print them on the page
-      printResults(resultObj);
-    }
-  }
-}
 // API Query search
 function searchApi(query) {
   var tmbdQueryUrl = "https://api.themoviedb.org/3/search/";
@@ -115,13 +101,20 @@ function searchApi(query) {
       return response.json();
     })
     .then((tmbdRes) => {
-      console.log(tmbdRes.results);
-
       if (!tmbdRes.results.length) {
-        resultContentEl.html("<h3>no results found, search again!</h3>");
+        $("#no-results").foundation("open");
       } else {
         printResults(tmbdRes);
-        saveResultsToLocalStorage(tmbdRes);
+
+        // Store the searched query in recentSearches array
+        if (!recentSearches.includes(query)) {
+          var recentQuery = query.replace("+", " ");
+          recentSearches.unshift(recentQuery);
+          if (recentSearches.length > 5) {
+            recentSearches.pop();
+          }
+        }
+        storeRecentSearchesInStorage();
       }
     })
     .catch((error) => {
@@ -130,6 +123,26 @@ function searchApi(query) {
         "<h3>Error occurred while fetching search results</h3>"
       );
     });
+}
+
+function filterRecentSearches() {
+  var currentDomain = window.location.hostname;
+
+  recentSearches = recentSearches.filter(function (search) {
+    var searchUrl = "./movies.html?q=" + search;
+    return searchUrl.includes(currentDomain);
+  });
+}
+
+function getRecentSearchesFromStorage() {
+  var recentSearchesString = localStorage.getItem("recentSearches");
+  if (recentSearchesString) {
+    recentSearches = JSON.parse(recentSearchesString);
+  }
+}
+
+function storeRecentSearchesInStorage() {
+  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
 }
 
 // Search bar from display page
@@ -155,12 +168,49 @@ function handleSearchFormSubmit(event) {
   searchApi(query);
 }
 
-// Loading previous saved results if page is refreshed
-$(document).ready(function () {
-  loadResultsFromLocalStorage();
-});
+// Getting Genre list
+function getGenreList() {
+  var apiUrl =
+    "https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=" +
+    apiKey;
+  fetch(apiUrl, { cache: "reload" })
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayGenreLists(data.genres);
+        });
+      } else {
+        $(".lead").text("Error " + response.status + response.statusText);
+        $("#movie-validation-modal").foundation("open");
+      }
+    })
+    .catch(function (error) {
+      $(".lead").text("Unable to connect ");
+      $("#movie-validation-modal").foundation("open");
+    });
+}
+getGenreList();
+function displayGenreLists(genres) {
+  var genreListEl = $("#genre-list");
+  var ulEl = $("<ul>");
+  for (var i = 0; i < genres.length; i++) {
+    var liEl = $("<li>");
+    var aEl = $("<a>");
+    aEl.text(genres[i].name);
+    liEl.attr("data-index", genres[i].id);
+    liEl.append(aEl);
+    ulEl.append(liEl);
+    genreListEl.append(liEl);
+  }
+  genreListEl.on("click", function (event) {
+    var liClicked = $(event.target);
+    var genreId = liClicked.parent("li").attr("data-index");
+    var genreIdQueryString = "./.html?q=" + genreId;
+    location.assign(genreIdQueryString);
+  });
+}
 
-// Event listener for search bar
+// On click event listeners
 logoEl.on("click", function () {
   var locUrl = "./index.html";
   location.assign(locUrl);
@@ -169,5 +219,47 @@ projectTitleEl.on("click", function () {
   var locUrl = "./index.html";
   location.assign(locUrl);
 });
+$("#rated-link").on("click", function (event) {
+  event.preventDefault();
+  var query = "top_rated";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
+});
+$("#search-link").on("click", function (event) {
+  event.preventDefault();
+  var query = "most_searched";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
+});
+$("#recent-link").on("click", function (event) {
+  event.preventDefault();
+  var query = "recent_releases";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
+});
+// Event listener for search bar
 searchFormEl.on("submit", handleSearchFormSubmit);
 getParams();
+
+$(document).ready(function () {
+  getRecentSearchesFromStorage();
+  filterRecentSearches();
+
+  $("#search-input")
+    .autocomplete({
+      minLength: 0,
+      delay: 0,
+      autoFocus: true,
+      position: {
+        my: "left top+4",
+        at: "left bottom",
+        collision: "flip",
+      },
+    })
+    .on("focus", function () {
+      $(this).autocomplete("search");
+    });
+
+  // Update Autocomplete source with recent searches
+  $("#search-input").autocomplete("option", "source", recentSearches);
+});
