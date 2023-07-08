@@ -6,6 +6,7 @@ var logoEl = $("#logo");
 var projectTitleEl = $("#project-title1");
 
 var apiKey = "533313cc880a2148c77843e769ec1a97";
+var recentSearches = [];
 
 // Hover class to Header
 logoEl.addClass("card-title");
@@ -86,7 +87,7 @@ function printResults(resultObj) {
 }
 
 // API Query search
-function searchApi(query, page) {
+function searchApi(query) {
   var tmbdQueryUrl = "https://api.themoviedb.org/3/search/";
 
   tmbdQueryUrl =
@@ -100,12 +101,20 @@ function searchApi(query, page) {
       return response.json();
     })
     .then((tmbdRes) => {
-      console.log(tmbdRes.results);
-
       if (!tmbdRes.results.length) {
-        $("#no-input").foundation("open");
+        $("#no-results").foundation("open");
       } else {
         printResults(tmbdRes);
+
+        // Store the searched query in recentSearches array
+        if (!recentSearches.includes(query)) {
+          var recentQuery = query.replace("+", " ");
+          recentSearches.unshift(recentQuery); // Add new query to the beginning of the array
+          if (recentSearches.length > 5) {
+            recentSearches.pop(); // Remove the oldest query if the limit exceeds 5
+          }
+        }
+        storeRecentSearchesInStorage();
       }
     })
     .catch((error) => {
@@ -114,6 +123,26 @@ function searchApi(query, page) {
         "<h3>Error occurred while fetching search results</h3>"
       );
     });
+}
+
+function filterRecentSearches() {
+  var currentDomain = window.location.hostname;
+
+  recentSearches = recentSearches.filter(function (search) {
+    var searchUrl = "./movies.html?q=" + search;
+    return searchUrl.includes(currentDomain);
+  });
+}
+
+function getRecentSearchesFromStorage() {
+  var recentSearchesString = localStorage.getItem("recentSearches");
+  if (recentSearchesString) {
+    recentSearches = JSON.parse(recentSearchesString);
+  }
+}
+
+function storeRecentSearchesInStorage() {
+  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
 }
 
 // Search bar from display page
@@ -169,3 +198,27 @@ $("#recent-link").on("click", function (event) {
 // Event listener for search bar
 searchFormEl.on("submit", handleSearchFormSubmit);
 getParams();
+
+$(document).ready(function () {
+  getRecentSearchesFromStorage();
+  filterRecentSearches();
+
+  // Call the function after page loads
+  $("#search-input")
+    .autocomplete({
+      minLength: 0, // Show suggestions when the field is focused
+      delay: 0, // No delay in showing suggestions
+      autoFocus: true, // Focus on the first suggestion
+      position: {
+        my: "left top+4", // Adjust the position of the suggestions dropdown
+        at: "left bottom",
+        collision: "flip",
+      },
+    })
+    .on("focus", function () {
+      $(this).autocomplete("search");
+    });
+
+  // Update Autocomplete source with recent searches
+  $("#search-input").autocomplete("option", "source", recentSearches);
+});
