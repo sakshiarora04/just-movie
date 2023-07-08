@@ -35,14 +35,16 @@ function getDataFromApi(query,pageno) {
   }
 //   }  
   else if(query==="trending"){
-    requestedUrl = requestedUrl + query+ "/movie/week?api_key=" + apiKey;
+    requestedUrl = requestedUrl + query+ "/movie/week?&page="+ pageno+"&api_key=" + apiKey;
     movieTypeEl.text("Most Searched");
+    createPagination(pageno);
   }
 else{
     //https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
     apiKey
-    requestedUrl = requestedUrl +"discover/movie?&with_original_language=en&"+ query+ "&api_key=" + apiKey;
-    movieTypeEl.text("Most Searched");
+    requestedUrl = requestedUrl +"discover/movie?&with_original_language=en&"+ query+"&page="+ pageno + "&api_key=" + apiKey;
+    movieTypeEl.text("Recent Releases");
+    createPagination(pageno);
 }  
 fetch(requestedUrl)
     .then((response) => {
@@ -185,7 +187,7 @@ function createPagination(pageno) {
      pageContainer.append(
         "<li class='page-item' onclick='callToPagination(" +
           (pageno - 1) +
-          ")'><a href='' class='page-link'><</a></li>"
+          ")'><a href='javascript:void(0)' class='page-link'><</a></li>"
       );
     }
   
@@ -194,7 +196,7 @@ function createPagination(pageno) {
       if (pageno == pageno + i) {
         
         pageContainer.append(
-          "<li class='page-item'><a href='' class='page-link'>" +
+          "<li class='page-item'><a href='javascript:void(0)' class='page-link'>" +
             (pageno + i) +
             "</a></li>"
         );
