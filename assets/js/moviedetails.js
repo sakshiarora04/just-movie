@@ -130,7 +130,7 @@ var displayMovieDetails = function (movies) {
 //Movie details from OMDB to display ratings from different sites.
 
 var getMovieByImdbId = function (imdbId) {
-    var apiUrl = 'http://www.omdbapi.com?apikey=' + omdbapiKey + '&i=' + imdbId;
+    var apiUrl = 'https://www.omdbapi.com?apikey=' + omdbapiKey + '&i=' + imdbId;
     fetch(apiUrl, { cache: 'reload' })
         .then(function (response) {
             if (response.ok) {
