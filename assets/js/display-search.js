@@ -168,6 +168,48 @@ function handleSearchFormSubmit(event) {
   searchApi(query);
 }
 
+// Getting Genre list
+function getGenreList() {
+  var apiUrl =
+    "https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=" +
+    apiKey;
+  fetch(apiUrl, { cache: "reload" })
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayGenreLists(data.genres);
+        });
+      } else {
+        $(".lead").text("Error " + response.status + response.statusText);
+        $("#movie-validation-modal").foundation("open");
+      }
+    })
+    .catch(function (error) {
+      $(".lead").text("Unable to connect ");
+      $("#movie-validation-modal").foundation("open");
+    });
+}
+getGenreList();
+function displayGenreLists(genres) {
+  var genreListEl = $("#genre-list");
+  var ulEl = $("<ul>");
+  for (var i = 0; i < genres.length; i++) {
+    var liEl = $("<li>");
+    var aEl = $("<a>");
+    aEl.text(genres[i].name);
+    liEl.attr("data-index", genres[i].id);
+    liEl.append(aEl);
+    ulEl.append(liEl);
+    genreListEl.append(liEl);
+  }
+  genreListEl.on("click", function (event) {
+    var liClicked = $(event.target);
+    var genreId = liClicked.parent("li").attr("data-index");
+    var genreIdQueryString = "./.html?q=" + genreId;
+    location.assign(genreIdQueryString);
+  });
+}
+
 // On click event listeners
 logoEl.on("click", function () {
   var locUrl = "./index.html";
