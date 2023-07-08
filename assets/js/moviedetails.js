@@ -1,5 +1,5 @@
 var searchParramsArr = window.location.search.split('=')
-var movieId = searchParramsArr.pop()
+var movieId = searchParramsArr.pop();
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
@@ -318,7 +318,7 @@ function displayReviews(reviews) {
                 responsiveVoice.speak(clickedReview);
             }
             moreReviewEl.on('click', '#stop-review', stopReview);
-            function stopReview(event) {
+            function stopReview() {
                 responsiveVoice.cancel();
             }
             $('#btn-close-modal').on('click', function () {
@@ -344,3 +344,39 @@ function init() {
 }
 //Initial function call
 init();
+
+var logoEl = $("#logo");
+var projectTitleEl = $("#project-title1");
+logoEl.on("click", function () {
+    var locUrl = "./index.html";
+    location.assign(locUrl);
+  });
+  projectTitleEl.on("click", function () {
+    var locUrl = "./index.html";
+    location.assign(locUrl);
+  });
+  $("#rated-link").on("click", function (event) {
+    event.preventDefault();
+    var query = "top_rated";
+    var linkToMoreMovies = "./movies.html?q=" + "top_rated";
+    location.assign("./movies.html?q=top_rated");
+  });
+  $("#search-link").on("click", function (event) {
+    event.preventDefault();
+    var query = "most_searched";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+  });
+  $("#recent-link").on("click", function (event) {
+    event.preventDefault();
+    var query = "recent_releases";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+  });
+  
+  
+  
+  
+  
+
+  

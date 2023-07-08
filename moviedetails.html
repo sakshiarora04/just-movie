@@ -12,6 +12,10 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="images/x-icon" href="./assets/images/icon2.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
     <!-- link to custom stylesheet -->
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/moviedetails.css" />
@@ -23,58 +27,65 @@
     <!----------------------------------- Header------------------------------------->
     <header>
         <div class="margin-5">
-            <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
-                <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
-                <div class="title-bar-title">Menu</div>
+          <div
+            class="title-bar"
+            data-responsive-toggle="responsive-menu"
+            data-hide-for="medium"
+          >
+            <button
+              class="menu-icon"
+              type="button"
+              data-toggle="responsive-menu"
+            ></button>
+            <div class="title-bar-title">Menu</div>
+          </div>
+          <div class="top-bar" id="responsive-menu">
+            <div class="top-bar-left small-4">
+              <ul class="dropdown menu" data-dropdown-menu>
+                <li class="menu-text">
+                  <img id="logo" src="./assets/images/logo2.jpg" alt="logo" />
+                </li>
+                <li>
+                  <h1 id="project-title1">
+                    Just<span id="project-title2">Movie</span>
+                  </h1>
+                </li>
+              </ul>
             </div>
-
-            <div class="top-bar" id="responsive-menu">
-                <div class="top-bar-left small-4">
-                    <ul class="dropdown menu" data-dropdown-menu>
-                        <li class="menu-text">
-                            <img id="logo" src="./assets/images/logo2.jpg" alt="logo" />
-                        </li>
-                        <li>
-                            <h1 id="project-title1">
-                                Just<span id="project-title2">Movie</span>
-                            </h1>
-                        </li>
-                    </ul>
-                </div>
-                <div class="top-bar-middle small-4">
-                    <ul class="dropdown menu" data-dropdown-menu>
-                        <li>
-                            <a href="#">Movies</a>
-                            <ul class="menu">
-                                <li><a href="#top-rated">Top Rated</a></li>
-                                <li><a href="#most-searched">Most Searched</a></li>
-                                <li><a href="#">Recent Releases</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Genres</a>
-                            <ul class="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Adventure</a></li>
-                                <li><a href="#">Romance</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="top-bar-right small-4">
-                    <form id="search-form">
-                        <ul class="menu">
-                            <li>
-                                <input id="search-input" type="search" placeholder="What do you want to watch"
-                                    style="max-width: 300px" />
-                            </li>
-                            <li><button type="submit" class="button">Search</button></li>
-                        </ul>
-                    </form>
-                </div>
+            <div class="top-bar-middle small-4">
+              <ul class="dropdown menu" data-dropdown-menu>
+                <li>
+                  <a href="#">Movies</a>
+                  <ul class="menu">
+                    <li id="rated-link"><a href="#top-rated">Top Rated</a></li>
+                    <li id="search-link"><a href="#most-searched">Most Searched</a></li>
+                    <li id="recent-link"><a href="#recent-releases">Recent Releases</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#">Genres</a>
+                  <ul id="genre-list" class="menu"></ul>
+                </li>
+              </ul>
             </div>
+            <div class="top-bar-right small-4">
+              <form id="search-form">
+                <ul class="menu">
+                  <li>
+                    <input
+                      id="search-input"
+                      type="search"
+                      placeholder="What do you want to watch"
+                      style="max-width: 300px"
+                    />
+                  </li>
+                  <li><button type="submit" class="button">Search</button></li>
+                </ul>
+              </form>
+            </div>
+          </div>
         </div>
-    </header>
+      </header>
     <!------------------------------------------------------------------------------->
     <!----------------------------------- Modal------------------------------------->
     <div class="reveal" id="movie-validation-modal" data-reveal>
@@ -162,10 +173,11 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
-
-    <script src="./assets/js/script.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+       
+    <script src="./assets/js/search.js"></script>
     <script src="./assets/js/moviedetails.js"></script>
-
+ 
     <script>
         $(document).foundation();
     </script>
