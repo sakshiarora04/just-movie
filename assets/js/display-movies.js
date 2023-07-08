@@ -4,30 +4,36 @@ var movieTypeEl = $("#movie-type");
 var moviesResultEl = $("#movies-result");
 var logoEl = $("#logo");
 var projectTitleEl = $("#project-title1");
+var pageContainer=$('#page-container');
 
 var apiKey = "533313cc880a2148c77843e769ec1a97";
 
-
+var pageno=1;
 logoEl.addClass("card-title");
 projectTitleEl.addClass("card-title");
 
+//get query and parameters from index page 
 
-function getParams() {
+function getParams(pageno) {
   var getQueryParam = window.location.search.split("=");
   var query = getQueryParam.pop();
   console.log(query);
-  getDataFromApi(query);
+  
+  getDataFromApi(query,pageno);
 }
-function getDataFromApi(query) {
+//fetch data from api by applying query
+function getDataFromApi(query,pageno) {
   var requestedUrl;
+
  requestedUrl = "https://api.themoviedb.org/3/";
   //   tmbdQueryUrl =
   //     tmbdQueryUrl + "movie?query=" + query + "&page=1" + "&api_key=" + apiKey;
   if (query === "top_rated") {
-    requestedUrl = requestedUrl + "movie/" + query + "?api_key=" + apiKey;
+    requestedUrl = requestedUrl + "movie/" + query + "?&page="+ pageno + "&api_key=" + apiKey;
     movieTypeEl.text("Top Movies");
+    createPagination(pageno);
   }
-//   }https://api.themoviedb.org/3/trending/movie/week?api_key=
+//   }  
   else if(query==="trending"){
     requestedUrl = requestedUrl + query+ "/movie/week?api_key=" + apiKey;
     movieTypeEl.text("Most Searched");
@@ -47,7 +53,7 @@ fetch(requestedUrl)
     })
     .then((data) => {
       if (!data.results.length) {
-        moviesResultEl.html("<h3>no results found, search again!</h3>");
+        moviesResultEl.html("<h3>No results found</h3>");
       } else {
         printResults(data);
     
@@ -61,7 +67,9 @@ fetch(requestedUrl)
     });
 }
 
+// print results - every movie in cards
 function printResults(obj) {
+    moviesResultEl.html("");
   obj.results.forEach(function (result) {
    
     if (!result.title) {
@@ -112,20 +120,21 @@ function printResults(obj) {
     });
   });
 } 
+// link on header to display movies page
   $('#top-rated').on("click", function () {
     var query = "top_rated";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
+    var linkToTopMovies = "./movies.html?q=" + query;
+    location.assign(linkToTopMovies);
   });
   $('#most-searched').on('click',function(){
     var query = "tending";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
+    var linkToMostMovies = "./movies.html?q=" + query;
+    location.assign(linkToMostMovies);
   });
   $("#recent-releases").on("click", function () {
     var query="primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc";
-    var linkToMoreMovies = "./movies.html?q="+query;
-    location.assign(linkToMoreMovies);
+    var linkToRecentMovies = "./movies.html?q="+query;
+    location.assign(linkToRecentMovies);
   });
   // Event listener for search bar
   logoEl.on("click", function () {
@@ -136,6 +145,7 @@ function printResults(obj) {
     var locUrl = "./index.html";
     location.assign(locUrl);
   });
+  // handle search submit button
   function handleSearchFormSubmit(event) {
     event.preventDefault();
   
@@ -159,5 +169,64 @@ function printResults(obj) {
   }
   
   searchFormEl.on("submit", handleSearchFormSubmit);
+  $(document).ready(function(){
+getParams(pageno);
+  })
 
-getParams();
+function createPagination(pageno) {
+    
+    pageContainer.html("");
+    
+    if (pageno ==1) {
+      pageContainer.append(
+        "<li class='page-item disabled'><a href='javascript:void(0)' class='page-link'><</a></li>"
+      );
+    } else {
+     pageContainer.append(
+        "<li class='page-item' onclick='callToPagination(" +
+          (pageno - 1) +
+          ")'><a href='' class='page-link'><</a></li>"
+      );
+    }
+  
+    var i = 0;
+    for (i = 0; i <= 4; i++) {
+      if (pageno == pageno + i) {
+        
+        pageContainer.append(
+          "<li class='page-item'><a href='' class='page-link'>" +
+            (pageno + i) +
+            "</a></li>"
+        );
+       
+      } else {
+        if (pageno + i <= 20) {
+          pageContainer.append(
+            "<li class='page-item' onclick='callToPagination(" +
+              (pageno + i) +
+              ")'><a href='javascript:void(0)' class='page-link'>" +
+              (pageno + i) +
+              "</a></li>"
+          );
+          
+        }
+      }
+    }
+  
+    if (pageno== 20) {
+      pageContainer.append(
+        "<li class='page-item disabled'><a href='javascript:void(0)' class='page-link'>></a></li>"
+      );
+    } else {
+      pageContainer.append(
+        "<li class='page-item next' onclick='callToPagination(" +
+          (pageno + 1) +
+          ")'><a href='javascript:void(0)' class='page-link'>></a></li>"
+      );
+    }
+    
+  }
+  function callToPagination(pageno) {
+    createPagination(pageno);
+    getParams(pageno);
+  }

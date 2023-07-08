@@ -145,6 +145,23 @@ a {
   text-align: center;
   margin-top: 20px;
 }
+.pagination-center{
+  justify-content: center;
+  display: flex;
+}
+.page-link{
+  margin-right: 5px;
+  background-color: var(--title-color-2);
+
+}
+
+.pagination a{
+  
+  color: var(--title-color-1);
+  /* padding: .1300rem .400rem; */
+  font-size: 15px;
+  border-radius: 5px;
+}
 @media screen and (max-width: 768px) {
   .slide-content {
     margin: 0 10px;
