@@ -258,12 +258,16 @@ $(document).ready(function () {
     var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
   });
-  $("#search-link").on("click", function () {
-    var linkToMoreMovies = "./movies.html";
+  $("#search-link").on("click", function (event) {
+    event.preventDefault();
+    var query= "trending";
+    var linkToMoreMovies = "./movies.html?q="+query;
     location.assign(linkToMoreMovies);
   });
-  $("#recent-link").on("click", function () {
-    var linkToMoreMovies = "./movies.html";
+  $("#recent-link").on("click", function (event) {
+    event.preventDefault();
+    var query="primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc";
+    var linkToMoreMovies = "./movies.html?q="+query;
     location.assign(linkToMoreMovies);
   });
 });

@@ -47,7 +47,9 @@ a {
   margin-left: 0;
   border-radius: 2px solid var(--button-color);
 }
-
+.see-more{
+  margin-left: 15px;
+}
 .top-bar {
   background-color: var(--color-dark1);
 }
@@ -95,10 +97,10 @@ a {
 }
 
 .slide-content {
-  margin: 20px 40px;
+  /* margin: 20px 40px; */
   /* overflow: hidden; */
   border-radius: 25px;
-  width: 80%;
+  width: 70%;
 }
 .card-search {
   border-radius: 25px;

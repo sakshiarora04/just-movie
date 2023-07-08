@@ -7,11 +7,11 @@ var projectTitleEl = $("#project-title1");
 
 var apiKey = "533313cc880a2148c77843e769ec1a97";
 
-// Hover class to Header
+
 logoEl.addClass("card-title");
 projectTitleEl.addClass("card-title");
 
-// getting paramaters for api fetch
+
 function getParams() {
   var getQueryParam = window.location.search.split("=");
   var query = getQueryParam.pop();
@@ -20,18 +20,25 @@ function getParams() {
 }
 function getDataFromApi(query) {
   var requestedUrl;
-
-  //https://api.themoviedb.org/3/movie/top_rated?api_key=
-
-  requestedUrl = "https://api.themoviedb.org/3/";
+ requestedUrl = "https://api.themoviedb.org/3/";
   //   tmbdQueryUrl =
   //     tmbdQueryUrl + "movie?query=" + query + "&page=1" + "&api_key=" + apiKey;
   if (query === "top_rated") {
     requestedUrl = requestedUrl + "movie/" + query + "?api_key=" + apiKey;
     movieTypeEl.text("Top Movies");
   }
-
-  fetch(requestedUrl)
+//   }https://api.themoviedb.org/3/trending/movie/week?api_key=
+  else if(query==="trending"){
+    requestedUrl = requestedUrl + query+ "/movie/week?api_key=" + apiKey;
+    movieTypeEl.text("Most Searched");
+  }
+else{
+    //https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
+    apiKey
+    requestedUrl = requestedUrl +"discover/movie?&with_original_language=en&"+ query+ "&api_key=" + apiKey;
+    movieTypeEl.text("Most Searched");
+}  
+fetch(requestedUrl)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -43,7 +50,7 @@ function getDataFromApi(query) {
         moviesResultEl.html("<h3>no results found, search again!</h3>");
       } else {
         printResults(data);
-        
+    
       }
     })
     .catch((error) => {
@@ -56,7 +63,7 @@ function getDataFromApi(query) {
 
 function printResults(obj) {
   obj.results.forEach(function (result) {
-    // if a movie has no overview
+   
     if (!result.title) {
       return;
     }
@@ -104,8 +111,39 @@ function printResults(obj) {
       location.assign(movieIdQueryString);
     });
   });
-}
-
-
+} 
+  
+  // Event listener for search bar
+  logoEl.on("click", function () {
+    var locUrl = "./index.html";
+    location.assign(locUrl);
+  });
+  projectTitleEl.on("click", function () {
+    var locUrl = "./index.html";
+    location.assign(locUrl);
+  });
+  function handleSearchFormSubmit(event) {
+    event.preventDefault();
+  
+    var searchInputVal = $("#search-input").val();
+  
+    if (!searchInputVal) {
+      console.error("You need a search input value!");
+      $("#no-input").foundation("open"); // Show the popup
+  
+      return;
+    }
+  
+    var query = searchInputVal.replace(/\s/g, "+");
+  
+    moviesResultEl.empty();
+    var locUrl = window.location.href.split("?");
+    var queryUrl = locUrl[0];
+    var queryString = queryUrl + "?q=" + query;
+    window.location.replace(queryString);
+    getDataFromApi(query);
+  }
+  
+  searchFormEl.on("submit", handleSearchFormSubmit);
 
 getParams();
