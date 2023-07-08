@@ -1,82 +1,101 @@
-#movie-details p, #cast-details p,#movie-reviews h6{
-  margin: 0px;
-  /* font-size: 15px; */
+.no-radius {
+  border-radius: 0px;
+  border-style: none;
 }
-#cast-details p{
+
+.card-section {
+  width: auto;
+  height: auto;
+
+}
+
+#poster {
+  border-style: solid;
+}
+
+#imgId {
+  border-color: var(--section-title-color);
+  border-style: solid;
+  border-radius: 25px;
+  background-color: #fff;
+  border-style: none;
+}
+
+#movie-details p,
+#cast-details p,
+#movie-reviews h6 {
+  margin: 0px;
+}
+
+#cast-details p {
   font-size: 15px;
 }
-#review-heading-modal{
+
+#review-heading-modal {
   background-color: var(--color-dark);
   color: var(--title-color-1);
 }
-.div-movie-details{
-    background-color: #1B1616;
-    padding-top: 40px;
-  }
-  #movie-details{
-    background-color: #1B1616;
-    color: var(--title-color-1);
-  }
-  #movie-cast-section,#movie-reviews{
-    /* background-color: white; */
-    background-color: var(--color-dark);
-    /* background-color: #1B1616; */
-    color: var(--title-color-1);
-    
-  }
-  a{
-    color: var(--title-color-1);
-  }
-  .section-review{
-    background-color:  #1B1616;
-  }
-  .card{
-border-style: none;
-  }
-  
-  .movie-cast .grid-container {
-    padding-left: 0;
-    display: flex;
-    justify-content: flex-start;
-    /* overflow-x: auto; */
-    /* scroll-snap-type: x mandatory; */
-    width: 100%;
+
+.div-movie-details {
+  background-color: #1B1616;
+  padding-top: 40px;
+}
+
+#movie-details {
+  background-color: #1B1616;
+  color: var(--title-color-1);
+}
+
+#movie-cast-section,
+#movie-reviews {
+
+  background-color: var(--color-dark1);
+  color: var(--title-color-1);
+}
+
+a {
+  color: var(--title-color-1);
+
+}
+
+.section-review {
+  background-color: #1B1616;
+}
+
+.movie-cast .grid-container {
+  padding-left: 0;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .movie-cast .card-group {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    /* -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory; */
-    width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
 
-  }
-  
+}
+
 .movie-cast .card {
-    /* scroll-snap-align: start;*/
-    flex: 0 0 auto; 
-    margin-right: 1rem;
+  flex: 0 0 auto;
+  margin-right: 1rem;
 }
-  
+
 .movie-cast .grid-x {
-    overflow-x: scroll;
-    /* -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory; */
-    width: max-content; 
-    margin-left: -1rem;
+  overflow-x: auto;
+  width: max-content;
+  margin-left: -1rem;
+  padding-top: 10px;
 }
-  
+
 .movie-cast .cell {
-    scroll-snap-align: start; 
-    flex: 0 0 auto; 
-    margin-right: 0; 
-    margin-left: 1rem; 
-    
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  margin-right: 0;
+  margin-left: 1rem;
+
 }
-.cast-title{
+
+.cast-title {
   text-decoration: solid;
-} 
-#movie-cast-section:hover{
- 
 }
