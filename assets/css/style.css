@@ -19,9 +19,41 @@ a {
   margin-left: 20px;
 }
 
+.card-title {
+  font-weight: bolder;
+}
+
 .card-title:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.card-size {
+  height: 100%;
+}
+
+.section-text {
+  overflow: hidden;
+}
+
+.section-text h6 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.section-text .title-text {
+  display: inline;
+}
+
+.section-text .card-rating {
+  margin-top: 5px;
+}
+
+#poster-size {
+  height: 100%;
 }
 
 #logo {
