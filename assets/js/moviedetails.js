@@ -102,20 +102,20 @@ var displayMovieDetails = function (movies) {
             if (movies.credits.cast[i].profile_path != null) {
                 var castProfilePath = 'https://image.tmdb.org/t/p/w500///' + movies.credits.cast[i].profile_path;
             }
-            else{
+            else {
                 var castProfilePath = './assets/images/no-photo.jpeg';
             }
-                var cardEl = $('<div class="card small-12" style="height:320px; width:170px ; background-color:white"></div>');
-                var castImageEl = $('<img style="height:220px; ">').attr("src", castProfilePath);
-                var cardSectionEl = $('<div class="card-section" style="background-color:white padding:0px "></div>');
-                var castName = $('<p>').append($('<strong>').text(movies.credits.cast[i].name));
-                var castRole = $('<p>').text(movies.credits.cast[i].character);
-                cardEl.append(castImageEl);
-                cardSectionEl.append(castName).append(castRole);
-                cardEl.append(cardSectionEl);
-                castEl.append(cardEl);
-                movieCastEl.addClass('movie-cast');
-            
+            var cardEl = $('<div class="card small-12" style="height:320px; width:170px ; background-color:white"></div>');
+            var castImageEl = $('<img style="height:220px; ">').attr("src", castProfilePath);
+            var cardSectionEl = $('<div class="card-section" style="background-color:white padding:0px "></div>');
+            var castName = $('<p>').append($('<strong>').text(movies.credits.cast[i].name));
+            var castRole = $('<p>').text(movies.credits.cast[i].character);
+            cardEl.append(castImageEl);
+            cardSectionEl.append(castName).append(castRole);
+            cardEl.append(cardSectionEl);
+            castEl.append(cardEl);
+            movieCastEl.addClass('movie-cast');
+
         }
     }
     else {
@@ -275,7 +275,7 @@ function displayReviews(reviews) {
                 sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
                 sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
                 var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline-block;"><i id="play-button" class="fa-solid fa-volume-high"></i></button>');
-                
+
                 //start voice -button
                 //  Screen readers will see "Play" 
                 var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
@@ -350,33 +350,26 @@ var projectTitleEl = $("#project-title1");
 logoEl.on("click", function () {
     var locUrl = "./index.html";
     location.assign(locUrl);
-  });
-  projectTitleEl.on("click", function () {
+});
+projectTitleEl.on("click", function () {
     var locUrl = "./index.html";
     location.assign(locUrl);
-  });
-  $("#rated-link").on("click", function (event) {
+});
+$("#rated-link").on("click", function (event) {
     event.preventDefault();
     var query = "top_rated";
-    var linkToMoreMovies = "./movies.html?q=" + "top_rated";
-    location.assign("./movies.html?q=top_rated");
-  });
-  $("#search-link").on("click", function (event) {
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+});
+$("#search-link").on("click", function (event) {
     event.preventDefault();
     var query = "most_searched";
     var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
-  });
-  $("#recent-link").on("click", function (event) {
+});
+$("#recent-link").on("click", function (event) {
     event.preventDefault();
     var query = "recent_releases";
     var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
-  });
-  
-  
-  
-  
-  
-
-  
+});
