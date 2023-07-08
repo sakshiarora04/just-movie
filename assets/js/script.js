@@ -4,7 +4,7 @@ var calloutEl = $("#errorMessage");
 
 var swiper1 = new Swiper("#slide-rated", {
   speed: 300,
-  slidesPerView: 3,
+  slidesPerView: 4,
   spaceBetween: 15,
   loop: true,
   calculateHeight: true,
@@ -35,7 +35,7 @@ var swiper1 = new Swiper("#slide-rated", {
 });
 var swiper2 = new Swiper("#slide-search", {
   speed: 300,
-  slidesPerView: 3,
+  slidesPerView: 4,
   spaceBetween: 15,
   loop: true,
   calculateHeight: true,
@@ -67,7 +67,7 @@ var swiper2 = new Swiper("#slide-search", {
 
 var swiper3 = new Swiper("#slide-recent", {
   speed: 300,
-  slidesPerView: 3,
+  slidesPerView: 4,
   spaceBetween: 15,
   loop: true,
   calculateHeight: true,

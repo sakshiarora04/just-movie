@@ -112,7 +112,21 @@ function printResults(obj) {
     });
   });
 } 
-  
+  $('#top-rated').on("click", function () {
+    var query = "top_rated";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+  });
+  $('#most-searched').on('click',function(){
+    var query = "tending";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+  });
+  $("#recent-releases").on("click", function () {
+    var query="primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc";
+    var linkToMoreMovies = "./movies.html?q="+query;
+    location.assign(linkToMoreMovies);
+  });
   // Event listener for search bar
   logoEl.on("click", function () {
     var locUrl = "./index.html";
