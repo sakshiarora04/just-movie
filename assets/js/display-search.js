@@ -228,13 +228,13 @@ $("#rated-link").on("click", function (event) {
 $("#search-link").on("click", function (event) {
   event.preventDefault();
   var query = "most_searched";
-  var linkToMoreMovies = "./movies.html" + query;
+  var linkToMoreMovies = "./movies.html?q=" + query;
   location.assign(linkToMoreMovies);
 });
 $("#recent-link").on("click", function (event) {
   event.preventDefault();
   var query = "recent_releases";
-  var linkToMoreMovies = "./movies.html" + query;
+  var linkToMoreMovies = "./movies.html?q=" + query;
   location.assign(linkToMoreMovies);
 });
 // Event listener for search bar
