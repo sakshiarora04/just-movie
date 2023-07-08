@@ -4,6 +4,7 @@ var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
 // Fetch movie details by id
+
 var getMovieById = function (movieId) {
     var apiUrl = 'https://api.themoviedb.org/3/movie/' + movieId + '?api_key=' + apiKey + '&language=en-US&append_to_response=credits';
     fetch(apiUrl, { cache: 'reload' })
@@ -27,6 +28,7 @@ var getMovieById = function (movieId) {
 };
 
 // Displays movie details 
+
 var titleEl = $('#movie-details');
 var displayMovieDetails = function (movies) {
 
@@ -46,7 +48,6 @@ var displayMovieDetails = function (movies) {
         var imageEl = $('#imgId').attr('src', moviePosterPath);
     }
     else {
-        // var posterImg = $('<img src="./assets/images/no-poster.png">');
         var imageEl = $('#imgId').attr('src', './assets/images/no-poster.png');
     }
 
@@ -75,9 +76,10 @@ var displayMovieDetails = function (movies) {
     var userRating = movies.vote_average.toFixed(1);
 
     titleEl.append($('<h3>').text(movieTitle));
+    //star icon
     // <i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>
     titleEl.append($('<strong>').text('Genre : ')).append($('<p>').css('display', 'inline').text(genre));
-    titleEl.append($('<p style="color: #fdeb26">').css('display', 'inline-block').css('padding-left', '20px').text(userRating+'        ⭐       ' ));
+    titleEl.append($('<p style="color: #fdeb26">').css('display', 'inline-block').css('padding-left', '20px').text(userRating + '        ⭐       '));
     titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('Runtime : ')).append($('<p>').css('display', 'inline-block').text(runtime)));
     if (userRating > 0) {
         titleEl.append($('<p>').css('display', 'block').append($('<strong>').text('User Rating : ')).append($('<p>').css('display', 'inline-block').text(userRating + '/ 10')));
@@ -91,7 +93,6 @@ var displayMovieDetails = function (movies) {
 
     //Display cast details
 
-    // var movieSection = $('#movie-cast-section');
     var castEl = $('#cast-details');
     var castHeading = $('#cast-heading');
     castHeading.append($('<strong>').text('Cast'));
@@ -100,8 +101,12 @@ var displayMovieDetails = function (movies) {
         for (var i = 0; i < movies.credits.cast.length; i++) {
             if (movies.credits.cast[i].profile_path != null) {
                 var castProfilePath = 'https://image.tmdb.org/t/p/w500///' + movies.credits.cast[i].profile_path;
+            }
+            else{
+                var castProfilePath = './assets/images/no-photo.jpeg';
+            }
                 var cardEl = $('<div class="card small-12" style="height:320px; width:170px ; background-color:white"></div>');
-                var castImageEl = $('<img style="height:200px; width:200px">').attr("src", castProfilePath);
+                var castImageEl = $('<img style="height:220px; ">').attr("src", castProfilePath);
                 var cardSectionEl = $('<div class="card-section" style="background-color:white padding:0px "></div>');
                 var castName = $('<p>').append($('<strong>').text(movies.credits.cast[i].name));
                 var castRole = $('<p>').text(movies.credits.cast[i].character);
@@ -110,13 +115,11 @@ var displayMovieDetails = function (movies) {
                 cardEl.append(cardSectionEl);
                 castEl.append(cardEl);
                 movieCastEl.addClass('movie-cast');
-            }
+            
         }
     }
     else {
         movieCastEl.append($('<h5 style="width:600px;" >').text("Cast not available").css('display', 'block'));
-        
-        // titleEl.append($('<h5 style="width:600px">').text("No reviews").css('display', 'block'));
     }
 
     if (imdbId != null) {
@@ -125,6 +128,7 @@ var displayMovieDetails = function (movies) {
 };
 
 //Movie details from OMDB to display ratings from different sites.
+
 var getMovieByImdbId = function (imdbId) {
     var apiUrl = 'http://www.omdbapi.com?apikey=' + omdbapiKey + '&i=' + imdbId;
     fetch(apiUrl, { cache: 'reload' })
@@ -146,6 +150,7 @@ var getMovieByImdbId = function (imdbId) {
 };
 
 //Display movie ratings of  IMDB, Rotten tomatoes and Metacritic(Data is taken from OMDB by imdbid).
+
 function displayRatingsFromOmdb(ratings) {
     if (ratings.length !== 0) {
         var ratingSource;
@@ -177,6 +182,7 @@ function displayRatingsFromOmdb(ratings) {
 }
 
 //function to fetch reviews by movie id
+
 var getReviewsByMovieId = function (movieId) {
     var apiUrl = 'https://api.themoviedb.org/3/movie/' + movieId + '/reviews?api_key=' + apiKey;
     fetch(apiUrl, { cache: 'reload' })
@@ -199,6 +205,7 @@ var getReviewsByMovieId = function (movieId) {
 
 
 //Display reviews
+
 function displayReviews(reviews) {
     var sectionReviewEl = $('<div style="background-color:#1B1616; padding :15px"></div>');
     var titleEl = $('#movie-reviews');
@@ -214,7 +221,7 @@ function displayReviews(reviews) {
         sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
         sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
 
-
+        //start voice -button
         var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline;"></button>');
         //  Screen readers will see "Play" 
         var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
@@ -237,7 +244,6 @@ function displayReviews(reviews) {
         titleEl.append(sectionReviewEl);
 
         //Plays the text to voice (using responsive voice api call)
-
         $("#play-review").on("click", function () {
             responsiveVoice.speak(review);
         });
@@ -269,6 +275,8 @@ function displayReviews(reviews) {
                 sectionReviewEl.append($('<p>').text('Written by ' + author + ' on ' + reviewDate));
                 sectionReviewEl.append($('<p>').css('display', 'block').append($('<p>').css('display', 'inline').text(review)));
                 var buttonPlayEl = $('<button id="play-review" class="button" type="button" style="display:inline-block;"><i id="play-button" class="fa-solid fa-volume-high"></i></button>');
+                
+                //start voice -button
                 //  Screen readers will see "Play" 
                 var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
                 // Visual users will see the icon , but not the "Play" text 
@@ -283,7 +291,6 @@ function displayReviews(reviews) {
                 var spanScreenReaderEl2 = $('<span class="show-for-sr">Play</span>');
                 // Visual users will see the icon , but not the "Play" text 
                 var spanVisualReaderEl2 = $('<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>');
-                // <i id="play-button" class="fa-solid fa-volume-xmark"></i>
                 var hrEl = $('<hr>');
                 buttonPlayEl2.append(spanScreenReaderEl2);
                 buttonPlayEl2.append(spanVisualReaderEl2);
@@ -326,7 +333,9 @@ function displayReviews(reviews) {
         titleEl.append($('<h5 style="width:600px">').text("No reviews").css('display', 'block'));
     }
 }
+
 //First function to call
+
 function init() {
     if (movieId > 0) {
         getMovieById(movieId);

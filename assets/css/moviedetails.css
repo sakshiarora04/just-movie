@@ -1,18 +1,19 @@
-.no-radius{
-  border-radius:0px;
+.no-radius {
+  border-radius: 0px;
   border-style: none;
 }
 
 .card-section {
   width: auto;
   height: auto;
-  
+
 }
-#poster{
+
+#poster {
   border-style: solid;
 }
 
-#imgId{
+#imgId {
   border-color: var(--section-title-color);
   border-style: solid;
   border-radius: 25px;
@@ -20,6 +21,7 @@
   /* object-fit: cover; */
   border-style: none;
 }
+
 /* ------------- */
 #movie-details p,
 #cast-details p,
@@ -46,15 +48,16 @@
   color: var(--title-color-1);
 }
 
-#movie-cast-section, #movie-reviews {
- 
+#movie-cast-section,
+#movie-reviews {
+
   background-color: var(--color-dark1);
   color: var(--title-color-1);
 }
 
 a {
   color: var(--title-color-1);
- 
+
 }
 
 .section-review {
@@ -76,23 +79,23 @@ a {
 }
 
 .movie-cast .card {
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
   margin-right: 1rem;
 }
 
 .movie-cast .grid-x {
   overflow-x: auto;
-  width: max-content; 
+  width: max-content;
   margin-left: -1rem;
   padding-top: 10px;
 }
 
 .movie-cast .cell {
-  scroll-snap-align: start; 
-  flex: 0 0 auto; 
-  margin-right: 0; 
-  margin-left: 1rem; 
-  
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  margin-right: 0;
+  margin-left: 1rem;
+
 }
 
 .cast-title {
