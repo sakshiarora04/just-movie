@@ -15,7 +15,6 @@ function handleSearchFormSubmit(event) {
   }
 
   var query = searchInputVal.replace(/\s/g, "+");
-  // console.log(query)
   var queryString = "./display-search.html?q=" + query;
 
   location.assign(queryString);
@@ -43,14 +42,13 @@ $(document).ready(function () {
   getRecentSearchesFromStorage();
   filterRecentSearches();
 
-  // Call the function after page loads
   $("#search-input")
     .autocomplete({
-      minLength: 0, // Show suggestions when the field is focused
-      delay: 0, // No delay in showing suggestions
-      autoFocus: true, // Focus on the first suggestion
+      minLength: 0,
+      delay: 0,
+      autoFocus: true,
       position: {
-        my: "left top+4", // Adjust the position of the suggestions dropdown
+        my: "left top+4",
         at: "left bottom",
         collision: "flip",
       },

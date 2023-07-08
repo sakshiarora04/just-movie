@@ -109,9 +109,9 @@ function searchApi(query) {
         // Store the searched query in recentSearches array
         if (!recentSearches.includes(query)) {
           var recentQuery = query.replace("+", " ");
-          recentSearches.unshift(recentQuery); // Add new query to the beginning of the array
+          recentSearches.unshift(recentQuery);
           if (recentSearches.length > 5) {
-            recentSearches.pop(); // Remove the oldest query if the limit exceeds 5
+            recentSearches.pop();
           }
         }
         storeRecentSearchesInStorage();
@@ -203,14 +203,13 @@ $(document).ready(function () {
   getRecentSearchesFromStorage();
   filterRecentSearches();
 
-  // Call the function after page loads
   $("#search-input")
     .autocomplete({
-      minLength: 0, // Show suggestions when the field is focused
-      delay: 0, // No delay in showing suggestions
-      autoFocus: true, // Focus on the first suggestion
+      minLength: 0,
+      delay: 0,
+      autoFocus: true,
       position: {
-        my: "left top+4", // Adjust the position of the suggestions dropdown
+        my: "left top+4",
         at: "left bottom",
         collision: "flip",
       },
