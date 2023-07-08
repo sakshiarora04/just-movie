@@ -8,7 +8,9 @@
   height: auto;
 
 }
-
+.card{
+  border-style: none;
+    }
 #poster {
   border-style: solid;
 }

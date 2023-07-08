@@ -72,7 +72,9 @@ var displayMovieDetails = function (movies) {
         }
     }
 
-
+    var runtime = Math.floor(118 / 60) + 'h    ' + 118 % 60 + 'min';
+    var userRating = movies.vote_average.toFixed(1);
+    var overview = movies.overview;
     titleEl.append($('<h3>').text(movieTitle));
     //star icon
     // <i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>
@@ -123,10 +125,6 @@ var displayMovieDetails = function (movies) {
     if (imdbId != null) {
         getMovieByImdbId(imdbId);
     }
-
-if (imdbId != null) {
-    getMovieByImdbId(imdbId);
-}
 };
 
 //Movie details from OMDB to display ratings from different sites.
@@ -188,11 +186,7 @@ function displayRatingsFromOmdb(ratings) {
 //function to fetch reviews by movie id
 
 var getReviewsByMovieId = function (movieId) {
-    var apiUrl =
-        "https://api.themoviedb.org/3/movie/" +
-        movieId +
-        "/reviews?api_key=" +
-        apiKey;
+    var apiUrl ="https://api.themoviedb.org/3/movie/" +movieId +"/reviews?api_key=" +  apiKey;
     fetch(apiUrl, { cache: "reload" })
         .then(function (response) {
             if (response.ok) {
@@ -247,16 +241,14 @@ function displayReviews(reviews) {
         var spanVisualReaderEl2 = $(
             '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>'
         );
-        buttonPlayEl2.append(spanScreenReaderEl2);
-        buttonPlayEl2.append(spanVisualReaderEl2);
-        sectionReviewEl.append(buttonPlayEl2);
+       
         // sectionReviewEl.append($('<p>').text(''));
-        moreReviewEl.append(sectionReviewEl);
+        // titleEl.append(sectionReviewEl);
         var hrEl = $("<hr>");
         buttonPlayEl.append(spanScreenReaderEl);
         buttonPlayEl.append(spanVisualReaderEl);
         sectionReviewEl.append(buttonPlayEl);
-        titleEl.append(sectionReviewEl);
+        
 
         //stop button
         var buttonPlayEl2 = $('<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>');
