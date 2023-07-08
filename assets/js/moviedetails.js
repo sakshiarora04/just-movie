@@ -71,7 +71,7 @@ var displayMovieDetails = function (movies) {
             var writer = movies.credits.crew[i].name;
         }
     }
-  }
+
 
     titleEl.append($('<h3>').text(movieTitle));
     //star icon
@@ -123,10 +123,10 @@ var displayMovieDetails = function (movies) {
     if (imdbId != null) {
         getMovieByImdbId(imdbId);
     }
-  }
-  if (imdbId != null) {
+
+if (imdbId != null) {
     getMovieByImdbId(imdbId);
-  }
+}
 };
 
 //Movie details from OMDB to display ratings from different sites.
@@ -149,15 +149,6 @@ var getMovieByImdbId = function (imdbId) {
             $('.lead').text('Unable to connect ');
             $('#movie-validation-modal').foundation('open');
         });
-      } else {
-        $(".lead").text("Error " + response.status + response.statusText);
-        $("#movie-validation-modal").foundation("open");
-      }
-    })
-    .catch(function (error) {
-      $(".lead").text("Unable to connect ");
-      $("#movie-validation-modal").foundation("open");
-    });
 };
 
 //Display movie ratings of  IMDB, Rotten tomatoes and Metacritic(Data is taken from OMDB by imdbid).
@@ -191,32 +182,32 @@ function displayRatingsFromOmdb(ratings) {
         titleEl.append(cardEl);
     }
     titleEl.append(cardEl);
-  }
 }
+
 
 //function to fetch reviews by movie id
 
 var getReviewsByMovieId = function (movieId) {
-  var apiUrl =
-    "https://api.themoviedb.org/3/movie/" +
-    movieId +
-    "/reviews?api_key=" +
-    apiKey;
-  fetch(apiUrl, { cache: "reload" })
-    .then(function (response) {
-      if (response.ok) {
-        response.json().then(function (data) {
-          displayReviews(data.results);
+    var apiUrl =
+        "https://api.themoviedb.org/3/movie/" +
+        movieId +
+        "/reviews?api_key=" +
+        apiKey;
+    fetch(apiUrl, { cache: "reload" })
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    displayReviews(data.results);
+                });
+            } else {
+                $(".lead").text("Error " + response.status + response.statusText);
+                $("#movie-validation-modal").foundation("open");
+            }
+        })
+        .catch(function (error) {
+            $(".lead").text("Unable to connect ");
+            $("#movie-validation-modal").foundation("open");
         });
-      } else {
-        $(".lead").text("Error " + response.status + response.statusText);
-        $("#movie-validation-modal").foundation("open");
-      }
-    })
-    .catch(function (error) {
-      $(".lead").text("Unable to connect ");
-      $("#movie-validation-modal").foundation("open");
-    });
 };
 
 
@@ -243,18 +234,18 @@ function displayReviews(reviews) {
         var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
         // Visual users will see the icon , but not the "Play" text
         var spanVisualReaderEl = $(
-          '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>'
+            '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>'
         );
 
         //stop button
         var buttonPlayEl2 = $(
-          '<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>'
+            '<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>'
         );
         //  Screen readers will see "Play"
         var spanScreenReaderEl2 = $('<span class="show-for-sr">Play</span>');
         // Visual users will see the icon , but not the "Play" text
         var spanVisualReaderEl2 = $(
-          '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>'
+            '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>'
         );
         buttonPlayEl2.append(spanScreenReaderEl2);
         buttonPlayEl2.append(spanVisualReaderEl2);
