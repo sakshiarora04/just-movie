@@ -18,6 +18,11 @@ a {
   margin-top: 20px;
   margin-left: 20px;
 }
+.card a{
+  
+  margin-top: 0;
+  margin-left: 0;
+}
 
 .card-title {
   font-weight: bolder;
@@ -28,6 +33,14 @@ a {
   cursor: pointer;
 }
 
+.see-more{
+  text-decoration: underline;
+  color: var(--title-color-2);
+  font-size: 15px;
+  background-color: var(--color-dark);
+  cursor: pointer;
+
+}
 .card-size {
   height: 100%;
 }
@@ -67,7 +80,9 @@ a {
   margin-left: 0;
   border-radius: 2px solid var(--button-color);
 }
-
+.see-more{
+  margin-left: 15px;
+}
 .top-bar {
   background-color: var(--color-dark1);
 }
@@ -115,10 +130,10 @@ a {
 }
 
 .slide-content {
-  margin: 20px 40px;
+  /* margin: 20px 40px; */
   /* overflow: hidden; */
   border-radius: 25px;
-  width: 80%;
+  width: 70%;
 }
 .card-search {
   border-radius: 25px;
@@ -162,6 +177,23 @@ a {
   min-height: 40px;
   text-align: center;
   margin-top: 20px;
+}
+.pagination-center{
+  justify-content: center;
+  display: flex;
+}
+.page-link{
+  margin-right: 5px;
+  background-color: var(--title-color-2);
+
+}
+
+.pagination a{
+  
+  color: var(--title-color-1);
+  /* padding: .1300rem .400rem; */
+  font-size: 15px;
+  border-radius: 5px;
 }
 @media screen and (max-width: 768px) {
   .slide-content {

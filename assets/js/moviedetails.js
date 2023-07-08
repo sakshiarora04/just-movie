@@ -3,6 +3,11 @@ var movieId = searchParramsArr.pop();
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
+<<<<<<< HEAD
+var isSpeakerOn = false;
+
+=======
+>>>>>>> main
 // Fetch movie details by id
 
 var getMovieById = function (movieId) {
