@@ -111,7 +111,7 @@ function getRatedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("rated");
+        
         renderRatedResults(data);
       }
     })
@@ -136,7 +136,7 @@ function getMostSearchedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("search");
+       
         renderMostSearchedResults(data);
       }
     })
@@ -148,9 +148,14 @@ function getMostSearchedResults() {
     });
 }
 
+// function getRecentReleasesResults() {
+//   var mostRecentUrl =
+//     "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
+//     apiKey;
 function getRecentReleasesResults() {
+  var today= dayjs().format("YYYY-MM-DD");
   var mostRecentUrl =
-    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
+    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte="+today+"&sort_by=primary_release_date.desc&api_key=" +
     apiKey;
   fetch(mostRecentUrl)
     .then(function (response) {
@@ -163,7 +168,7 @@ function getRecentReleasesResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("recent");
+        
         renderRecentReleasesResults(data);
       }
     })

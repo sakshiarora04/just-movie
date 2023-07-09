@@ -95,10 +95,45 @@ function displayGenreLists(genres) {
     ulEl.append(liEl);
     genreListEl.append(liEl);
   }
-  genreListEl.on("click", function (event) {
-    var liClicked = $(event.target);
-    var genreId = liClicked.parent("li").attr("data-index");
-    var genreIdQueryString = "./.html?q=" + genreId;
-    location.assign(genreIdQueryString);
-  });
+  // genreListEl.on("click", function (event) {
+  //   var liClicked = $(event.target);
+  //   var genreId = liClicked.parent("li").attr("data-index");
+  //   var genreIdQueryString = "./.html?q=" + genreId;
+  //   location.assign(genreIdQueryString);
+  // });
 }
+// ---------------------------
+var logoEl = $("#logo");
+var projectTitleEl = $("#project-title1");
+
+
+// Hover class to Header
+logoEl.addClass("card-title");
+projectTitleEl.addClass("card-title");
+
+logoEl.on("click", function () {
+    var locUrl = "./index.html";
+    location.assign(locUrl);
+});
+projectTitleEl.on("click", function () {
+    var locUrl = "./index.html";
+    location.assign(locUrl);
+});
+$("#rated-link").on("click", function (event) {
+    event.preventDefault();
+    var query = "top_rated";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+});
+$("#search-link").on("click", function (event) {
+    event.preventDefault();
+    var query = "trending";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+});
+$("#recent-link").on("click", function (event) {
+    event.preventDefault();
+    var query = "recent_releases";
+    var linkToMoreMovies = "./movies.html?q=" + query;
+    location.assign(linkToMoreMovies);
+});

@@ -3,11 +3,6 @@ var movieId = searchParramsArr.pop();
 var apiKey = '533313cc880a2148c77843e769ec1a97';
 var omdbapiKey = '7721caf5';
 var imdbId;
-<<<<<<< HEAD
-var isSpeakerOn = false;
-
-=======
->>>>>>> main
 // Fetch movie details by id
 
 var getMovieById = function (movieId) {
@@ -30,15 +25,6 @@ var getMovieById = function (movieId) {
             $('.lead').text('Unable to connect ');
             $('#movie-validation-modal').foundation('open');
         });
-      } else {
-        $(".lead").text("Error " + response.status + response.statusText);
-        $("#movie-validation-modal").foundation("open");
-      }
-    })
-    .catch(function (error) {
-      $(".lead").text("Unable to connect ");
-      $("#movie-validation-modal").foundation("open");
-    });
 };
 
 // Displays movie details 
@@ -85,8 +71,10 @@ var displayMovieDetails = function (movies) {
             var writer = movies.credits.crew[i].name;
         }
     }
-  }
 
+    var runtime = Math.floor(118 / 60) + 'h    ' + 118 % 60 + 'min';
+    var userRating = movies.vote_average.toFixed(1);
+    var overview = movies.overview;
     titleEl.append($('<h3>').text(movieTitle));
     //star icon
     // <i id="star" class="fas fa-solid fa-star fa-sm" style="color: #fdeb26; display:inline ;margin-left:60px ;"></i>
@@ -137,10 +125,6 @@ var displayMovieDetails = function (movies) {
     if (imdbId != null) {
         getMovieByImdbId(imdbId);
     }
-  }
-  if (imdbId != null) {
-    getMovieByImdbId(imdbId);
-  }
 };
 
 //Movie details from OMDB to display ratings from different sites.
@@ -163,15 +147,6 @@ var getMovieByImdbId = function (imdbId) {
             $('.lead').text('Unable to connect ');
             $('#movie-validation-modal').foundation('open');
         });
-      } else {
-        $(".lead").text("Error " + response.status + response.statusText);
-        $("#movie-validation-modal").foundation("open");
-      }
-    })
-    .catch(function (error) {
-      $(".lead").text("Unable to connect ");
-      $("#movie-validation-modal").foundation("open");
-    });
 };
 
 //Display movie ratings of  IMDB, Rotten tomatoes and Metacritic(Data is taken from OMDB by imdbid).
@@ -205,32 +180,28 @@ function displayRatingsFromOmdb(ratings) {
         titleEl.append(cardEl);
     }
     titleEl.append(cardEl);
-  }
 }
+
 
 //function to fetch reviews by movie id
 
 var getReviewsByMovieId = function (movieId) {
-  var apiUrl =
-    "https://api.themoviedb.org/3/movie/" +
-    movieId +
-    "/reviews?api_key=" +
-    apiKey;
-  fetch(apiUrl, { cache: "reload" })
-    .then(function (response) {
-      if (response.ok) {
-        response.json().then(function (data) {
-          displayReviews(data.results);
+    var apiUrl = "https://api.themoviedb.org/3/movie/" + movieId + "/reviews?api_key=" + apiKey;
+    fetch(apiUrl, { cache: "reload" })
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    displayReviews(data.results);
+                });
+            } else {
+                $(".lead").text("Error " + response.status + response.statusText);
+                $("#movie-validation-modal").foundation("open");
+            }
+        })
+        .catch(function (error) {
+            $(".lead").text("Unable to connect ");
+            $("#movie-validation-modal").foundation("open");
         });
-      } else {
-        $(".lead").text("Error " + response.status + response.statusText);
-        $("#movie-validation-modal").foundation("open");
-      }
-    })
-    .catch(function (error) {
-      $(".lead").text("Unable to connect ");
-      $("#movie-validation-modal").foundation("open");
-    });
 };
 
 
@@ -257,29 +228,27 @@ function displayReviews(reviews) {
         var spanScreenReaderEl = $('<span class="show-for-sr">Play</span>');
         // Visual users will see the icon , but not the "Play" text
         var spanVisualReaderEl = $(
-          '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>'
+            '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-high"></i> </span>'
         );
 
         //stop button
         var buttonPlayEl2 = $(
-          '<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>'
+            '<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>'
         );
         //  Screen readers will see "Play"
         var spanScreenReaderEl2 = $('<span class="show-for-sr">Play</span>');
         // Visual users will see the icon , but not the "Play" text
         var spanVisualReaderEl2 = $(
-          '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>'
+            '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>'
         );
-        buttonPlayEl2.append(spanScreenReaderEl2);
-        buttonPlayEl2.append(spanVisualReaderEl2);
-        sectionReviewEl.append(buttonPlayEl2);
+
         // sectionReviewEl.append($('<p>').text(''));
-        moreReviewEl.append(sectionReviewEl);
+        // titleEl.append(sectionReviewEl);
         var hrEl = $("<hr>");
         buttonPlayEl.append(spanScreenReaderEl);
         buttonPlayEl.append(spanVisualReaderEl);
         sectionReviewEl.append(buttonPlayEl);
-        titleEl.append(sectionReviewEl);
+
 
         //stop button
         var buttonPlayEl2 = $('<button id="stop-review" class="button" type="button" style="display:inline-block; margin-left:10opx"></button>');
@@ -394,31 +363,39 @@ function init() {
 //Initial function call
 init();
 
-var logoEl = $("#logo");
-var projectTitleEl = $("#project-title1");
-logoEl.on("click", function () {
-    var locUrl = "./index.html";
-    location.assign(locUrl);
-});
-projectTitleEl.on("click", function () {
-    var locUrl = "./index.html";
-    location.assign(locUrl);
-});
-$("#rated-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "top_rated";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
-});
-$("#search-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "most_searched";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
-});
-$("#recent-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "recent_releases";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
-});
+
+
+// var logoEl = $("#logo");
+// var projectTitleEl = $("#project-title1");
+
+
+// // Hover class to Header
+// logoEl.addClass("card-title");
+// projectTitleEl.addClass("card-title");
+
+// logoEl.on("click", function () {
+//     var locUrl = "./index.html";
+//     location.assign(locUrl);
+// });
+// projectTitleEl.on("click", function () {
+//     var locUrl = "./index.html";
+//     location.assign(locUrl);
+// });
+// $("#rated-link").on("click", function (event) {
+//     event.preventDefault();
+//     var query = "top_rated";
+//     var linkToMoreMovies = "./movies.html?q=" + query;
+//     location.assign(linkToMoreMovies);
+// });
+// $("#search-link").on("click", function (event) {
+//     event.preventDefault();
+//     var query = "trending";
+//     var linkToMoreMovies = "./movies.html?q=" + query;
+//     location.assign(linkToMoreMovies);
+// });
+// $("#recent-link").on("click", function (event) {
+//     event.preventDefault();
+//     var query = "recent_releases";
+//     var linkToMoreMovies = "./movies.html?q=" + query;
+//     location.assign(linkToMoreMovies);
+// });

@@ -36,13 +36,13 @@ function printResults(resultObj) {
     var cardSectionEl = $('<div class="card-section section-text"></div>');
     var titleEl = $(
       '<h6 class="card-title">' +
-        '<span class="title-text">' +
-        movie.title +
-        "</span>" +
-        " (" +
-        releaseDate +
-        ")" +
-        "</h6>"
+      '<span class="title-text">' +
+      movie.title +
+      "</span>" +
+      " (" +
+      releaseDate +
+      ")" +
+      "</h6>"
     );
 
     cardEl.on("click", function () {
@@ -55,8 +55,8 @@ function printResults(resultObj) {
     if (movie.poster_path) {
       var posterImg = $(
         '<img id="poster-size" class="card-title" src="https://image.tmdb.org/t/p/w500' +
-          movie.poster_path +
-          '">'
+        movie.poster_path +
+        '">'
       );
       cardEl.append(posterImg);
     } else {
@@ -69,10 +69,10 @@ function printResults(resultObj) {
       var rating = parseFloat(movie.vote_average);
       var ratingEl = $(
         '<p class="card-rating">' +
-          "Rating: " +
-          rating.toFixed(2) +
-          "⭐" +
-          "</p>"
+        "Rating: " +
+        rating.toFixed(1) +
+        "⭐" +
+        "</p>"
       );
       cardSectionEl.append(titleEl, ratingEl);
     } else {
@@ -113,8 +113,9 @@ function searchApi(query) {
           if (recentSearches.length > 5) {
             recentSearches.pop();
           }
+          storeRecentSearchesInStorage();
         }
-        storeRecentSearchesInStorage();
+
       }
     })
     .catch((error) => {
@@ -202,12 +203,12 @@ function displayGenreLists(genres) {
     ulEl.append(liEl);
     genreListEl.append(liEl);
   }
-  genreListEl.on("click", function (event) {
-    var liClicked = $(event.target);
-    var genreId = liClicked.parent("li").attr("data-index");
-    var genreIdQueryString = "./.html?q=" + genreId;
-    location.assign(genreIdQueryString);
-  });
+  // genreListEl.on("click", function (event) {
+  //   var liClicked = $(event.target);
+  //   var genreId = liClicked.parent("li").attr("data-index");
+  //   var genreIdQueryString = "./.html?q=" + genreId;
+  //   location.assign(genreIdQueryString);
+  // });
 }
 
 // On click event listeners
@@ -227,7 +228,7 @@ $("#rated-link").on("click", function (event) {
 });
 $("#search-link").on("click", function (event) {
   event.preventDefault();
-  var query = "most_searched";
+  var query = "trending";
   var linkToMoreMovies = "./movies.html?q=" + query;
   location.assign(linkToMoreMovies);
 });
