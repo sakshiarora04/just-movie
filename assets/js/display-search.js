@@ -70,7 +70,7 @@ function printResults(resultObj) {
       var ratingEl = $(
         '<p class="card-rating">' +
           "Rating: " +
-          rating.toFixed(2) +
+          rating.toFixed(1) +
           "⭐" +
           "</p>"
       );
@@ -227,7 +227,7 @@ $("#rated-link").on("click", function (event) {
 });
 $("#search-link").on("click", function (event) {
   event.preventDefault();
-  var query = "most_searched";
+  var query = "trending";
   var linkToMoreMovies = "./movies.html?q=" + query;
   location.assign(linkToMoreMovies);
 });

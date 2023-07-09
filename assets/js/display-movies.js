@@ -39,13 +39,15 @@ function getDataFromApi(query,pageno) {
     movieTypeEl.text("Most Searched");
     createPagination(pageno);
   }
-else{
+  else{
     //https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
-    apiKey
-    requestedUrl = requestedUrl +"discover/movie?&with_original_language=en&"+ query+"&page="+ pageno + "&api_key=" + apiKey;
+    //apiKey
+    var today= dayjs().format("YYYY-MM-DD");
+    requestedUrl = requestedUrl +"discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte="+today+"&sort_by="+ query + "&page="+ pageno + "&api_key=" + apiKey;
     movieTypeEl.text("Recent Releases");
     createPagination(pageno);
-}  
+}
+ 
 fetch(requestedUrl)
     .then((response) => {
       if (!response.ok) {
@@ -81,7 +83,8 @@ function printResults(obj) {
     var releaseDate = dayjs(result.release_date).format("YYYY");
     var cell = $('<div class="cell"></div>');
     var card = $('<div class="card"></div>');
-    var cardSection = $('<div class="card-section"></div>');
+    // var cardSection = $('<div class="card-section"></div>');
+    var cardSection = $('<div class="card-section" style="height:130px"></div>');
     var titleE1 = $(
       '<h6 class="card-title">' +
         result.title +
@@ -148,6 +151,7 @@ function printResults(obj) {
     location.assign(locUrl);
   });
   // handle search submit button
+
   function handleSearchFormSubmit(event) {
     event.preventDefault();
   
@@ -161,14 +165,11 @@ function printResults(obj) {
     }
   
     var query = searchInputVal.replace(/\s/g, "+");
+    var queryString = "./display-search.html?q=" + query;
   
-    moviesResultEl.empty();
-    var locUrl = window.location.href.split("?");
-    var queryUrl = locUrl[0];
-    var queryString = queryUrl + "?q=" + query;
-    window.location.replace(queryString);
-    getDataFromApi(query);
+    location.assign(queryString);
   }
+
   
   searchFormEl.on("submit", handleSearchFormSubmit);
   $(document).ready(function(){

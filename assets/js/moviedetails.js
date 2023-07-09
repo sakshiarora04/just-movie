@@ -363,31 +363,39 @@ function init() {
 //Initial function call
 init();
 
-var logoEl = $("#logo");
-var projectTitleEl = $("#project-title1");
-logoEl.on("click", function () {
-    var locUrl = "./index.html";
-    location.assign(locUrl);
-});
-projectTitleEl.on("click", function () {
-    var locUrl = "./index.html";
-    location.assign(locUrl);
-});
-$("#rated-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "top_rated";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
-});
-$("#search-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "most_searched";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
-});
-$("#recent-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "recent_releases";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
-});
+
+
+// var logoEl = $("#logo");
+// var projectTitleEl = $("#project-title1");
+
+
+// // Hover class to Header
+// logoEl.addClass("card-title");
+// projectTitleEl.addClass("card-title");
+
+// logoEl.on("click", function () {
+//     var locUrl = "./index.html";
+//     location.assign(locUrl);
+// });
+// projectTitleEl.on("click", function () {
+//     var locUrl = "./index.html";
+//     location.assign(locUrl);
+// });
+// $("#rated-link").on("click", function (event) {
+//     event.preventDefault();
+//     var query = "top_rated";
+//     var linkToMoreMovies = "./movies.html?q=" + query;
+//     location.assign(linkToMoreMovies);
+// });
+// $("#search-link").on("click", function (event) {
+//     event.preventDefault();
+//     var query = "trending";
+//     var linkToMoreMovies = "./movies.html?q=" + query;
+//     location.assign(linkToMoreMovies);
+// });
+// $("#recent-link").on("click", function (event) {
+//     event.preventDefault();
+//     var query = "recent_releases";
+//     var linkToMoreMovies = "./movies.html?q=" + query;
+//     location.assign(linkToMoreMovies);
+// });
