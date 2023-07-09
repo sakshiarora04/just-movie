@@ -111,7 +111,7 @@ function getRatedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("rated");
+        
         renderRatedResults(data);
       }
     })
@@ -136,7 +136,7 @@ function getMostSearchedResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("search");
+       
         renderMostSearchedResults(data);
       }
     })
@@ -168,7 +168,7 @@ function getRecentReleasesResults() {
       if (!data.results.length) {
         $(".slide-content").html("No results found");
       } else {
-        console.log("recent");
+        
         renderRecentReleasesResults(data);
       }
     })

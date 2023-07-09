@@ -95,12 +95,12 @@ function displayGenreLists(genres) {
     ulEl.append(liEl);
     genreListEl.append(liEl);
   }
-  genreListEl.on("click", function (event) {
-    var liClicked = $(event.target);
-    var genreId = liClicked.parent("li").attr("data-index");
-    var genreIdQueryString = "./.html?q=" + genreId;
-    location.assign(genreIdQueryString);
-  });
+  // genreListEl.on("click", function (event) {
+  //   var liClicked = $(event.target);
+  //   var genreId = liClicked.parent("li").attr("data-index");
+  //   var genreIdQueryString = "./.html?q=" + genreId;
+  //   location.assign(genreIdQueryString);
+  // });
 }
 // ---------------------------
 var logoEl = $("#logo");

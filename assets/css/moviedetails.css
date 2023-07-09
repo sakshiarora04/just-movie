@@ -1,6 +1,6 @@
-.no-radius {
-  border-radius: 0px;
-  border-style: none;
+a {
+  color: var(--title-color-1);
+
 }
 
 .card-section {
@@ -8,9 +8,11 @@
   height: auto;
 
 }
-.card{
+
+.card {
   border-style: none;
-    }
+}
+
 #poster {
   border-style: solid;
 }
@@ -20,6 +22,11 @@
   border-style: solid;
   border-radius: 25px;
   background-color: #fff;
+  border-style: none;
+}
+
+.no-radius {
+  border-radius: 0px;
   border-style: none;
 }
 
@@ -53,11 +60,6 @@
 
   background-color: var(--color-dark1);
   color: var(--title-color-1);
-}
-
-a {
-  color: var(--title-color-1);
-
 }
 
 .section-review {
