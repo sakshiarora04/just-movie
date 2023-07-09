@@ -7,7 +7,6 @@ var projectTitleEl = $("#project-title1");
 
 var apiKey = "533313cc880a2148c77843e769ec1a97";
 var recentSearches = [];
-
 // Hover class to Header
 logoEl.addClass("card-title");
 projectTitleEl.addClass("card-title");
@@ -17,6 +16,9 @@ function getParams() {
   var searchParamsArr = window.location.search.split("=");
 
   var query = searchParamsArr.pop();
+
+  loadLocalStorage();
+  filterRecentSearches();
 
   searchApi(query);
 }
@@ -105,16 +107,10 @@ function searchApi(query) {
         $("#no-results").foundation("open");
       } else {
         printResults(tmbdRes);
-
-        // Store the searched query in recentSearches array
-        if (!recentSearches.includes(query)) {
-          var recentQuery = query.replace("+", " ");
-          recentSearches.unshift(recentQuery);
-          if (recentSearches.length > 5) {
-            recentSearches.pop();
-          }
+        if (query) {
+          getRecentSearchesFromStorage(query);
         }
-        storeRecentSearchesInStorage();
+        // Store the searched query in recentSearches array
       }
     })
     .catch((error) => {
@@ -129,15 +125,29 @@ function filterRecentSearches() {
   var currentDomain = window.location.hostname;
 
   recentSearches = recentSearches.filter(function (search) {
-    var searchUrl = "./movies.html?q=" + search;
-    return searchUrl.includes(currentDomain);
+    return search.includes(currentDomain);
   });
 }
 
-function getRecentSearchesFromStorage() {
+function loadLocalStorage() {
   var recentSearchesString = localStorage.getItem("recentSearches");
   if (recentSearchesString) {
     recentSearches = JSON.parse(recentSearchesString);
+  }
+}
+
+function getRecentSearchesFromStorage(query) {
+  var recentSearchesString = localStorage.getItem("recentSearches");
+  if (recentSearchesString) {
+    recentSearches = JSON.parse(recentSearchesString);
+  }
+  if (query && !recentSearches.includes(query)) {
+    var recentQuery = query.replace("+", " ");
+    recentSearches.unshift(recentQuery);
+    if (recentSearches.length > 5) {
+      recentSearches.pop();
+    }
+    storeRecentSearchesInStorage();
   }
 }
 
@@ -242,7 +252,7 @@ searchFormEl.on("submit", handleSearchFormSubmit);
 getParams();
 
 $(document).ready(function () {
-  getRecentSearchesFromStorage();
+  loadLocalStorage();
   filterRecentSearches();
 
   $("#search-input")

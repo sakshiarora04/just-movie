@@ -18,8 +18,7 @@ a {
   margin-top: 20px;
   margin-left: 20px;
 }
-.card a{
-  
+.card a {
   margin-top: 0;
   margin-left: 0;
 }
@@ -33,13 +32,12 @@ a {
   cursor: pointer;
 }
 
-.see-more{
+.see-more {
   text-decoration: underline;
   color: var(--title-color-2);
   font-size: 15px;
   background-color: var(--color-dark);
   cursor: pointer;
-
 }
 .card-size {
   height: 100%;
@@ -66,7 +64,7 @@ a {
 }
 
 #poster-size {
-  height: 100%;
+  height: 356px;
 }
 
 #logo {
@@ -80,7 +78,7 @@ a {
   margin-left: 0;
   border-radius: 2px solid var(--button-color);
 }
-.see-more{
+.see-more {
   margin-left: 15px;
 }
 .top-bar {
@@ -178,18 +176,16 @@ a {
   text-align: center;
   margin-top: 20px;
 }
-.pagination-center{
+.pagination-center {
   justify-content: center;
   display: flex;
 }
-.page-link{
+.page-link {
   margin-right: 5px;
   background-color: var(--title-color-2);
-
 }
 
-.pagination a{
-  
+.pagination a {
   color: var(--title-color-1);
   /* padding: .1300rem .400rem; */
   font-size: 15px;

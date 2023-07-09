@@ -32,8 +32,7 @@ function filterRecentSearches() {
   var currentDomain = window.location.hostname;
 
   recentSearches = recentSearches.filter(function (search) {
-    var searchUrl = "./movies.html?q=" + search;
-    return searchUrl.includes(currentDomain);
+    return search.includes(currentDomain);
   });
 }
 
