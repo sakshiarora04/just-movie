@@ -47,23 +47,6 @@ a {
   margin-left: 15px;
 }
 
-.card a {
-  margin-top: 0;
-  margin-left: 0;
-}
-
-.card-title {
-  font-weight: bolder;
-}
-
-.card-title:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.card-size {
-  height: 100%;
-}
 
 .section-text {
   overflow: hidden;
@@ -143,9 +126,25 @@ a {
   width: 70%;
 }
 
+.card a {
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.card-title {
+  font-weight: bolder;
+}
+
+.card-title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.card-size {
+  height: 100%;
+}
 .card-search {
   border-radius: 25px;
-
   object-fit: cover;
 }
 
@@ -157,6 +156,7 @@ a {
 
 .card img {
   height: 356px;
+  cursor: pointer;
 }
 
 .swiper-navBtn {

@@ -4,21 +4,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+   <!-- add icon -->
   <link rel="icon" type="images/x-icon" href="./assets/images/icon2.jpg" />
-  <title>Movies</title>
+  <title>Just Movies</title>
+   <!-- link to foundation stylesheet -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css"
     crossorigin="anonymous" />
   <!-- link to google fonts -->
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet" />
+     <!-- link to font-awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
+  <!-- link to jquery stylesheet -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+  <!-- link to custom stylesheet -->
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
 <body class="min-100-vh">
   <header>
+      <!-- header containing logo and menu -->
     <div class="margin-5">
       <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
         <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
@@ -28,6 +35,7 @@
       <div class="top-bar" id="responsive-menu">
         <div class="top-bar-left small-4">
           <ul class="dropdown menu" data-dropdown-menu>
+            <!-- logo -->
             <li class="menu-text">
               <img id="logo" src="./assets/images/logo2.jpg" alt="logo" />
             </li>
@@ -37,11 +45,13 @@
               </h1>
             </li>
           </ul>
+          <!-- menu -->
         </div>
         <div class="top-bar-middle small-4">
           <ul class="dropdown menu" data-dropdown-menu>
             <li>
               <a href="./index.html">Movies</a>
+              <!-- movies list -->
               <ul class="menu">
                 <li id="top-rated"><a href="#">Top Movies</a></li>
                 <li id="most-searched"><a href="#">Most Searched</a></li>
@@ -49,15 +59,14 @@
               </ul>
             </li>
             <li>
+              <!-- genre list -->
               <a href="#">Genres</a>
-              <ul id="genre-list" class="menu">
-                <!-- <li><a href="#">Action</a></li>
-                  <li><a href="#">Adventure</a></li>
-                  <li><a href="#">Romance</a></li> -->
+              <ul id="genre-list" class="menu">          
               </ul>
             </li>
           </ul>
         </div>
+        <!-- search bar -->
         <div class="top-bar-right small-4">
           <form id="search-form">
             <ul class="menu">
@@ -74,17 +83,19 @@
   </header>
   <main>
     <br />
+    <!-- modal to show message -->
     <div class="tiny reveal" id="no-input" data-reveal>
       <p>Please enter a search value</p>
       <button class="close-button" data-close aria-label="Close reveal" type="button">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <!-- display movie cards containing poster, title and rating -->
     <div class="grid-container">
       <p id="movie-type" class="lead"></p>
       <div id="movies-result" class="grid-x grid-margin-x grid-margin-y small-up-2 medium-up-3 large-up-4"></div>
     </div>
-
+    <!-- pagination to move between pages -->
     <div class="grid-container pagination-center">
       <div class="grid-x grid-margin-x grid-margin-y small-up-2 medium-up-3 large-up-4">
         <ul class="pagination" id="page-container">

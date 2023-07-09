@@ -1,36 +1,35 @@
+// global variables
 var searchFormEl = $("#search-form");
 var calloutEl = $("#errorMessage");
 var recentSearches = [];
 var apiKey = "533313cc880a2148c77843e769ec1a97";
-
+// handle submit on search bar
 function handleSearchFormSubmit(event) {
   event.preventDefault();
 
   var searchInputVal = $("#search-input").val();
-
+//modal appears on invalid input
   if (!searchInputVal) {
     console.error("You need a search input value!");
     $("#no-input").foundation("open"); // Show the popup
 
     return;
   }
-
+//change the location of page to show all movies related to entered value
   var query = searchInputVal.replace(/\s/g, "+");
   var queryString = "./display-search.html?q=" + query;
-
   location.assign(queryString);
 }
-
+// store searched data into local storage
 function getRecentSearchesFromStorage() {
   var recentSearchesString = localStorage.getItem("recentSearches");
   if (recentSearchesString) {
     recentSearches = JSON.parse(recentSearchesString);
   }
 }
-
+// function filters the valid recent search and returns it
 function filterRecentSearches() {
   var currentDomain = window.location.hostname;
-
   recentSearches = recentSearches.filter(function (search) {
     var searchUrl = "./movies.html?q=" + search;
     return searchUrl.includes(currentDomain);
@@ -61,7 +60,7 @@ $(document).ready(function () {
   // Update Autocomplete source with recent searches
   $("#search-input").autocomplete("option", "source", recentSearches);
 });
-
+// get genre list from api
 function getGenreList() {
   var apiUrl =
     "https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=" +
@@ -83,6 +82,7 @@ function getGenreList() {
     });
 }
 getGenreList();
+// display genre list in header
 function displayGenreLists(genres) {
   var genreListEl = $("#genre-list");
   var ulEl = $("<ul>");
@@ -95,6 +95,7 @@ function displayGenreLists(genres) {
     ulEl.append(liEl);
     genreListEl.append(liEl);
   }
+  //on click function to go to new page to display all movies of that genre
   // genreListEl.on("click", function (event) {
   //   var liClicked = $(event.target);
   //   var genreId = liClicked.parent("li").attr("data-index");
@@ -119,6 +120,7 @@ projectTitleEl.on("click", function () {
     var locUrl = "./index.html";
     location.assign(locUrl);
 });
+//on click functions to go to display all movies related to selected option
 $("#rated-link").on("click", function (event) {
     event.preventDefault();
     var query = "top_rated";
