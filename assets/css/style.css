@@ -10,6 +10,10 @@
 body {
   background-color: var(--color-dark);
 }
+header {
+  z-index: 9999;
+  position: relative;
+}
 
 section {
   background-color: var(--color-dark);
@@ -22,7 +26,7 @@ a {
   margin-left: 20px;
 }
 
-.dropdown.menu>li.is-dropdown-submenu-parent>a::after {
+.dropdown.menu > li.is-dropdown-submenu-parent > a::after {
   border-color: black transparent transparent;
 }
 
@@ -45,9 +49,16 @@ a {
   background-color: var(--color-dark);
   cursor: pointer;
   margin-left: 15px;
+  
 }
+.language{
 
-
+display: inline-block;
+}
+.language-select{
+  height: 25px;
+  width: 100px;
+}
 .section-text {
   overflow: hidden;
 }
@@ -95,6 +106,7 @@ a {
   font-size: 40px;
   margin-top: 20px;
   margin-left: 70px;
+  display: inline;
 }
 
 #project-title1 {
@@ -205,11 +217,9 @@ a {
 .page-link {
   margin-right: 5px;
   background-color: var(--title-color-2);
-
 }
 
 .pagination a {
-
   color: var(--title-color-1);
   font-size: 15px;
   border-radius: 5px;

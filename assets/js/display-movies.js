@@ -50,6 +50,7 @@ function getDataFromApi(query, pageno) {
     })
     .then((data) => {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         moviesResultEl.html("<h3>No results found</h3>");
       } else {
         printResults(data);
@@ -194,7 +195,6 @@ function createPagination(pageno) {
       ")'><a href='javascript:void(0)' class='page-link'>Next</a></li>"
     );
   }
-
 }
 // create page no and get movies data according to that page
 function callToPagination(pageno) {

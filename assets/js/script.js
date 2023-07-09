@@ -2,6 +2,7 @@
 var apiKey = "533313cc880a2148c77843e769ec1a97";
 var searchFormEl = $("#search-form");
 var calloutEl = $("#errorMessage");
+var lang='en';
 // swiper for slider to work
 var swiper1 = new Swiper("#slide-rated", {
   speed: 300,
@@ -101,6 +102,7 @@ var swiper3 = new Swiper("#slide-recent", {
 function getRatedResults() {
   var mostRatedUrl =
     "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey;
+   console.log(mostRatedUrl)
   fetch(mostRatedUrl)
     .then(function (response) {
       if (!response.ok) {
@@ -110,6 +112,7 @@ function getRatedResults() {
     })
     .then(function (data) {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         $(".slide-content").html("No results found");
       } else {
         renderRatedResults(data);
@@ -133,6 +136,7 @@ function getMostSearchedResults() {
     })
     .then(function (data) {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         $(".slide-content").html("No results found");
       } else {
         renderMostSearchedResults(data);
@@ -145,10 +149,10 @@ function getMostSearchedResults() {
 }
 
 // get recent movies from api
-function getRecentReleasesResults() {
+function getRecentReleasesResults(lang) {
   var today = dayjs().format("YYYY-MM-DD");
   var mostRecentUrl =
-    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=" +
+    "https://api.themoviedb.org/3/discover/movie?&with_original_language="+lang+"&primary_release_date.gte=2023-01-01&primary_release_date.lte=" +
     today +
     "&sort_by=primary_release_date.desc&api_key=" +
     apiKey;
@@ -161,6 +165,7 @@ function getRecentReleasesResults() {
     })
     .then(function (data) {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         $(".slide-content").html("No results found");
       } else {
         renderRecentReleasesResults(data);
@@ -251,7 +256,6 @@ function printResults(result) {
   return cell;
 }
 
-
 $(document).ready(function () {
   // links for see more button
   $("#see-rated-link").on("click", function (event) {
@@ -272,11 +276,17 @@ $(document).ready(function () {
     var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
   });
+ 
   init();
+});
+$("#language-select").change(function(){
+  var value=($(this).val());
+  console.log(value)
+  getRecentReleasesResults(value);
 });
 //functions to call on page load
 function init() {
   getRatedResults();
   getMostSearchedResults();
-  getRecentReleasesResults();
+  getRecentReleasesResults(lang);
 }

@@ -105,8 +105,8 @@
     <main>
       <br />
       <!-- modal to show message -->
-      <div class="tiny reveal" id="no-input" data-reveal>
-        <p>Please enter a search value</p>
+      <div class="tiny reveal" id="movie-results" data-reveal>
+        <p>No movies found</p>
         <button
           class="close-button"
           data-close
@@ -123,13 +123,14 @@
       <!-- top rated movies in slider -->
       <div id="top-rated" class="grid-container">
         <p class="lead">
-          Top Movies<input
+          Top Movies
+          <input
             type="submit"
             id="see-rated-link"
             value="see more"
             class="see-more"
-          />
-        </p>
+          >    
+          
         <section>
           <div class="slide-container swiper">
             <div id="slide-rated" class="slide-content">
@@ -195,6 +196,20 @@
               class="see-more"
             />
           </p>
+          <div class="language">  
+                 
+            <form action="" class="language-pick">
+                <select name="language-select" class="language-select" id="language-select">
+                  
+                <option lang="de" value="es">Spanish</option>
+                <option lang="en" value="en" selected >English</option>
+                <option lang="fr" value="fr">French</option>
+                <option lang="it" value="ja">Japanese</option>
+              </div>
+              </select>
+            </form>
+          
+          </div>  
           <section>
             <div class="slide-container swiper">
               <div id="slide-recent" class="slide-content">
