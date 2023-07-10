@@ -95,13 +95,13 @@ function displayGenreLists(genres) {
     ulEl.append(liEl);
     genreListEl.append(liEl);
   }
-  //on click function to go to new page to display all movies of that genre
-  // genreListEl.on("click", function (event) {
-  //   var liClicked = $(event.target);
-  //   var genreId = liClicked.parent("li").attr("data-index");
-  //   var genreIdQueryString = "./.html?q=" + genreId;
-  //   location.assign(genreIdQueryString);
-  // });
+  genreListEl.on("click", function (event) {
+    var liClicked = $(event.target);
+    var aText=liClicked.text();
+    var genreId = liClicked.parent("li").attr("data-index");
+    var genreIdQueryString = "./genre.html?q=" + genreId +"&"+ aText;   
+    location.assign(genreIdQueryString);
+  });
 }
 // ---------------------------
 var logoEl = $("#logo");

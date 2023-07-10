@@ -13,8 +13,7 @@ projectTitleEl.addClass("card-title");
 //get query and parameters from index page 
 function getParams(pageno) {
   var getQueryParam = window.location.search.split("=");
-  var query = getQueryParam[1];
-  console.log(query)
+  var query = getQueryParam[1]; 
   getDataFromApi(query, pageno);
 }
 //fetch data from api by applying query
