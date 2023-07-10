@@ -1,7 +1,9 @@
+//global variables
 var apiKey = "533313cc880a2148c77843e769ec1a97";
 var searchFormEl = $("#search-form");
 var calloutEl = $("#errorMessage");
-
+var lang = "en";
+// swiper for slider to work
 var swiper1 = new Swiper("#slide-rated", {
   speed: 300,
   slidesPerView: 4,
@@ -96,7 +98,7 @@ var swiper3 = new Swiper("#slide-recent", {
     prevEl: "#button-recent-prev",
   },
 });
-
+// get top rated movies from api
 function getRatedResults() {
   var mostRatedUrl =
     "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey;
@@ -109,19 +111,18 @@ function getRatedResults() {
     })
     .then(function (data) {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         $(".slide-content").html("No results found");
       } else {
-        
         renderRatedResults(data);
       }
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-      $(".slide-content").html(
-        "<h3>Error occurred while fetching search results</h3>"
-      );
+      $(".slide-content").html("<h3>Error occurred while fetching movies</h3>");
     });
 }
+//get most searched movies from api
 function getMostSearchedResults() {
   var mostSearchedUrl =
     "https://api.themoviedb.org/3/trending/movie/week?api_key=" + apiKey;
@@ -134,28 +135,27 @@ function getMostSearchedResults() {
     })
     .then(function (data) {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         $(".slide-content").html("No results found");
       } else {
-       
         renderMostSearchedResults(data);
       }
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-      $(".slide-content").html(
-        "<h3>Error occurred while fetching search results</h3>"
-      );
+      $(".slide-content").html("<h3>Error occurred while fetching movies</h3>");
     });
 }
 
-// function getRecentReleasesResults() {
-//   var mostRecentUrl =
-//     "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc&api_key=" +
-//     apiKey;
-function getRecentReleasesResults() {
-  var today= dayjs().format("YYYY-MM-DD");
+// get recent movies from api
+function getRecentReleasesResults(lang) {
+  var today = dayjs().format("YYYY-MM-DD");
   var mostRecentUrl =
-    "https://api.themoviedb.org/3/discover/movie?&with_original_language=en&primary_release_date.gte=2023-01-01&primary_release_date.lte="+today+"&sort_by=primary_release_date.desc&api_key=" +
+    "https://api.themoviedb.org/3/discover/movie?&with_original_language=" +
+    lang +
+    "&primary_release_date.gte=2023-01-01&primary_release_date.lte=" +
+    today +
+    "&sort_by=primary_release_date.desc&api_key=" +
     apiKey;
   fetch(mostRecentUrl)
     .then(function (response) {
@@ -166,21 +166,20 @@ function getRecentReleasesResults() {
     })
     .then(function (data) {
       if (!data.results.length) {
+        $("#movie-results").foundation("open");
         $(".slide-content").html("No results found");
       } else {
-        
         renderRecentReleasesResults(data);
       }
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-      $(".slide-content").html(
-        "<h3>Error occurred while fetching search results</h3>"
-      );
+      $(".slide-content").html("<h3>Error occurred while fetching movies</h3>");
     });
 }
+//render rated movies resultes in slider
 function renderRatedResults(obj) {
-  //loop to print 4 cards inside carousal
+  //append slider in swiper
   for (var i = 0; i < obj.results.length; i++) {
     var cell = printResults(obj.results[i]);
     var slideShow = $('<div class="card-search swiper-slide"></div>');
@@ -188,11 +187,10 @@ function renderRatedResults(obj) {
     swiper1.appendSlide(slideShow);
     swiper1.update();
   }
-    
-  
 }
+//render most searched movies resultes in slider
 function renderMostSearchedResults(obj) {
-  //loop to print cards inside carousal
+  //append slider in swiper
   for (var i = 0; i < obj.results.length; i++) {
     var cell = printResults(obj.results[i]);
     var slideShow = $('<div class="card-search swiper-slide"></div>');
@@ -201,9 +199,9 @@ function renderMostSearchedResults(obj) {
     swiper2.update();
   }
 }
-
+//render recent released movies resultes in slider
 function renderRecentReleasesResults(obj) {
-  //loop to print 4 cards inside carousal
+  //append slider in swiper
   for (var i = 0; i < obj.results.length; i++) {
     var cell = printResults(obj.results[i]);
     var slideShow = $('<div class="card-search swiper-slide"></div>');
@@ -212,14 +210,23 @@ function renderRecentReleasesResults(obj) {
     swiper3.update();
   }
 }
+//print every movie in corresponding cards
 function printResults(result) {
   var cell = $('<div class="cell"></div>');
   var card = $('<div class="card"></div>');
   var a = $("<a></a>");
   var img = $("<img>");
   var cardSection = $('<div class="card-section"></div>');
+  // show release year
   var releaseDate = dayjs(result.release_date).format("YYYY");
-  var titleE1 = $('<h6 class="card-title">' + result.title + " (" + releaseDate + ")" + '</h6>');
+  var titleE1 = $(
+    '<h6 class="card-title">' +
+      result.title +
+      " (" +
+      releaseDate +
+      ")" +
+      "</h6>"
+  );
   var ratingE1;
   var pE1 = $("<p>");
   var imgLink = "https://image.tmdb.org/t/p/w500/";
@@ -227,15 +234,14 @@ function printResults(result) {
   if (result.poster_path) {
     imgLink += result.poster_path;
     img.attr("src", imgLink);
-    
   } else {
     img.attr("src", "./assets/images/no-poster.png");
   }
   var query = result.id;
-  a.attr("href", "./moviedetails.html?q=" + query);  
+  a.attr("href", "./moviedetails.html?q=" + query);
   var rating = parseFloat(result.vote_average);
   if (rating > 0) {
-    ratingE1 = $('<h6>' + "Rating: " + rating.toFixed(1) + '</h6>');
+    ratingE1 = $("<h6>" + "Rating: " + rating.toFixed(1) + "</h6>");
     ratingE1.append('<i class="fa fa-star" style="color:yellow"></i>');
   } else {
     ratingE1 = $("<h6>No rating available</h6>");
@@ -250,46 +256,37 @@ function printResults(result) {
   cell.append(a);
   return cell;
 }
-function init() {
-  getRatedResults();
-  getMostSearchedResults();
-  getRecentReleasesResults();
-}
-init();
+
 $(document).ready(function () {
-  $("#rated-link").on("click", function (event) {
+  // links for see more button
+  $("#see-rated-link").on("click", function (event) {
     event.preventDefault();
     var query = "top_rated";
     var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
   });
-  $("#search-link").on("click", function (event) {
+  $("#see-search-link").on("click", function (event) {
     event.preventDefault();
-    var query= "trending";
-    var linkToMoreMovies = "./movies.html?q="+query;
+    var query = "trending";
+    var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
   });
-  $("#recent-link").on("click", function (event) {
+  $("#see-recent-link").on("click", function (event) {
     event.preventDefault();
-    var query="primary_release_date.gte=2023-01-01&primary_release_date.lte=2023-07-03&sort_by=primary_release_date.desc";
-    var linkToMoreMovies = "./movies.html?q="+query;
+    var query = "primary_release_date.desc";
+    var linkToMoreMovies = "./movies.html?q=" + query;
     location.assign(linkToMoreMovies);
   });
+
+  init();
 });
-
-function handleSearchFormSubmit(event) {
-  event.preventDefault();
-
-  var searchInputVal = $("#search-input").val();
-  if (!searchInputVal) {
-    console.error("You need a search input value!");
-    $("#no-input").foundation("open"); // Show the popup
-    return;
-  }
-  var query = searchInputVal.replace(/\s/g, "+");
-  var queryString = "./display-search.html?q=" + query;
-
-  location.assign(queryString);
+$("#language-select").change(function () {
+  var value = $(this).val();
+  getRecentReleasesResults(value);
+});
+//functions to call on page load
+function init() {
+  getRatedResults();
+  getMostSearchedResults();
+  getRecentReleasesResults(lang);
 }
-
-searchFormEl.on("submit", handleSearchFormSubmit);
