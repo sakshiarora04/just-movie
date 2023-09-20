@@ -13,8 +13,17 @@ a {
   border-style: none;
 }
 
+.justify-content {
+  display: flex;
+  justify-content: center;
+}
+
 #poster {
   border-style: solid;
+  width: 240px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #imgId {
@@ -23,6 +32,7 @@ a {
   border-radius: 25px;
   background-color: #fff;
   border-style: none;
+
 }
 
 .no-radius {

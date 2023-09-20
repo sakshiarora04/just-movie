@@ -234,8 +234,10 @@ function printResults(result) {
   if (result.poster_path) {
     imgLink += result.poster_path;
     img.attr("src", imgLink);
+    img.attr("style", "object-fit:cover;");
   } else {
     img.attr("src", "./assets/images/no-poster.png");
+    img.attr("style", "object-fit:cover;");
   }
   var query = result.id;
   a.attr("href", "./moviedetails.html?q=" + query);

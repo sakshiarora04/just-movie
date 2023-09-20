@@ -95,7 +95,7 @@ function printResults(obj) {
     // Dynamically creating cards
     var releaseDate = dayjs(result.release_date).format("YYYY");
     var cell = $('<div class="cell"></div>');
-    var card = $('<div class="card"></div>');
+    var card = $('<div class="card card-width"></div>');
     var cardSection = $(
       '<div class="card-section" style="height:130px"></div>'
     );
@@ -115,6 +115,8 @@ function printResults(obj) {
     if (result.poster_path) {
       imgLink += result.poster_path;
       img.attr("src", imgLink);
+      img.attr("style", "object-fit:cover;");
+      // img.attr("style", "width:250px;");
     } else {
       img.attr("src", "./assets/images/no-poster.png");
     }
