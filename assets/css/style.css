@@ -12,7 +12,7 @@ body {
 }
 
 header {
-  z-index: 9999;
+  z-index: 1;
   position: relative;
 
 }
@@ -39,6 +39,7 @@ a {
 #logo {
   height: 75px;
   width: 75px;
+
 }
 
 .button {
@@ -135,7 +136,8 @@ a {
 
 #project-title1 {
   color: var(--title-color-1);
-  margin-top: 15px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #project-title2 {
@@ -199,7 +201,11 @@ a {
   cursor: pointer;
 }
 
-.swiper-navBtn {
+.swiper {
+  z-index: 0;
+}
+
+z .swiper-navBtn {
   color: #6e93f7;
   transition: color 0.3s ease;
 }
@@ -253,10 +259,12 @@ a {
   border-radius: 5px;
 }
 
+
+
 #genre-list li a,
-#rated-link a,
-#search-link a,
-#recent-link a {
+#top-rated a,
+#most-searched a,
+#recent-releases a {
   margin-left: 5px;
   margin-top: 2px;
 }
@@ -265,10 +273,23 @@ a {
   background-color: var(--title-color-2);
 }
 
-.dropdown .menu:hover {}
-
 .menu .vertical a:hover {
   color: var(--title-color-2);
+}
+
+#menu-level1-item {
+  margin-left: 0;
+  margin-top: 0;
+  text-align: center;
+}
+
+.menu .menu-text {
+
+  padding-right: 0px;
+}
+
+#li-logo {
+  padding-top: 0%;
 }
 
 @media screen and (max-width: 768px) {
@@ -282,10 +303,63 @@ a {
 }
 
 @media screen and (max-width: 39.9375em) {
+  #logo {
+    height: 40px;
+    width: 40px;
+
+  }
+
+  #genre-list {
+    z-index: 1;
+  }
+
+  .top-bar .top-bar-left {
+    display: flex;
+    margin: auto;
+    padding: auto;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+
+  .menu .menu-text {
+    padding: 0;
+    padding-right: 0px;
+  }
+
+  .top-bar-middle {
+    display: flex;
+    margin: auto;
+
+  }
+
+  #project-title1 {
+    padding-top: 6px;
+  }
+
+  .top-bar .top-bar-right {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding: 10px 0px 10px 0px;
+  }
+
+  .home-lead {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    flex-direction: column;
+  }
 
   .language {
 
-    display: inline-block;
-    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding-top: 10px;
+  }
+
+  #see-recent-link {
+    margin-left: 0px;
   }
 }

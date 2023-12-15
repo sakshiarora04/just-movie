@@ -82,7 +82,7 @@ var displayMovieDetails = function (movies) {
     .append($("<strong>").text("Genre : "))
     .append($("<p>").css("display", "inline").text(genre));
   titleEl.append(
-    $('<p style="color: #fdeb26">')
+    $('<p style="color: #e8b715">')
       .css("display", "inline-block")
       .css("padding-left", "20px")
       .text(userRating + "        ⭐       ")
@@ -131,6 +131,7 @@ var displayMovieDetails = function (movies) {
       .css("display", "block")
       .append($("<strong>").text("Overview : "))
       .append($("<p>").css("display", "inline").text(overview))
+      .css("text-align", "justify")
   );
 
   //Display cast details
@@ -158,10 +159,13 @@ var displayMovieDetails = function (movies) {
       var cardSectionEl = $(
         '<div class="card-section" style="background-color:white padding:0px "></div>'
       );
-      var castName = $("<p>").append(
-        $("<strong>").text(movies.credits.cast[i].name)
-      );
-      var castRole = $("<p>").text(movies.credits.cast[i].character);
+
+      var castName = $(
+        '<p style="font-size:13px;margin-bottom:0px;"></p>'
+      ).append($("<strong>").text(movies.credits.cast[i].name));
+      var castRole = $(
+        '<p style="font-size:12px;margin-bottom:0px;"></p>'
+      ).text(movies.credits.cast[i].character);
       cardEl.append(castImageEl);
       cardSectionEl.append(castName).append(castRole);
       cardEl.append(cardSectionEl);
@@ -229,7 +233,7 @@ function displayRatingsFromOmdb(ratings) {
         var sourceEl = $('<p style="text-align:center;">').append(
           $("<strong>").text(ratingSource)
         );
-        var ratingEl = $('<p style="text-align:center;color: #fdeb26">').text(
+        var ratingEl = $('<p style="text-align:center;color: #e8b715">').text(
           ratingValue
         );
         cardSectionEl.append(sourceEl);
@@ -295,7 +299,7 @@ function displayReviews(reviews) {
     sectionReviewEl.append(
       $("<p>")
         .css("display", "block")
-        .append($("<p>").css("display", "inline").text(review))
+        .append($("<p>").css("text-align", "justify").text(review))
     );
 
     //start voice -button
@@ -320,8 +324,6 @@ function displayReviews(reviews) {
       '<span aria-hidden="true"><i id="play-button" class="fa-solid fa-volume-xmark"></i> </span>'
     );
 
-    // sectionReviewEl.append($('<p>').text(''));
-    // titleEl.append(sectionReviewEl);
     var hrEl = $("<hr>");
     buttonPlayEl.append(spanScreenReaderEl);
     buttonPlayEl.append(spanVisualReaderEl);
@@ -353,7 +355,7 @@ function displayReviews(reviews) {
     });
 
     var sectionReviewElLink = $(
-      '<a id="read-more-reviews" style="display:block; margin-left:0px; color:  rgba(230, 77, 35, 0.811);">Read all Reviews</a>'
+      '<a id="read-more-reviews" style="display:block; margin-left:0px; color:  rgba(230, 77, 35, 0.811); text-decoration:underline">Read all Reviews</a>'
     );
     sectionReviewEl.append(sectionReviewElLink);
 
@@ -382,7 +384,7 @@ function displayReviews(reviews) {
         sectionReviewEl.append(
           $("<p>")
             .css("display", "block")
-            .append($("<p>").css("display", "inline").text(review))
+            .append($("<p>").css("text-align", "justify").text(review))
         );
         var buttonPlayEl = $(
           '<button id="play-review" class="button" type="button" style="display:inline-block;"><i id="play-button" class="fa-solid fa-volume-high"></i></button>'
