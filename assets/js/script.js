@@ -234,15 +234,17 @@ function printResults(result) {
   if (result.poster_path) {
     imgLink += result.poster_path;
     img.attr("src", imgLink);
+    img.attr("style", "object-fit:cover;");
   } else {
     img.attr("src", "./assets/images/no-poster.png");
+    img.attr("style", "object-fit:cover;");
   }
   var query = result.id;
   a.attr("href", "./moviedetails.html?q=" + query);
   var rating = parseFloat(result.vote_average);
   if (rating > 0) {
     ratingE1 = $("<h6>" + "Rating: " + rating.toFixed(1) + "</h6>");
-    ratingE1.append('<i class="fa fa-star" style="color:yellow"></i>');
+    ratingE1.append("⭐");
   } else {
     ratingE1 = $("<h6>No rating available</h6>");
   }

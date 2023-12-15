@@ -8,14 +8,14 @@ function handleSearchFormSubmit(event) {
   event.preventDefault();
 
   var searchInputVal = $("#search-input").val();
-//modal appears on invalid input
+  //modal appears on invalid input
   if (!searchInputVal) {
     console.error("You need a search input value!");
     $("#no-input").foundation("open"); // Show the popup
 
     return;
   }
-//change the location of page to show all movies related to entered value
+  //change the location of page to show all movies related to entered value
   var query = searchInputVal.replace(/\s/g, "+");
   var queryString = "./display-search.html?q=" + query;
   location.assign(queryString);
@@ -97,9 +97,9 @@ function displayGenreLists(genres) {
   }
   genreListEl.on("click", function (event) {
     var liClicked = $(event.target);
-    var aText=liClicked.text();
+    var aText = liClicked.text();
     var genreId = liClicked.parent("li").attr("data-index");
-    var genreIdQueryString = "./genre.html?q=" + genreId +"&"+ aText;   
+    var genreIdQueryString = "./genre.html?q=" + genreId + "&" + aText;
     location.assign(genreIdQueryString);
   });
 }
@@ -107,35 +107,34 @@ function displayGenreLists(genres) {
 var logoEl = $("#logo");
 var projectTitleEl = $("#project-title1");
 
-
 // Hover class to Header
 logoEl.addClass("card-title");
 projectTitleEl.addClass("card-title");
 
 logoEl.on("click", function () {
-    var locUrl = "./index.html";
-    location.assign(locUrl);
+  var locUrl = "./index.html";
+  location.assign(locUrl);
 });
 projectTitleEl.on("click", function () {
-    var locUrl = "./index.html";
-    location.assign(locUrl);
+  var locUrl = "./index.html";
+  location.assign(locUrl);
 });
 //on click functions to go to display all movies related to selected option
-$("#rated-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "top_rated";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
+$("#top-rated").on("click", function (event) {
+  event.preventDefault();
+  var query = "top_rated";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
 });
-$("#search-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "trending";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
+$("#most-searched").on("click", function (event) {
+  event.preventDefault();
+  var query = "trending";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
 });
-$("#recent-link").on("click", function (event) {
-    event.preventDefault();
-    var query = "recent_releases";
-    var linkToMoreMovies = "./movies.html?q=" + query;
-    location.assign(linkToMoreMovies);
+$("#recent-releases").on("click", function (event) {
+  event.preventDefault();
+  var query = "recent_releases";
+  var linkToMoreMovies = "./movies.html?q=" + query;
+  location.assign(linkToMoreMovies);
 });

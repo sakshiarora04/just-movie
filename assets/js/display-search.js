@@ -32,17 +32,17 @@ function printResults(resultObj) {
     // Dynamically creating cards
     var releaseDate = dayjs(movie.release_date).format("YYYY");
     var cellEl = $('<div class="cell"></div>');
-    var cardEl = $('<div class="card card-size"></div>');
+    var cardEl = $('<div class="card card-size card-width"></div>');
     var cardSectionEl = $('<div class="card-section section-text"></div>');
     var titleEl = $(
       '<h6 class="card-title">' +
-      '<span class="title-text">' +
-      movie.title +
-      "</span>" +
-      " (" +
-      releaseDate +
-      ")" +
-      "</h6>"
+        '<span class="title-text">' +
+        movie.title +
+        "</span>" +
+        " (" +
+        releaseDate +
+        ")" +
+        "</h6>"
     );
 
     cardEl.on("click", function () {
@@ -55,13 +55,13 @@ function printResults(resultObj) {
     if (movie.poster_path) {
       var posterImg = $(
         '<img id="poster-size" class="card-title" src="https://image.tmdb.org/t/p/w500' +
-        movie.poster_path +
-        '">'
+          movie.poster_path +
+          '">'
       );
       cardEl.append(posterImg);
     } else {
       var posterImg = $(
-        '<img id="poster-size" src="./assets/images/no-poster.png">'
+        '<img id="poster-size" src="./assets/images/no-poster.png" style="object-fit:cover;">'
       );
       cardEl.append(posterImg);
     }
@@ -69,10 +69,10 @@ function printResults(resultObj) {
       var rating = parseFloat(movie.vote_average);
       var ratingEl = $(
         '<p class="card-rating">' +
-        "Rating: " +
-        rating.toFixed(1) +
-        "⭐" +
-        "</p>"
+          "Rating: " +
+          rating.toFixed(1) +
+          "⭐" +
+          "</p>"
       );
       cardSectionEl.append(titleEl, ratingEl);
     } else {
@@ -115,7 +115,6 @@ function searchApi(query) {
           }
           storeRecentSearchesInStorage();
         }
-
       }
     })
     .catch((error) => {

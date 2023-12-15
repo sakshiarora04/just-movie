@@ -32,10 +32,10 @@
             <div class="top-bar" id="responsive-menu">
                 <div class="top-bar-left small-4">
                     <ul class="dropdown menu" data-dropdown-menu>
-                        <li class="menu-text">
+                        <li id="li-logo" class="menu-text">
                             <img id="logo" src="./assets/images/logo2.jpg" alt="logo" />
                         </li>
-                        <li>
+                        <li class="menu-text">
                             <h1 id="project-title1">
                                 Just<span id="project-title2">Movie</span>
                             </h1>
@@ -45,15 +45,15 @@
                 <div class="top-bar-middle small-4">
                     <ul class="dropdown menu" data-dropdown-menu>
                         <li>
-                            <a href="#">Movies</a>
+                            <a id="menu-level1-item" href=" #">Movies</a>
                             <ul class="menu">
-                                <li id="rated-link"><a href="#top-rated">Top Rated</a></li>
-                                <li id="search-link"><a href="#most-searched">Most Searched</a></li>
-                                <li id="recent-link"><a href="#recent-releases">Recent Releases</a></li>
+                                <li id="top-rated"><a href="#">Top Movies</a></li>
+                                <li id="most-searched"><a href="#">Most Searched</a></li>
+                                <li id="recent-releases"><a href="#">Recent Releases</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#">Genres</a>
+                            <a id="menu-level1-item" href="#">Genres</a>
                             <ul id="genre-list" class="menu"></ul>
                         </li>
                     </ul>
@@ -97,32 +97,23 @@
             <div class="grid-container movie-details">
 
                 <!-- Poster and Movie details  -->
-                <div class="grid-x grid-margin-x  ">
+                <div class="grid-x grid-margin-x justify-content">
 
                     <!-- poster display -->
-                    <div class="small-7 cell medium-3">
+                    <div class="cell small-12 medium-5 large-3">
                         <div id="poster" class="card">
                             <img id="imgId" src="">
                         </div>
                     </div>
                     <!-- Movie details  -->
-                    <div class="small-8 cell medium-9">
+
+                    <div class="small-12 cell medium-7 large-9">
                         <div class="card no-radius">
                             <div id="movie-details" class="card-section">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- </div>
-                </div>
-              </div>
-            </div>
-            Reviews
-            <div class="small-12 cell medium-12">
-              <div class="card">
-                <div id="movie-reviews" class="card-section">
-                  <h4>Reviews</h4> -->
-
                 <!-- Cast and Review Section -->
                 <div class="grid-x grid-margin-x  ">
 
@@ -131,7 +122,6 @@
                         <div class="card no-radius">
                             <div id="movie-cast-section" class="card-section">
                                 <h4 id="cast-heading"></h4>
-                                <!-- <div id="movie-casts" class="movie-cast"> -->
                                 <div id="movie-casts">
                                     <div class="grid-container">
                                         <div class="grid-x grid-margin-x">
@@ -159,8 +149,6 @@
                 </div>
             </div>
         </div>
-        <!-- </div>
-        </div> -->
         <footer>
             <div class="ftr">© 2020-2023 by JustMovie.com, Inc.</div>
         </footer>

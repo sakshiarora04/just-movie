@@ -34,7 +34,6 @@ function getDataFromApi(query, pageno) {
     pageno +
     "&api_key=" +
     apiKey;
-  console.log(requestedUrl);
   movieTypeEl.text(genreName);
   createPagination(pageno);
   // fetch data base on requested url
@@ -70,7 +69,7 @@ function printResults(obj) {
     // Dynamically creating cards
     var releaseDate = dayjs(result.release_date).format("YYYY");
     var cell = $('<div class="cell"></div>');
-    var card = $('<div class="card"></div>');
+    var card = $('<div class="card card-width"></div>');
     var cardSection = $(
       '<div class="card-section" style="height:130px"></div>'
     );
@@ -90,13 +89,14 @@ function printResults(obj) {
     if (result.poster_path) {
       imgLink += result.poster_path;
       img.attr("src", imgLink);
+      img.attr("style", "object-fit:cover;");
     } else {
       img.attr("src", "./assets/images/no-poster.png");
     }
     var rating = parseFloat(result.vote_average);
     if (rating > 0) {
       ratingE1 = $("<h6>" + "Rating: " + rating.toFixed(1) + "</h6>");
-      ratingE1.append('<i class="fa fa-star" style="color:yellow"></i>');
+      ratingE1.append("⭐");
     } else {
       ratingE1 = $("<h6>No rating available</h6>");
     }
@@ -107,7 +107,6 @@ function printResults(obj) {
     card.append(cardSection);
     cell.append(card);
     moviesResultEl.append(cell);
-    console.log(obj);
     card.on("click", function () {
       var movieId = result.id;
       var movieIdQueryString = "./moviedetails.html?q=" + movieId;
